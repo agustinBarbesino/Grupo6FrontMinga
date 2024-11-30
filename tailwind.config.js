@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      clipPath: {
+        'ellipse-custom': 'ellipse(20% 20% at 20% 5%)',
+      },
+    },
   },
   plugins: [],
 }
