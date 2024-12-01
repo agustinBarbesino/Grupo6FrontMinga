@@ -14,7 +14,7 @@ function NavBar() {
     }
     return (
         <>
-            <header className="relative w-full bg-transparent">
+            <header className="relative w-full bg-transparent z-50">
                 <div className="flex fixed w-full justify-between font-montserrat px-2 md:px-6 py-4">
 
                     <div className="relative ">
