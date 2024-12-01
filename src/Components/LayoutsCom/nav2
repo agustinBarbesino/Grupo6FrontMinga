@@ -1,0 +1,110 @@
+import { React, useState } from "react"
+import { NavLink } from "react-router-dom"
+import img from '../../assets/logoMinga.png'
+
+function NavBar() {
+    const [isOpen, setIsOpen] = useState(false)
+    const token = true
+    const user = {
+        email: "user1@example.com",
+        password: "password123",
+        photo: "https://example.com/photo1.jpg",
+        role: 0,
+        online: false
+    }
+    return (
+        <>
+            <header className="relative w-full bg-transparent">
+                <div className="flex fixed w-full justify-between px-6 py-4">
+                    {/* contiene navbar */}
+                    <div className="relative flex w-full justify-between items-center">
+                        <div className="flex items-center justify-start md:justify-start w-1/2">
+                            <button className=" z-10 p-2 text-rose-light hover:text-rose-dark "
+                                onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
+                                <svg className="w-8 h-8 align-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+                                    {isOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 16L16 6M6 6l10 10" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
+                                </svg>
+                            </button>
+
+                        </div>
+
+                        <nav className={`absolute w-screen bg-pink-gradient pt-20 sm:w-32 text-white rounded shadow-lg ${isOpen ? "block z-10 min-w-80" : "hidden"} `} >
+                            <ul className="flex flex-col w-full p-4 md:p-4">
+                                {token && (
+                                    <li className="flex justify-center items-center ">
+                                        <div className="flex flex-col justify-start md:flex-row  bg-opacity-20 md:items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 md:py-1 w-full md:min-w-max md:flex-grow">
+                                            <img
+                                                src={user.photo}
+                                                alt={`${user.email}'s profile`}
+                                                className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
+                                            />
+                                            <span className="text-sm sm:text-base text-ellipsis text-white overflow-hidden whitespace-nowrap">
+                                                {user.email}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-end justify-end w-1/2">
+                                            <button className=" z-10 p-2 text-white hover:text-rose-light "
+                                                onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
+                                                <svg className="w-8 h-8 align-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+                                                    {isOpen ? (
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 16L16 6M6 6l10 10" />
+                                                    ) : (
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 6h16M4 12h16M4 18h16" />
+                                                    )}
+                                                </svg>
+                                            </button>
+
+                                        </div>
+                                    </li>
+                                )}
+
+
+                                <li className="font-SW place-content-center px-3" >
+                                    <NavLink to="/home" className={({ isActive }) =>
+                                        isActive ? "text-rose-dark bg-white drop-shadow" : "text-white drop-shadow"}>
+                                        Home
+                                    </NavLink>
+                                </li>
+                                <li className="font-SW place-content-center px-3" >
+                                    <NavLink to="/cities" className={({ isActive }) =>
+                                        isActive ? "text-rose-dark bg-white drop-shadow" : "text-white drop-shadow"}>
+                                        Cities
+                                    </NavLink>
+                                </li>
+
+
+                            </ul>
+                            {!token ? (
+                                <div className="flex place-content-center justify-center ml-0 md:ml-4 md:mr-2  mt-0 md:mt-2 mb-2 md:w-32 z-50">
+                                    <button className="flex items-center font-SW px-3 py-1  md:py-2 gap-2 drop-shadow bg-gray-700 text-white hover:bg-red-800 rounded text-sm sm:text-base">
+                                        <img src={img} className="h-auto w-6 sm:w-8" alt="Log in" /><NavLink to="/Login"> Login</NavLink>
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex place-content-center justify-center ml-0 md:ml-4 md:mr-2  mt-0 md:mt-2 mb-2 md:w-32 z-50">
+                                    <button className="flex items-center font-SW px-3 py-1  md:py-2 gap-2 drop-shadow bg-gray-700 text-white hover:bg-red-800 rounded text-sm sm:text-base" >
+                                        Logout
+                                    </button>
+                                </div>
+
+                            )
+                            }
+                        </nav>
+                    </div>
+                    <NavLink to="/Home" className="flex w-1/4 place-content-end align-end pl-3 border-2 border-red-300">  <img src={img} className="h-auto ml-1 w-10 md:w-16" alt="LogoManga" />
+                    </NavLink>
+                </div>
+
+            </header>
+
+
+
+        </>
+    )
+}
+
+export default NavBar 
