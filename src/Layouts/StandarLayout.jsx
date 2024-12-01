@@ -1,15 +1,18 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../Components/LayoutsCom/Header.jsx';
+import NavBar from '../Components/LayoutsCom/Navbar.jsx';
 import Footer from '../Components/LayoutsCom/Footer.jsx';
 
 export default function StandarLayout() {
   return (
     <>
-      <Header/>
-      <main className=' w-full min-h-[50vh]'>
-        <Outlet></Outlet>
-      </main>
-      <Footer  />
+      <div className="flex flex-col  min-h-screen ">
+        <NavBar />
+        <main className=' flex-grow min-h-80'>
+          <Outlet></Outlet>
+        </main>
+        <Footer />
+      </div>
+
     </>
   );
 }
