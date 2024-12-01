@@ -1,3 +1,10 @@
-.clip-ellipse-custom {
-    clip-path: ellipse(60% 80% at 50% 20%);
+.clip-ellipse-bg {
+    clip-path: ellipse(58% 82% at 50.5% 19%);
+    
   }
+.clip-ellipse-custom {
+    clip-path:ellipse(57.5% 81% at 51% 17.5%);
+    filter:brightness(50%)
+  }
+
+  
