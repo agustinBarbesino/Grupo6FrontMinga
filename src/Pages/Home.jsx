@@ -4,7 +4,7 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
-    <div className="min-h-screen w-full bg-[#F4F4F4] pb-16">
+    <div className="min-h-screen w-full bg-[#F4F4F4] md:pb-16">
       {/* Carousel Section */}
       <section className="hidden lg:block w-full py-8 md:py-16 px-4 bg-[#F4F4F4]" >
         <div className=" w-[1258px] h-[265px] max-w-7xl mx-auto bg-[#F472B6] flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg">
