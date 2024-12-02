@@ -11,7 +11,7 @@ const Header = () => {
         <div className="flex fixed w-full justify-between font-montserrat px-2 md:px-6 py-4">
           <NavBar/>
           {/* logo */}
-          <NavLink to="/Home" className="flex justify-center md:justify-end 1/2 md:w-1/4">  <img src={img} className="h-auto w-full md:w-20" alt="LogoManga" />
+          <NavLink to="/Home" className="flex justify-center md:justify-end md:w-1/4">  <img src={img} className="h-auto w-16 md:w-20" alt="LogoManga" />
           </NavLink>
         </div>
 
