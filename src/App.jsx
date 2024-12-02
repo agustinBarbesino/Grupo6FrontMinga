@@ -1,14 +1,9 @@
-
-import { NotFound } from "./Pages/NotFound"
+import Mangas from "./Pages/Mangas"
 import {RouterProvider,createBrowserRouter} from "react-router-dom"
 import './App.css'
 
 let router = createBrowserRouter([{
-  element:<LayoutPrincipal></LayoutPrincipal>,
-  children:[{
-  path:"/",element//: la direccion
-}]},{
-  path:"/*",element: <NotFound></NotFound>
+  path:"/mangas",element:<Mangas></Mangas>
 }])
 function App() {
 

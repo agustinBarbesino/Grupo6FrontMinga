@@ -1,13 +1,18 @@
-// import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
-// import authReducer from "./reducer/authReducer"
+import categoryReducer from "./reducer/categoryReducer";
+import mangasReducer from "./reducer/mangasReducer";
+import mangasFilterReducer from "./mangaSlice";
 
 
-// const store = configureStore({
-//     reducer: {
+const store = configureStore({
+    reducer: {
+        mangasFilterStore:mangasFilterReducer,
+        categoryStore:categoryReducer,
+        mangasStore:mangasReducer
+    },
+});
 
-//         authStore: authReducer
-//     },
-// });
 
-// export default store
+
+export default store
