@@ -6,7 +6,10 @@ import StandarLayout from "./Layouts/StandarLayout";
 //Pages
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
-import EditProfile from './Components/Profile/ProfileComponent'
+import EditProfile from './Components/Profile/ProfileComponent';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import ChangeRol from './Pages/ChangeRol';
 import EditManga from "./Pages/EditManga"
 import EditChapter from "./Pages/EditChapter"
 import NewChapter from "./Pages/CreateChapter"
@@ -34,6 +37,9 @@ const router = createBrowserRouter([
       { path: "/favorites", element: <FavoritesPage /> },
       { path: "/panel", element: <PanelPage /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/signin", element: <Login /> },
+      { path: "/signup", element: <Register /> },
+      { path: "/rol", element: <ChangeRol /> }
     ],
   },
   
