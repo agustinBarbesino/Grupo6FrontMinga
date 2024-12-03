@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
+import Modal from './Modal';
 
 //css
 import 'swiper/css/navigation';
@@ -13,6 +14,8 @@ console.log(mangas[0].chapters[0].pages);
 
 
 export default function ChapterPages() {
+
+
 
     return (
         <>
@@ -30,14 +33,14 @@ export default function ChapterPages() {
             speed={2000}
             breakpoints={{
                 480: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                     spaceBetween: 20,
-                    slidesPerGroup: 4,
+                    slidesPerGroup: 1,
                 },
                 768: {
-                    slidesPerView: 3,
+                    slidesPerView: 1,
                     spaceBetween: 40,
-                    slidesPerGroup: 3,
+                    slidesPerGroup: 1,
                 },
                 1024: {
                     slidesPerView: 1,
@@ -55,6 +58,7 @@ export default function ChapterPages() {
                 </SwiperSlide>
             ))}
         </Swiper>
+<Modal />
     </>
     );
 }

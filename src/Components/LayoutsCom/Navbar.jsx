@@ -1,7 +1,9 @@
 import { React, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 
 function NavBar() {
+    const location = useLocation();
+    const isActive = location.pathname === '/chapter';
     const [isOpen, setIsOpen] = useState(false)
     const token = true
     const user = {
@@ -13,8 +15,12 @@ function NavBar() {
     }
     return (
         <>
-            <div className="relative">
-                <button className={`"z-10 p-2 text-rose-light hover:text-rose-dark ${isOpen ? "hidden" : "block z-10 md:min-w-80"}`}
+            <div className="relative ">
+                <button className={`
+                    z-10 p-2 
+                    ${isActive ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
+                    ${isOpen ? 'hidden' : 'block z-10 md:min-w-80'}
+                    `}
                     onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
                         {isOpen ? (
