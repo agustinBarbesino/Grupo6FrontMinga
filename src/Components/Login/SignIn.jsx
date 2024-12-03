@@ -1,4 +1,5 @@
 import React from 'react'
+import { FcGoogle } from 'react-icons/fc'
 
 export default function SignIn() {
   return (
@@ -17,26 +18,33 @@ export default function SignIn() {
         </h1>
         <p className='w-7/12 mb-6 text-gray-600 text-center'>Discover manga and comics, track your progress, have fun, read manga.</p>
         <form className="w-4/5 sm:w-3/5">
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600 font-semibold mb-1">
+          <div className="relative w-full mb-6">
+            <label
+              htmlFor="email"
+              className="absolute -top-3 left-4 px-1 bg-white text-sm text-pink-400"
+            >
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-pink-400"
-              placeholder="Enter your email"
+              className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-pink-400"
             />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-pink-400">
+                @
+            </span>
           </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-600 font-semibold mb-1">
+          <div className="relative w-full mb-6">
+            <label
+              htmlFor="password"
+              className="absolute -top-3 left-4 px-1 -py-0 bg-white text-sm text-pink-400"
+            >
               Password
             </label>
             <input
               type="password"
               id="password"
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-pink-400"
-              placeholder="Enter your password"
+              className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-pink-400"
             />
           </div>
           <button
@@ -47,8 +55,9 @@ export default function SignIn() {
           </button>
           <button
             type="button"
-            className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:border-pink-400 hover:text-pink-400 transition mb-6"
+            className="w-full flex justify-center items-center border border-gray-300 text-gray-700 py-2 rounded-lg hover:border-pink-400 hover:text-pink-400 transition mb-6"
           >
+            <FcGoogle className="w-5 h-5 mr-2" />
             Sign In with Google
           </button>
         </form>

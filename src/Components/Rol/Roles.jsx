@@ -21,8 +21,12 @@ export default function Roles() {
           </div>
         </div>
       </div>
-      <div className='hidden md:block md:w-1/2'>
-        <img className='opacity-80 object-contain' src="src/assets/rolBg.png" alt="" />
+      <div className='hidden md:flex w-full md:w-1/2 md:min-h-screen relative justify-center'>
+        <img className='opacity-80 object-contain w-full h-auto' src="src/assets/rolBg.png" alt="" />
+        <div className='absolute w-9/12 flex flex-col justify-start items-start text-white text-start mt-44'>
+          <h1 className='text-2xl font-medium'>Minga.com is the best place to find manga reviews. We’ve been super impress by the quality of applicants.   </h1>
+          <p className='text-lg mt-2 opacity-60'>- Ignacio Borraz</p>
+        </div>
       </div>
     </div>
   )
