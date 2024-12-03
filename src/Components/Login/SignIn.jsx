@@ -11,7 +11,7 @@ export default function SignIn() {
           alt="Background"
         />
       </div>
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6">
+      <div className="w-full min-h-screen md:w-1/2 flex flex-col justify-center items-center md:items-center p-6">
         <h1 className="text-2xl font-bold mb-4">
             Welcome <span className="text-pink-400">back</span>
             !
