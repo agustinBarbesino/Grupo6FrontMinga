@@ -11,6 +11,8 @@ import EditManga from "./Pages/EditManga"
 import EditChapter from "./Pages/EditChapter"
 import NewChapter from "./Pages/CreateChapter"
 import NewManga from "./Pages/CreateManga"
+import NewAuthor from "./Pages/NewAuthor"
+import NewCompany from "./Pages/NewCompany"
 import FavoritesPage from "./Pages/Favorites";
 import PanelPage from "./Pages/PanelAdmin";
 import Profile from "./Pages/Profile";
@@ -27,6 +29,8 @@ const router = createBrowserRouter([
       { path: "/editChapter", element: <EditChapter /> },
       { path: "/newManga", element: <NewManga /> },
       { path: "/newChapter", element: <NewChapter /> },
+      { path: "/newAuthor", element: <NewAuthor /> },
+      { path: "/newCompany", element: <NewCompany /> },
       { path: "/favorites", element: <FavoritesPage /> },
       { path: "/panel", element: <PanelPage /> },
       { path: "/profile", element: <Profile /> },
