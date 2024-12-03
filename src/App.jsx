@@ -6,7 +6,10 @@ import StandarLayout from "./Layouts/StandarLayout";
 //Pages
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
-import Profile from './Components/Profile/ProfileComponent'
+import Profile from './Components/Profile/ProfileComponent';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import ChangeRol from './Pages/ChangeRol';
 
 
 const router = createBrowserRouter([
@@ -16,6 +19,9 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/home", element: <Home /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/signin", element: <Login /> },
+      { path: "/signup", element: <Register /> },
+      { path: "/rol", element: <ChangeRol /> }
     ],
   },
   
