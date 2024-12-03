@@ -10,6 +10,11 @@ import Profile from './Components/Profile/ProfileComponent';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import ChangeRol from './Pages/ChangeRol';
+import EditManga from "./Pages/EditManga"
+import EditChapter from "./Pages/EditChapter"
+import NewChapter from "./Pages/CreateChapter"
+import NewManga from "./Pages/CreateManga"
+import FavoritesPage from "./Pages/Favorites";
 
 
 const router = createBrowserRouter([
@@ -19,6 +24,11 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/home", element: <Home /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/editManga", element: <EditManga /> },
+      { path: "/editChapter", element: <EditChapter /> },
+      { path: "/newManga", element: <NewManga /> },
+      { path: "/newChapter", element: <NewChapter /> },
+      { path: "/favorites", element: <FavoritesPage /> },
       { path: "/signin", element: <Login /> },
       { path: "/signup", element: <Register /> },
       { path: "/rol", element: <ChangeRol /> }
