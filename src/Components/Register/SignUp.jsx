@@ -7,8 +7,7 @@ export default function SignUp() {
     <div className="w-full min-h-screen flex flex-col md:flex-row">
       <div className="w-full min-h-screen md:w-1/2 flex flex-col justify-center items-center md:items-center p-6">
         <h1 className="text-2xl font-bold mb-4">
-            Welcome <span className="text-pink-400">back</span>
-            !
+            Welcome!
         </h1>
         <p className='w-7/12 mb-6 text-gray-600 text-center'>Discover manga and comics, track your progress, have fun, read manga.</p>
         <form className="w-4/5 sm:w-3/5">
@@ -56,11 +55,24 @@ export default function SignUp() {
             />
             <Lock className="absolute w-4 h-4 right-4 top-1/2 -translate-y-1/2 text-pink-400"/>
           </div>
+          <div className="flex items-center mb-4">
+            <input
+              id="email-notifications"
+              type="checkbox"
+              className="text-pink-400 border-gray-300 rounded focus:ring-pink-400"
+            />
+            <label
+              htmlFor="email-notifications"
+              className="ml-2 text-sm text-gray-500"
+            >
+              Send notification to my email.
+            </label>
+          </div>
           <button
             type="submit"
             className="w-full bg-pink-400 text-white mb-4 py-2 rounded-lg hover:shadow-[4px_4px_0_0_#FFA500] transition"
           >
-            Sign In
+            Sign Up
           </button>
           <button
             type="button"
@@ -71,9 +83,9 @@ export default function SignUp() {
           </button>
         </form>
         <p className="text-gray-600 text-sm mb-4">
-          You don't have an account yet?{' '}
+          Already have an account?{' '}
           <a href="/signup" className="text-pink-400 font-bold hover:underline">
-            Sign Up
+            Log In
           </a>
         </p>
         <p className="text-gray-600 text-sm">
