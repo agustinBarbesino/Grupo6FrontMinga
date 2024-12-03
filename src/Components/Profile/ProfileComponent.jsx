@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Cake } from 'lucide-react';
 
-const Profile = () => {
+const EditProfile = () => {
     const navigate = useNavigate();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showSaveModal, setShowSaveModal] = useState(false);
@@ -203,4 +203,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default EditProfile;
