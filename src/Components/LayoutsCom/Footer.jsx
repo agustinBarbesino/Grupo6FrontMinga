@@ -49,7 +49,7 @@ const Footer = () => {
                                 </a>
                             </div>
                             <div className="flex flex-col text-center ">
-                                <button type="button" class="flex flex-row justify-center items-center text-white font-light bg-rose-dark hover:bg-rose-light  rounded-sm text-sm px-5 py-2.5 text-center mb-2">Donate <CiHeart className="text-white hover:text-rose-dark md:ml-2" size={24} /></button>
+                                <button type="button" className="flex flex-row justify-center items-center text-white font-light bg-rose-dark hover:bg-rose-light  rounded-sm text-sm px-5 py-2.5 text-center mb-2">Donate <CiHeart className="text-white hover:text-rose-dark md:ml-2" size={24} /></button>
                             </div>
                         </div>
                     </div>

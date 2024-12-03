@@ -5,6 +5,7 @@ import StandarLayout from "./Layouts/StandarLayout";
 
 //Pages
 import Home from "./Pages/Home";
+import Chapter from "./Pages/Chapter";
 import NotFound from "./Pages/NotFound";
 import EditProfile from './Components/Profile/ProfileComponent';
 import Login from './Pages/Login';
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/home", element: <Home /> },
-      { path: "/editProfile", element: <EditProfile /> },
+      { path: "/editProfile", element: <EditProfile /> },      
+      { path: "/chapter", element: <Chapter /> },
       { path: "/editManga", element: <EditManga /> },
       { path: "/editChapter", element: <EditChapter /> },
       { path: "/newManga", element: <NewManga /> },
