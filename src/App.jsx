@@ -11,6 +11,7 @@ import EditManga from "./Pages/EditManga"
 import EditChapter from "./Pages/EditChapter"
 import NewChapter from "./Pages/CreateChapter"
 import NewManga from "./Pages/CreateManga"
+import FavoritesPage from "./Pages/Favorites";
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/editChapter", element: <EditChapter /> },
       { path: "/newManga", element: <NewManga /> },
       { path: "/newChapter", element: <NewChapter /> },
+      { path: "/favorites", element: <FavoritesPage /> },
     ],
   },
   
