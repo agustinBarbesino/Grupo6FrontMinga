@@ -8,6 +8,7 @@ import Home from "./Pages/Home";
 import Chapter from "./Pages/Chapter";
 import NotFound from "./Pages/NotFound";
 import Profile from './Components/Profile/ProfileComponent'
+import EditManga from "./Pages/EditManga"
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/home", element: <Home /> },
       { path: "/profile", element: <Profile /> },
       { path: "/chapter", element: <Chapter /> },
+      { path: "/editManga", element: <EditManga /> },
     ],
   },
   
