@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { Categories } from "../../store/actions/categoryActions"
 import { MangasFetch } from "../../store/actions/mangasActions";
 import { useDispatch, useSelector } from "react-redux";
-import { Card } from "../components/Cards";
+import { Card } from "../Components/Mangas/Cards";
 import { category, search } from "../../store/mangaSlice";
-import { LoadingMangas } from "../components/LoadingMangas";
-import { LoadingCategories } from "../components/LoadingCategories";
+import { LoadingMangas } from "../Components/Mangas/LoadingMangas";
+import { LoadingCategories } from "../Components/Mangas/LoadingCategories";
 
 function Mangas(){
     const {categories} = useSelector(state=>state.categoryStore)

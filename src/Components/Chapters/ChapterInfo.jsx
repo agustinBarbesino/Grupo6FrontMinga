@@ -1,7 +1,7 @@
-import thumbUp from "../Resources/pulgarArriba.png";
-import thumbDown from "../Resources/pulgarAbajo-removebg-preview.png";
-import surprise from "../Resources/emojiSorpresa.webp";
-import hearthEyes from "../Resources/coras-removebg-preview.png";
+import thumbUp from "../../Resources/pulgarArriba.png";
+import thumbDown from "../../Resources/pulgarAbajo-removebg-preview.png";
+import surprise from "../../Resources/emojiSorpresa.webp";
+import hearthEyes from "../../Resources/coras-removebg-preview.png";
 import { useState } from "react";
 
 function ChapterInfo(){

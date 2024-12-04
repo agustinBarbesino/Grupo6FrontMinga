@@ -1,5 +1,5 @@
-import { ChapterInfo } from "../components/ChapterInfo";
-import { Chapter } from "../components/Chapter";
+import { ChapterInfo } from "../Components/Chapters/ChapterInfo";
+import { Chapter } from "../Components/Chapters/Chapter";
 import { useState } from "react";
 
 function Manga() {
