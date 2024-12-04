@@ -1,4 +1,3 @@
-
 import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
@@ -22,12 +21,14 @@ import NewCompany from "./Pages/NewCompany"
 import FavoritesPage from "./Pages/Favorites";
 import PanelPage from "./Pages/PanelAdmin";
 import Profile from "./Pages/Profile";
+import GoogleAuthHandler from "./Components/Login/GoogleHandler";
 import Mangas from "./Pages/Mangas"
 import Manga from "./Pages/Manga"
 
-let router = createBrowserRouter([{
-  element:<StandarLayout></StandarLayout>,
-  children:[{ path: "/", element: <Home /> },
+const router = createBrowserRouter([{
+  element: <StandarLayout />,
+  children: [
+    { path: "/", element: <Home /> },
     { path: "/home", element: <Home /> },
     { path: "/editProfile", element: <EditProfile /> },      
     { path: "/chapter", element: <Chapter /> },
@@ -43,15 +44,18 @@ let router = createBrowserRouter([{
     { path: "/signin", element: <Login /> },
     { path: "/signup", element: <Register /> },
     { path: "/rol", element: <ChangeRol /> },
-  {
-  path:"/mangas",element:<Mangas></Mangas>
-},{
-  path:"/manga",element:<Manga></Manga>
-}],},{
-  path:"/*",element: <NotFound></NotFound>
-}])
-function App() {
+    { path: "/mangas", element: <Mangas /> },
+    { path: "/manga", element: <Manga /> }
+  ]
+}, {
+  path: "/auth/google/callback",
+  element: <GoogleAuthHandler />
+}, {
+  path: "/*",
+  element: <NotFound />
+}]);
 
+function App() {
   return (
     <>
       <RouterProvider router={router} />     

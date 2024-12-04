@@ -1,18 +1,28 @@
 import { React, useState } from "react"
-import { NavLink, useLocation } from "react-router-dom"
+import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut, selectUser, selectIsAuthenticated } from '../../store/actions/authActions';
 
 function NavBar() {
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isActive = location.pathname === '/chapter';
-    const [isOpen, setIsOpen] = useState(false)
-    const token = true
-    const user = {
-        email: "user1@example.com",
-        password: "password123",
-        photo: "https://example.com/photo1.jpg",
-        role: 0,
-        online: false
-    }
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    const user = useSelector(selectUser);
+
+    const handleLogout = async () => {
+        try {
+            await dispatch(signOut()).unwrap();
+            setIsOpen(false);
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+
     return (
         <>
             <div className="relative ">
@@ -31,10 +41,9 @@ function NavBar() {
                     </svg>
                 </button>
 
-
                 <nav className={`md:absolute fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? "block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80" : "hidden"} `} >
                     {/* despliega los datos del usuario si existe token o no */}
-                    {token ? (
+                    {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 ">
                             <div className={`flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full `}>
                                 <img
@@ -47,7 +56,7 @@ function NavBar() {
                                 </span>
                             </div>
                             <div className="flex items-end justify-end w-1/2">
-                                <button className=" z-10 p-2 text-white hover:text-rose-light "
+                                <button className="z-10 p-2 text-white hover:text-rose-light"
                                     onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
                                     <svg className="w-8 h-8 align-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
                                         {isOpen ? (
@@ -61,7 +70,7 @@ function NavBar() {
                         </div>
                     ) : (
                         <div className="flex items-start justify-start w-full">
-                            <button className=" z-10 p-2 text-white hover:text-rose-dark "
+                            <button className="z-10 p-2 text-white hover:text-rose-dark"
                                 onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
                                 <svg className="w-8 h-8 align-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
                                     {isOpen ? (
@@ -76,37 +85,37 @@ function NavBar() {
 
                     {/* navegacion */}
                     <div className="flex place-content-center justify-center md:w-80 ">
-                        <button className="flex place-content-center  text-center items-center py-1 w-full mx-2  md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                        <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             <NavLink to="/home"> Home</NavLink>
                         </button>
                     </div>
                     <div className="flex place-content-center justify-center md:w-80 z-50">
-                        <button className="flex place-content-center  text-center items-center py-1 w-full mx-2  md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                        <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             <NavLink to="/mangas"> Mangas</NavLink>
                         </button>
                     </div>
 
                     {/* inciar/cerrar sesion */}
-                    {!token ? (
+                    {!isAuthenticated ? (
                         <div className="flex place-content-center justify-center mb-2 md:w-80 z-50">
-                            <button className="flex place-content-center  text-center items-center py-1 w-full mx-2  md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
-                                <NavLink to="/Login"> Login</NavLink>
+                            <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                                <NavLink to="/signin"> Sign In</NavLink>
                             </button>
                         </div>
-
                     ) : (
-                        <div className="flex place-content-center justify-center ml-0  mt-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <button className="flex place-content-center  text-center items-center py-1 w-full mx-2  md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                        <div className="flex place-content-center justify-center ml-0 mt-0 md:mt-2 mb-2 md:w-80 z-50">
+                            <button 
+                                onClick={handleLogout}
+                                className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" 
+                            >
                                 Logout
                             </button>
                         </div>
-
-                    )
-                    }
+                    )}
                 </nav>
             </div>
         </>
     )
 }
 
-export default NavBar 
+export default NavBar
