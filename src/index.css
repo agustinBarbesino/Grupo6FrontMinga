@@ -174,7 +174,7 @@ body{
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    line-height: 26px; /* Ajusta según el tamaño del círculo */
+    line-height: 26px; 
     font-size: 20px;
     color: #333;
     display: flex;

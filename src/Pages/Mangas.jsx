@@ -7,6 +7,8 @@ import { category, search } from "../store/mangaSlice";
 import { LoadingMangas } from "../Components/Mangas/LoadingMangas";
 import { LoadingCategories } from "../Components/Mangas/LoadingCategories";
 
+
+
 function Mangas(){
     const {categories} = useSelector(state=>state.categoryStore)
     const {mangas} = useSelector(state=>state.mangasStore)
@@ -15,7 +17,7 @@ function Mangas(){
     const {categoryM} = useSelector((state=>state.mangasFilterStore))
 
     const loading = mangasStore.loading
-    console.log(loading);
+    console.log(searchM);
     
     
 
