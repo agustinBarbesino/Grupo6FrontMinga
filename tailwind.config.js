@@ -1,14 +1,28 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
- 
-module.exports = withMT({
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "path-to-your-node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
-    "path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      clipPath: {
+        'footer': 'ellipse(60% 80% at 50% 20%)',
+      },
+      backgroundImage: {
+        'footer': "url('/src/assets/bg.jpg')",    
+        'pink-gradient': 'linear-gradient(to right, #F9A8D4, #F472B6)',    
+      },
+      colors: {
+        'rose-light': '#F9A8D4',
+        'rose-dark': '#F472B6',
+      },
+      fontFamily:{
+        'montserrat': ['Montserrat'],
+   
+      },
+    },
   },
   plugins: [],
-});
+}
+
