@@ -1,3 +1,5 @@
+
+import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 //Layouts
@@ -20,33 +22,34 @@ import NewCompany from "./Pages/NewCompany"
 import FavoritesPage from "./Pages/Favorites";
 import PanelPage from "./Pages/PanelAdmin";
 import Profile from "./Pages/Profile";
+import Mangas from "./Pages/Mangas"
+import Manga from "./Pages/Manga"
 
-
-const router = createBrowserRouter([
+let router = createBrowserRouter([{
+  element:<StandarLayout></StandarLayout>,
+  children:[{ path: "/", element: <Home /> },
+    { path: "/home", element: <Home /> },
+    { path: "/editProfile", element: <EditProfile /> },      
+    { path: "/chapter", element: <Chapter /> },
+    { path: "/editManga", element: <EditManga /> },
+    { path: "/editChapter", element: <EditChapter /> },
+    { path: "/newManga", element: <NewManga /> },
+    { path: "/newChapter", element: <NewChapter /> },
+    { path: "/newAuthor", element: <NewAuthor /> },
+    { path: "/newCompany", element: <NewCompany /> },
+    { path: "/favorites", element: <FavoritesPage /> },
+    { path: "/panel", element: <PanelPage /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "/signin", element: <Login /> },
+    { path: "/signup", element: <Register /> },
+    { path: "/rol", element: <ChangeRol /> },
   {
-    element: <StandarLayout />,
-    children: [
-      { path: "/", element: <Home /> },
-      { path: "/home", element: <Home /> },
-      { path: "/editProfile", element: <EditProfile /> },      
-      { path: "/chapter", element: <Chapter /> },
-      { path: "/editManga", element: <EditManga /> },
-      { path: "/editChapter", element: <EditChapter /> },
-      { path: "/newManga", element: <NewManga /> },
-      { path: "/newChapter", element: <NewChapter /> },
-      { path: "/newAuthor", element: <NewAuthor /> },
-      { path: "/newCompany", element: <NewCompany /> },
-      { path: "/favorites", element: <FavoritesPage /> },
-      { path: "/panel", element: <PanelPage /> },
-      { path: "/profile", element: <Profile /> },
-      { path: "/signin", element: <Login /> },
-      { path: "/signup", element: <Register /> },
-      { path: "/rol", element: <ChangeRol /> }
-    ],
-  },
-  
-  { path: "/*", element: <NotFound /> },
-]);
+  path:"/mangas",element:<Mangas></Mangas>
+},{
+  path:"/manga",element:<Manga></Manga>
+}],},{
+  path:"/*",element: <NotFound></NotFound>
+}])
 function App() {
 
   return (
