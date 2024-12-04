@@ -20,6 +20,7 @@ import NewCompany from "./Pages/NewCompany"
 import FavoritesPage from "./Pages/Favorites";
 import PanelPage from "./Pages/PanelAdmin";
 import Profile from "./Pages/Profile";
+import GoogleAuthHandler from "./Components/Login/GoogleHandler";
 
 
 const router = createBrowserRouter([
@@ -41,8 +42,13 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> },
       { path: "/signin", element: <Login /> },
       { path: "/signup", element: <Register /> },
-      { path: "/rol", element: <ChangeRol /> }
+      { path: "/rol", element: <ChangeRol /> },
     ],
+  },
+
+  {
+    path: "/auth/google/callback",
+    element: <GoogleAuthHandler />
   },
   
   { path: "/*", element: <NotFound /> },
