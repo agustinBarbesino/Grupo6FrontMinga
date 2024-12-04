@@ -1,6 +1,14 @@
 import { React, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { registerAuthor } from '../../store/actions/authorActions'
+import { useNavigate } from 'react-router-dom'
 
 const CreateAuthor = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    
+    const user = useSelector(state => state.auth.user)
+    
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
@@ -9,13 +17,21 @@ const CreateAuthor = () => {
         country: '',
         date: '',
         photo: '',
+        user_id: ''
     })
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(registerAuthor({ ...formData, user_id: user._id }));
+      }
+    
     return (
         <>
-            <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
+            <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
-                    <form className="space-y-2">
+                    <form className="space-y-2"
+                        onSubmit={handleSubmit}>
                          {/* name of author */}
                          <div className="flex justify-center md:justify-start">
                             <input
@@ -97,8 +113,6 @@ const CreateAuthor = () => {
 
                     </form>
                 </div>
-
-
             </div>
             {/* Modals */}
             {showSendModal && (
