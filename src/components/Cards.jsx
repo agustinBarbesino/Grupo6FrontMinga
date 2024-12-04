@@ -1,5 +1,5 @@
 
-function Card({category,name,image}){
+function Card({category,name,image,id}){
     let hexColor
                    switch(category){
                        case "Shonen":
@@ -17,7 +17,9 @@ function Card({category,name,image}){
                    }
                
                    
-
+    function manga(id){
+        window.location.href=`/manga?${id}`
+    }
     
     return(<>
      <div className="cardM relative">
@@ -26,7 +28,7 @@ function Card({category,name,image}){
                    <p className="titleM">{name}</p>
                    <p style={{color:hexColor,fontSize:15}} className="type">Type</p>
                 </div>
-                <button className="readM absolute">Read</button>
+                <button className="readM absolute" onClick={()=>{manga(id)}}>Read</button>
                 <img className="imageM absolute" src={image}alt="" />
      </div>
     </>)

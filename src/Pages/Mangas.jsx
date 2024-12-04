@@ -46,7 +46,7 @@ function Mangas(){
           {
             
             
-            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo}></Card>)
+            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo} id={m._id}></Card>)
            
            }
           </>

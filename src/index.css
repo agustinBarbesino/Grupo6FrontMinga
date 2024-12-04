@@ -114,6 +114,14 @@ body{
     font-weight: 700;
     font-size: 12px;
 }
+.buttonCategoryManga{
+    padding: 0 12px;
+    height: 35px;
+    border-radius: 50px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+}
 .categoryMLoading{
     position: relative;
     overflow: hidden;
@@ -235,6 +243,11 @@ body{
 .notFoundM{
     color: #F472B6;
     text-align: center;
+    outline: 1px solid red;
+    width: 100%;
+    font-size: 1.3rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 .cardMLoading{
     position: relative;
@@ -262,6 +275,257 @@ body{
       background-position: 450px 0;
     }
   }
+
+  /*Estilos de la pagina de manga*/
+
+.frontPage{
+   
+    width: 100%;
+    
+    height: 50%;
+    padding: 10px;
+    padding-top: 4rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+}
+.frontPage>img{
+    width: 100%;
+  
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.mangaTitle{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 28px;
+    padding: 10px 0;
+    color: black;
+  
+}
+.companyN{
+    padding: 8.5px 5px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: Grey;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    padding-top: 1rem;
+   
+
+}
+
+.custom-radio {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    
+}
+
+.custom-radio input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    
+}
+
+.custom-radio .circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: -1px -3px 0px 0px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    line-height: 26px; /* Ajusta según el tamaño del círculo */
+    font-size: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+
+}
+.circle>img{
+    width: 2.1rem;
+    height: 2.1rem;
+}
+
+.custom-radio input:checked + .circle {
+    background-color: #007bff;
+    border: 2px solid rgba(86, 207, 247, 0.379);
+    color: #fff;
+}
+.stadistics{
+    background: rgba(255, 255, 255, 1);
+    width: 100%;
+    box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    height: 60px;
+    display: flex;
+    margin-top: 1.2rem;
+    padding: 10px ;
+    align-items: center;
+    justify-content: center;
+}
+.stat{
+  
+    width: 33.5%;
+
+}
+.statLine{
+    border-left: 1px solid rgba(157, 157, 157, 1);
+    border-right: 1px solid rgba(157, 157, 157, 1);
+   
+}
+.statRating{
+    font-family: "Montserrat";
+font-size: 18px;
+font-weight: 400;
+height: 1.2rem;
+text-align: center;
+color: rgba(66, 66, 66, 1);
+}
+.Rating{
+font-family: Montserrat;
+font-size: 10px;
+font-weight: 400;
+text-align: center;
+color: rgba(157, 157, 157, 1);
+}
+.buttonsInfo{
+   
+    
+    height: 28px;
+    border-radius: 20px;
+    display: flex;
+    margin-top: 1.5rem;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.15);
+
+
+}
+.buttonsInfo>button{
+    width: 50%;
+    border-radius: 20px;
+    font-size: 10px;
+    font-family: "Montserrat";
+    font-weight: 400;
+    text-align: center;
+    transition: all .3s;
+  
+
+}
+.focusButton{
+    width: 50%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(170.39deg, #F9A8D4 -23.9%, #F472B6 70.69%);
+    z-index: -1;
+    transition: all .3s;
+}
+.infoAndChapters>p{
+padding: 1rem;
+font-family: Montserrat;
+font-size: 10px;
+font-weight: 400;
+color: #424242;
+text-align: left;
+
+
+}
+.infoAndChapters{
+    max-width: 360px;
+}
+.maxTablets{
+    max-width: 425px;
+}
+
+.chapters{
+   
+    display: flex;
+    flex-flow: row wrap;
+    padding: 2rem 0;
+    align-items: center;
+    justify-content: center;
+}
+.imagenChapter{
+    width: 63px;
+    height: 57px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.chapterInfo{
+    
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: 1rem;
+    width: 90px;
+    align-content: space-between;
+    
+}
+.chapterInfo>h6{
+    font-family: "Montserrat";
+font-size: 16px;
+font-weight: 400;
+color: black;
+width: 100%;
+padding-bottom: .7rem;
+}
+.chapterInfo>img{
+    width: 25px;
+    height: 20px;
+}
+.chapterInfo>p{
+    font-family: "Montserrat";
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0 .5rem;
+    color: black;
+}
+.readChapter{
+    width: 91px;
+    border-radius: 50rem;
+    height:44px;
+    background: linear-gradient(170.39deg, #F9A8D4 -23.9%, #F472B6 70.69%);
+    font-family: "Montserrat";
+font-size: 15px;
+font-weight: 700;
+}
+.chapter{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+.chapterTitle{
+    width: 100%;
+    text-align: center;
+    font-family: Montserrat;
+font-size: 18px;
+padding-top: 1rem;
+font-weight: 400;
+color: #222222;
+
+
+}
 @media only screen and (max-width: 768px) {
     .mangasCards{
         gap: 1rem;
@@ -281,7 +545,7 @@ body{
        
         font-family: "Montserrat", sans-serif;
         font-weight: 500;
-        font-size: 20px;
+        font-size: 18px;
     }
     .type{
         font-family: "Montserrat", sans-serif;
@@ -303,6 +567,7 @@ body{
         height: 138px;
         width: 150px;
     }
+    
   }
 @media only screen and (max-width: 600px) {
     .titleMangas{
@@ -392,6 +657,7 @@ body{
         width: 130px;
     }
   }
-  
+
+
   
   
