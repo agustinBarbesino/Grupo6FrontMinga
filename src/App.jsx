@@ -1,5 +1,4 @@
 
-import { NotFound } from "./Pages/NotFound"
 import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
@@ -27,7 +26,7 @@ import Mangas from "./Pages/Mangas"
 import Manga from "./Pages/Manga"
 
 let router = createBrowserRouter([{
-  element:<LayoutPrincipal></LayoutPrincipal>,
+  element:<StandarLayout></StandarLayout>,
   children:[{ path: "/", element: <Home /> },
     { path: "/home", element: <Home /> },
     { path: "/editProfile", element: <EditProfile /> },      
