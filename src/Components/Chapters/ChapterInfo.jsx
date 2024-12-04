@@ -13,16 +13,16 @@ function ChapterInfo(){
     
   };
     return(<>
-   <p className="mangaTitle maxTablets">
+   <p className="maxTablets font-montserrat font-normal text-[30px] leading-[28px] py-2 text-black">
             Naruto: And That's Why You're Disqualified!! #8
           </p>
           <div className="flex justify-between w-full maxTablets">
-             <button value="Shonen" className="Shonen buttonCategoryManga">Shonen</button>
-             <p className="companyN">Company Name</p>
+             <button value="Shonen" className="Shonen px-3 h-9 rounded-full font-montserrat font-medium text-xs">Shonen</button>
+             <p className="px-[5px] py-[8.5px] font-montserrat font-medium text-[16px] text-gray-500">Company Name</p>
           </div>
           
 
-          <div className="radio-container maxTablets">
+          <div className="flex items-center gap-2 w-full justify-center pt-4 maxTablets">
             <label className="custom-radio">
               <input
                 type="radio"
@@ -72,18 +72,18 @@ function ChapterInfo(){
               </span>
             </label>
           </div>
-          <div className="stadistics maxTablets">
-             <div className="stat">
-                <p className="statRating">4.5/5</p>
-                <p className="Rating">Rating</p>
+          <div className="bg-white w-full shadow-[0_2px_7px_0px_rgba(0,0,0,0.15)] rounded-[20px] h-[60px] flex mt-[1.2rem] p-2 items-center justify-center maxTablets">
+             <div className="w-[33.5%]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">4.5/5</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Rating</p>
              </div>
-             <div className="stat statLine">
-                <p className="statRating">265</p>
-                <p className="Rating">Chapters</p>
+             <div className="w-[33.5%] border-l border-r border-[#9D9D9D]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">265</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Chapters</p>
              </div>
-             <div className="stat">
-                <p className="statRating">Eng</p>
-                <p className="Rating">Language</p>
+             <div className="w-[33.5%]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">Eng</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Language</p>
              </div>
           </div>
     </>)
