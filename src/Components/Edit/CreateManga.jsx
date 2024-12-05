@@ -12,7 +12,7 @@ const CreateManga = () => {
     useEffect(() => {
         dispatch(fetchCategories())  //
     }, [dispatch])
-    /* modal que confirma envio */
+    /* estado de modal, data de mangas y cargando */
     const {showSendModal, mangaData, loading} = useSelector((state) => state.newManga)
     /* para los nombres de las categoras */
     const categorias = categories.map((category) => category.name)
@@ -123,7 +123,6 @@ const CreateManga = () => {
                         <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
-                               
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
                                 {loading ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}

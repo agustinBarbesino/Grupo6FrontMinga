@@ -1,16 +1,16 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from "react-redux"
-import { createChapter } from '../../store/actions/newActions.js'
+import { useSelector, useDispatch } from "react-redux"
+import { createChapter, setShowSendModal } from '../../store/actions/newActions.js'
 
 
 const CreateChapter = () => {
     const dispatch = useDispatch()
-    /* modal que confirma envio */
-    const [showSendModal, setShowSendModal] = useState(false)
+    /* estado de modal, data de mangas y cargando */
+    const {showSendModal, chapterData, loading} = useSelector((state) => state.newChapter)
     /* estado para controlar la altura dinámica del text area */
     const [textAreaHeight, setTextAreaHeight] = useState('auto')
-    const {id } = useParams()
+    const {id} = useParams()
     const initialFormData = {
         manga_id: id,
         title: '',
@@ -37,6 +37,11 @@ const CreateChapter = () => {
         setFormData(initialFormData)
         setTextAreaHeight('auto')
     }
+    useEffect(() => {
+        if (chapterData) {
+          dispatch(setShowSendModal(true))
+        }
+      }, [chapterData, dispatch])
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -86,10 +91,9 @@ const CreateChapter = () => {
                         <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
-                                onClick={() => setShowSendModal(true)}
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
-                                Send
+                                {loading ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}
                             </button>
                         </div>
 
@@ -105,7 +109,7 @@ const CreateChapter = () => {
                         <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
                         <hr className="border-gray-300 my-4" />
                         <button
-                            onClick={() => setShowSendModal(false)}
+                            onClick={(e) => dispatch(setShowSendModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
                             Accept
