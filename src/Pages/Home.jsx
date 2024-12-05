@@ -1,7 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, selectCategories, selectCategoriesLoading, selectCategoriesError } from '../store/actions/categoryActions';
+import { selectIsAuthenticated } from '../store/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const categories = useSelector((state) => state?.categories?.categories || []);
+  const isLoading = useSelector(selectCategoriesLoading);
+  const error = useSelector(selectCategoriesError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
     <div className="flex flex-col w-full bg-[#F4F4F4] pb-16 pt-16">
