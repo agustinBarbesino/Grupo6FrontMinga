@@ -1,6 +1,7 @@
 import { ChapterInfo } from "../Components/Chapters/ChapterInfo";
 import { Chapter } from "../Components/Chapters/Chapter";
 import { useState } from "react";
+import '../Components/Mangas/mangaPages.css';
 
 function Manga() {
   
@@ -23,7 +24,7 @@ function Manga() {
 
   return (
     <>
-      <main className="flex-wrap flex justify-center">
+      <div className="flex-wrap flex justify-center">
         <div className="w-full mb-16 min-w-[320px] p-2 pt-16 flex flex-col justify-center items-center">
           
           <img
@@ -43,7 +44,7 @@ function Manga() {
            
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

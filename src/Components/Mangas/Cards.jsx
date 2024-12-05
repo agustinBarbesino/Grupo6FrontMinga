@@ -1,4 +1,5 @@
 
+import './mangaPages.css'
 function Card({category,name,image,id}){
     let hexColor
                    switch(category){
@@ -28,7 +29,7 @@ function Card({category,name,image,id}){
                    <p className="leading-[20px]">{name}</p>
                    <p style={{color:hexColor,fontSize:15}} className="type">Type</p>
                 </div>
-                <button className="readM absolute w-[92px] h-[35px] top-[125px] left-[18px] px-7 py-2 gap-2 rounded-full bg-[#D1FBF0] font-roboto text-[12px] font-bold leading-[11.42px] text-left text-[#00BA88]" onClick={()=>{manga(id)}}>Read</button>
+                <button className="readM absolute" onClick={()=>{manga(id)}}>Read</button>
                 <img className="imageM absolute" src={image}alt="" />
      </div>
     </>)
