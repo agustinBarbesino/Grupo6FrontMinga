@@ -7,7 +7,15 @@ const CreateCompany = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const user = useSelector(state => state.auth.user)
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userId = user._id
+    console.log(userId)
+
+    const role = useSelector(state => state.role.selectedRole)
+
+    const rolChange = () => {
+        user.role = role
+    }
 
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
@@ -18,9 +26,68 @@ const CreateCompany = () => {
         user_id: ''
     })
 
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        website: '',
+        photo: '',
+        description: ''
+      });
+
+      const validateCompanyField = (name, value) => {
+        let error = '';
+      
+        switch (name) {
+          case 'name':
+            if (!value) {
+              error = 'Name is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'Name must contain only letters.';
+            } else if (value.length < 3) {
+              error = 'Name must be at least 3 characters long.';
+            } else if (value.length > 20) {
+              error = 'Name must be at most 20 characters long.';
+            }
+            break;
+      
+          case 'website':
+            if (!value) {
+              error = 'Website is required.';
+            } else if (!/^https?:\/\/\S+\.\S+$/.test(value)) {
+              error = 'Website must be a valid URL.';
+            }
+            break;
+      
+          case 'description':
+            if (!value) {
+              error = 'Description is required.';
+            } else if (value.length < 10) {
+              error = 'Description must be at least 10 characters long.';
+            } else if (value.length > 1000) {
+              error = 'Description must be at most 1000 characters long.';
+            }
+            break;
+      
+          case 'photo':
+            if (!value) {
+              error = 'Photo URL is required.';
+            } else if (!/^https?:\/\/\S+\.\S+$/.test(value)) {
+              error = 'Photo must be a valid URL.';
+            }
+            break;
+      
+          default:
+            break;
+        }
+      
+        return error;
+      };
+      
+
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(registerCompany({ ...formData, user_id: user._id }));
+        setShowSendModal(true);
+        rolChange()
       }
 
     return (

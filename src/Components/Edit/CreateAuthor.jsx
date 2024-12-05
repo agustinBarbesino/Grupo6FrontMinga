@@ -7,7 +7,15 @@ const CreateAuthor = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    const user = useSelector(state => state.auth.user)
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userId = user._id
+    console.log(userId)
+
+    const role = useSelector(state => state.role.selectedRole)
+
+    const rolChange = () => {
+        user.role = role
+    }
     
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
@@ -20,9 +28,127 @@ const CreateAuthor = () => {
         user_id: ''
     })
 
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        last_name: '',
+        city: '',
+        country: '',
+        date: '',
+        photo: ''
+      });
+
+      const validateAuthorField = (name, value) => {
+        let error = '';
+      
+        switch (name) {
+          case 'name':
+            if (!value) {
+              error = 'Name is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'Name must contain only letters.';
+            } else if (value.length < 3) {
+              error = 'Name must be at least 3 characters long.';
+            } else if (value.length > 20) {
+              error = 'Name must be at most 20 characters long.';
+            }
+            break;
+      
+          case 'last_name':
+            if (!value) {
+              error = 'Last name is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'Last name must contain only letters.';
+            } else if (value.length < 3) {
+              error = 'Last name must be at least 3 characters long.';
+            } else if (value.length > 20) {
+              error = 'Last name must be at most 20 characters long.';
+            }
+            break;
+      
+          case 'city':
+            if (!value) {
+              error = 'City is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'City must contain only letters.';
+            } else if (value.length < 2) {
+              error = 'City must be at least 2 characters long.';
+            } else if (value.length > 30) {
+              error = 'City must be at most 30 characters long.';
+            }
+            break;
+      
+          case 'country':
+            if (!value) {
+              error = 'Country is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'Country must contain only letters.';
+            } else if (value.length < 2) {
+              error = 'Country must be at least 2 characters long.';
+            } else if (value.length > 30) {
+              error = 'Country must be at most 30 characters long.';
+            }
+            break;
+      
+          case 'date':
+            if (!value) {
+              error = 'Date is required.';
+            } else if (isNaN(Date.parse(value))) {
+              error = 'Date must be a valid date.';
+            }
+            break;
+      
+          case 'photo':
+            if (!value) {
+              error = 'Photo URL is required.';
+            } else if (!/^https?:\/\/\S+\.\S+$/.test(value)) {
+              error = 'Photo must be a valid URL.';
+            }
+            break;
+      
+          default:
+            break;
+        }
+      
+        return error;
+    };
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        
+        setFormData(prev => ({
+          ...prev,
+          [id]: value
+        }));
+    
+        const error = validateAuthorField(id, value);
+        setValidationErrors(prev => ({
+          ...prev,
+          [id]: error
+        }));
+      };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(registerAuthor({ ...formData, user_id: user._id }));
+
+        const errors = {
+            name: validateAuthorField('name', formData.name),
+            last_name: validateAuthorField('last_name', formData.last_name),
+            city: validateAuthorField('city', formData.city),
+            country: validateAuthorField('country', formData.country),
+            date: validateAuthorField('date', formData.date),
+            photo: validateAuthorField('photo', formData.photo)
+          };
+          
+        setValidationErrors(errors);
+          
+        if (Object.values(errors).some(error => error !== '')) {
+            return;
+        }
+        console.log(formData)
+        dispatch(registerAuthor({...formData, user_id: userId}));
+        rolChange()
+        setShowSendModal(true)
+        navigate('/home')
       }
     
     return (
@@ -30,81 +156,111 @@ const CreateAuthor = () => {
             <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
-                    <form className="space-y-2"
+                    <form className="space-y-2 flex flex-col justify-center items-center"
                         onSubmit={handleSubmit}>
                          {/* name of author */}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex justify-center">
                             <input
                                 type="text"
-                                name="name"
+                                id="name"
                                 value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b ${
+                                    validationErrors.name ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
+                            {validationErrors.email && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+                            )}
                         </div>
                          {/* last name of author */}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="last_name"
+                                id="last_name"
                                 value={formData.last_name}
-                                onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b 
+                                    ${
+                                    validationErrors.last_name ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Last Name"
                             />
+                            {validationErrors.email && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.last_name}</p>
+                            )}
                         </div>
                          {/* city of author */}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="city"
+                                id="city"
                                 value={formData.city}
-                                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.email ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="City"
                             />
+                            {validationErrors.city && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.city}</p>
+                            )}
                         </div>
                          {/* country of author */}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="country"
+                                id="country"
                                 value={formData.country}
-                                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b 
+                                    ${validationErrors.country ? 'border-red-400' : 'border-gray-300'
+                                    }border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Country"
                             />
+                            {validationErrors.email && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.country}</p>
+                            )}
                         </div>
                          {/* date*/}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="date"
-                                name="date"
+                                id="date"
                                 value={formData.date}
-                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.date ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Date"
                             />
+                            {validationErrors.email && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.date}</p>
+                            )}
                         </div>
                        
                         {/*photo*/}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="url"
-                                name="photo"
+                                id="photo"
                                 value={formData.photo}
-                                onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.photo ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
+                            {validationErrors.email && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
+                            )}
                         </div>
                         {/* buttons */}
 
                         <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
-                                onClick={() => setShowSendModal(true)}
+                                type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
                                 Send
