@@ -6,18 +6,23 @@ import  mangasFilterReducer from "./mangaSlice";
 import chapterReducer from "./reducer/mangaReducer";
 import { newChapter, newManga } from './reducer/newReducer'
 import { editMangas } from './reducer/editReducer'
+import roleReducer from './reducer/roleReducer'
+import authorReducer from './reducer/authorReducer'
+import companyReducer from './reducer/companyReducer'
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    role: roleReducer,
     categories: categoryReducer,
     newManga: newManga,
     newChapter: newChapter,
     editMangas: editMangas,
     chapters:chapterReducer,
     mangasFilterStore:mangasFilterReducer,
-    mangasStore:mangasReducer
-    
+    mangasStore:mangasReducer,
+    company: companyReducer,
+    author: authorReducer
   },
 })
 

@@ -1,70 +1,202 @@
 import { React, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { registerCompany } from '../../store/actions/companyActions'
 
 const CreateCompany = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userId = user._id
+    console.log(userId)
+
+    const role = useSelector(state => state.role.selectedRole)
+
+    const rolChange = () => {
+        user.role = role
+    }
+
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
         website: '',
         photo: '',
         description: '',
+        user_id: ''
     })
+
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        website: '',
+        photo: '',
+        description: ''
+      });
+
+      const validateCompanyField = (name, value) => {
+        let error = '';
+      
+        switch (name) {
+          case 'name':
+            if (!value) {
+              error = 'Name is required.';
+            } else if (!/^[A-Za-z\s]+$/.test(value)) {
+              error = 'Name must contain only letters.';
+            } else if (value.length < 3) {
+              error = 'Name must be at least 3 characters long.';
+            } else if (value.length > 20) {
+              error = 'Name must be at most 20 characters long.';
+            }
+            break;
+      
+          case 'website':
+            if (!value) {
+              error = 'Website is required.';
+            } else if (!/^https?:\/\/\S+\.\S+$/.test(value)) {
+              error = 'Website must be a valid URL.';
+            }
+            break;
+      
+          case 'description':
+            if (!value) {
+              error = 'Description is required.';
+            } else if (value.length < 10) {
+              error = 'Description must be at least 10 characters long.';
+            } else if (value.length > 1000) {
+              error = 'Description must be at most 1000 characters long.';
+            }
+            break;
+      
+          case 'photo':
+            if (!value) {
+              error = 'Photo URL is required.';
+            } else if (!/^https?:\/\/\S+\.\S+$/.test(value)) {
+              error = 'Photo must be a valid URL.';
+            }
+            break;
+      
+          default:
+            break;
+        }
+      
+        return error;
+      };
+      
+
+      const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        
+        setFormData(prev => ({
+          ...prev,
+          [id]: value
+        }));
+    
+        const error = validateCompanyField(id, value);
+        setValidationErrors(prev => ({
+          ...prev,
+          [id]: error
+        }));
+      };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const errors = {
+            name: validateCompanyField('name', formData.name),
+            website: validateCompanyField('website', formData.website),
+            photo: validateCompanyField('photo', formData.photo),
+            description: validateCompanyField('description', formData.description),
+          };
+          
+        setValidationErrors(errors);
+          
+        if (Object.values(errors).some(error => error !== '')) {
+            return;
+        }
+        console.log(formData)
+        dispatch(registerCompany({...formData, user_id: userId}));
+        rolChange()
+        setShowSendModal(true)
+        navigate('/home')
+      }
+
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
-                    <form className="space-y-2">
+                    <form className="space-y-2"
+                        onSubmit={handleSubmit}>
                          {/* name of company */}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="name"
+                                id="name"
                                 value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.name ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
+                            {validationErrors.name && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+                            )}
                         </div>
                         {/*website*/}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="url"
-                                name="website"
+                                id="website"
                                 value={formData.website}
-                                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.website ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Website"
                             />
+                            {validationErrors.website && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.website}</p>
+                            )}
                         </div>
                         {/*photo*/}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="url"
-                                name="photo"
+                                id="photo"
                                 value={formData.photo}
-                                onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.photo ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
+                            {validationErrors.photo && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
+                            )}
                         </div>
                          {/* description of company*/}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="description"
+                                id="description"
                                 value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.description ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Description"
                             />
+                            {validationErrors.description && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.description}</p>
+                            )}
                         </div>
                         
                         {/* buttons */}
 
                         <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
-                                onClick={() => setShowSendModal(true)}
+                                type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
                                 Send
