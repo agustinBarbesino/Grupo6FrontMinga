@@ -1,9 +1,9 @@
-function Chapter(){
+function Chapter({mangaId,image}){
     return(<>
     <div className="flex flex-wrap py-8 items-center justify-center">
               <div className="w-full flex flex-nowrap items-center justify-center">
               <img className="w-[63px] h-[57px] object-cover rounded-[8px]"
-            src="https://s3-alpha-sig.figma.com/img/1e23/0439/c4d53357acfdeec4cbf374415d56b867?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=USVsBTcGowbN1PZbrczRKU4sIHfvKbaoqxnPr~oZgQsgn3i8Y~YHOqZ59imvYs5DcimNEQvNtzygNDEog77Fysba-fcFy5pY9i5ZSXCe5qTja6zs~0Ad4oiSYO3DyKJb1IS0y6kNdt~kIOYN3FKK0TBCm529~4~ApimBDQ~Ou6mOU5l5kLpx2LeovUBAGEks4RHAxKjJ09N4EnCW1Jximeq-~NhbIYsAQq~e~B5FOfOMp50V8-v9mUhdq8u4QTHTOeXqD1ylY56V-IkkRiPFlCDEeiU8NsC-fIiL8A~D1iIXQJ690deGFqnUSotn~4vdEK~9UNLdsXCIFtD6dw2lnw__"
+            src={image}
             alt="Portada del manga"/>
             <div className="flex flex-wrap ml-4 w-[90px] items-start justify-between">
               <h6 className="font-montserrat text-[16px] font-normal text-black w-full pb-2.5">Chapter #1</h6>

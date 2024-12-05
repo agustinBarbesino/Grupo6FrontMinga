@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Categories } from "../store/actions/categoryActions"
+import { fetchCategories } from "../store/actions/categoryActions"
 import { MangasFetch } from "../store/actions/mangasActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../Components/Mangas/Cards";
@@ -10,7 +10,7 @@ import '../Components/Mangas/mangaPages.css';
 
 
 function Mangas(){
-    const {categories} = useSelector(state=>state.categoryStore)
+    const {categories} = useSelector(state=>state.categories)
     const {mangas} = useSelector(state=>state.mangasStore)
     const mangasStore = useSelector(state=>state.mangasStore)
     const {searchM} = useSelector((state=>state.mangasFilterStore))
@@ -48,7 +48,7 @@ function Mangas(){
           {
             
             
-            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo} id={m._id}></Card>)
+            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo} id={m._id} autor={m.author_id?.name||m.company_id?.name}></Card>)
            
            }
           </>
@@ -63,7 +63,7 @@ function Mangas(){
 
 
     useEffect(()=>{
-        dispatch(Categories())
+        dispatch(fetchCategories())
         dispatch(MangasFetch())
     },[])
   

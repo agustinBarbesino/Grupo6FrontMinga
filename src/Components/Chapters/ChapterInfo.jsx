@@ -4,21 +4,21 @@ import surprise from "../../Resources/emojiSorpresa.webp";
 import hearthEyes from "../../Resources/coras-removebg-preview.png";
 import { useState } from "react";
 
-function ChapterInfo(){
+function ChapterInfo({name,author,category}){
   const [selectedValue, setSelectedValue] = useState(null);
 
   const handleRadioChange = (value) => {
     setSelectedValue(selectedValue === value ? null : value);
-    console.log(selectedValue);
+    console.log(author);
     
   };
     return(<>
    <p className="maxTablets font-montserrat font-normal text-[30px] leading-[28px] py-2 text-black">
-            Naruto: And That's Why You're Disqualified!! #8
+            {name}
           </p>
           <div className="flex justify-between w-full maxTablets">
-             <button value="Shonen" className="Shonen px-3 h-9 rounded-full font-montserrat font-medium text-xs">Shonen</button>
-             <p className="px-[5px] py-[8.5px] font-montserrat font-medium text-[16px] text-gray-500">Company Name</p>
+             <button value="Shonen" className={`${category} px-3 h-9 rounded-full font-montserrat font-medium text-xs`}>{category}</button>
+             <p className="px-[5px] py-[8.5px] font-montserrat font-medium text-[16px] text-gray-500">{author}</p>
           </div>
           
 
