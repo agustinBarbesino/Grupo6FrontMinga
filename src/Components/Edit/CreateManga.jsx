@@ -1,28 +1,64 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
+import { useSelector, useDispatch } from "react-redux"
+import { fetchCategories } from '../../store/actions/categoryActions.js'
+import { createManga, setShowSendModal } from '../../store/actions/newActions.js'
+
 
 const CreateManga = () => {
-    const [showSendModal, setShowSendModal] = useState(false)
-    const categories = ["bla", "blabla", "blablabla",]
-    const [data, setData] = useState('')
+    const dispatch = useDispatch()
+    const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
+    const rol = 1 // rol del usuario traer con estado
+    const modifier = '6750a0c15da1e9bc5c771f08' // traer del estado global el id de usuario o compania
+    useEffect(() => {
+        dispatch(fetchCategories())  //
+    }, [dispatch])
+    /* estado de modal, data de mangas y cargando */
+    const {showSendModal, mangaData, loading} = useSelector((state) => state.newManga)
+    /* para los nombres de las categoras */
+    const categorias = categories.map((category) => category.name)
+    /* para actualizar la categoria segun la seleccionada */
     const [category, setCategory] = useState('')
-    const handleChangeData = (e) => {
-        setData(e.target.value) // Actualiza el estado con el valor seleccionado
-    }
+    /* se manda el id de la categoria selecionada al form para crear manga */
     const handleChangeCategory = (e) => {
-        setCategory(e.target.value) // Actualiza el estado con el valor seleccionado
+        const selectedCategory = e.target.value
+        setCategory(e.target.value)
+        let cat = categories.find(c => c.name == selectedCategory)
+        setFormData({ ...formData, category_id: cat._id })
     }
-    const [formData, setFormData] = useState({
+    /* estado inicial de los datos que se van a mandar a creacion */
+    const initialFormData = {
         title: '',
         category_id: '',
         description: '',
         cover_photo: '',
-    })
+    }
+    const [formData, setFormData] = useState(initialFormData)
+    /* boton de enviar para enviar la info y limpiar formulario, segun el rol se manda autor o compania id */
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        let updatedFormData = { ...formData }
+        // Agregar `author_id` o `company_id` basado en el rol
+        if (rol === 1) {
+            updatedFormData.author_id = modifier
+        } else if (rol === 2) {
+            updatedFormData.company_id = modifier
+        }
+        dispatch(createManga({ updatedFormData }))
+        setFormData(initialFormData)
+        setCategory('')
+    }
+    /* Si el manga fue creado con éxito, mostramos el modal */
+    useEffect(() => {
+        if (mangaData) {
+          dispatch(setShowSendModal(true))
+        }
+      }, [mangaData, dispatch])
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
-                <div className="w-full pt-2">
-                    <form className="space-y-2">
+                <div className="w-full pt-2" >
+                    <form onSubmit={handleSubmit} className="space-y-2">
                         {/* title of manga */}
                         <div className="flex justify-center md:justify-start">
                             <input
@@ -46,7 +82,7 @@ const CreateManga = () => {
                                 <option value="" disabled >
                                     Insert category
                                 </option>
-                                {categories.map((category) => (
+                                {categorias.map((category) => (
                                     <option key={category} value={category} className='text-black'>
                                         {category}
                                     </option>
@@ -70,8 +106,8 @@ const CreateManga = () => {
                         <div className="flex justify-center md:justify-start">
                             <textarea
                                 name="data"
-                                value={formData.edit}
-                                onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
+                                value={formData.description}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500 resize-none overflow-hidden"
                                 placeholder="Insert description"
                                 rows={1}
@@ -86,11 +122,10 @@ const CreateManga = () => {
 
                         <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
-                                onClick={() => setShowSendModal(true)}
+                                type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
-                                Send
+                                {loading ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}
                             </button>
                         </div>
 
@@ -106,7 +141,7 @@ const CreateManga = () => {
                         <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
                         <hr className="border-gray-300 my-4" />
                         <button
-                            onClick={() => setShowSendModal(false)}
+                            onClick={(e) => dispatch(setShowSendModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
                             Accept
