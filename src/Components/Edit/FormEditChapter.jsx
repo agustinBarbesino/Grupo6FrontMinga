@@ -90,7 +90,7 @@ const FormEditChapter = () => {
 
                         <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
+                                type="submit"
                                 onClick={() => setShowSaveModal(true)}
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
                             >
