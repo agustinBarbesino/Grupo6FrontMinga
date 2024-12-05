@@ -1,0 +1,367 @@
+
+:root {
+    --text-primary: #b6b6b6;
+    --text-secondary: #ececec;
+    --color-primary-gradient-1: #F9A8D4;
+    --color-primary-gradient-2: #F472B6;
+    --color-primary:#FFFFFF;
+    --color-secondary:#EBEBEB;
+    --transition-speed: 600ms;
+
+  }
+
+.imageGirl{
+    z-index: -1;
+    height: 35rem;
+}
+.titleMangas{
+    font-size: 61px;
+}
+.containerSearch{
+    height: 29rem;
+    padding-top: 10rem;
+}
+.searchBar{
+    background-color: var(--color-secondary);
+    padding: 0px 25px;
+    max-width: 870px;
+    margin: 0px 10px;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+.searchBar>input{
+    height: 50px;
+    font-size: 20px;
+    color: var(--color-primary-gradient-2);
+    background-color: var(--color-secondary);
+}
+.searchBar>input::placeholder{
+    color: #999999;
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+}
+.searchBar:focus-within {
+    transition: all .3s;
+    outline: 3px solid var(--color-primary-gradient-2); 
+  }
+.mangas{
+    background-color: var(--color-primary);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+    padding: 3rem 3rem;
+    border-radius: 10px;
+}
+.bodyManga{
+    
+    background-color: var(--color-secondary);
+    width: 100%;
+    height: 100%;
+    position: relative;
+   z-index: 1;
+
+}
+.bgColor{
+    background-color: var(--color-secondary);
+}
+.all{
+    background-color: #999999;
+}
+.Shonen{
+    background-color: #FFE0DF;
+    color: #EF8481;
+    transition: all .1s;
+}
+.Shonen:hover{
+    background-color: #F472B6;
+    color: white;
+}
+.Seinen{
+    background-color: #FFDFC8;
+    color: #FC9C57;
+    transition: all .1s;
+}
+.Seinen:hover{
+    background-color: #ff8a38;
+    color: white;
+}
+.Shojo{
+    background-color: #D1FBF0;
+    color: #00BA88;
+    transition: all .1s;
+}
+.Shojo:hover{
+    background-color: #06c995;
+    color: white;
+}
+.Kodomo{
+    background-color: #E0DBFF;
+    color: #8883F0;
+    transition: all .1s;
+}
+.Kodomo:hover{
+    background-color: #6962f0;
+    color: white;
+}
+.textM{
+    font-family: "Roboto", sans-serif;
+}
+.titleM{
+    line-height: 20px;
+}
+.readM{
+    font-family: "Roboto", sans-serif;
+}
+.imageM{
+    width: 180px;
+    height: 167px;
+    right: 0;
+    border-top-left-radius: 150px 220px;
+    border-bottom-left-radius: 150px 220px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    object-fit: cover;
+}
+.cardMLoading{
+    position: relative;
+  overflow: hidden;
+  background-color: #d9d9d9;
+}
+.categoryMLoading::before,
+.cardMLoading::before{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to right, #d9d9d9 0%, rgba(255, 255, 255, .5) 30%, #d9d9d9 40%, #d9d9d9 100%);
+    background-repeat: no-repeat;
+    background-size: 450px 400px;
+    animation: shimmer 1s linear infinite;
+}
+@keyframes shimmer {
+    0%{
+      background-position: -450px 0;
+    }
+    100%{
+      background-position: 450px 0;
+    }
+  }
+
+  /*Estilos de la pagina de manga*/
+
+.custom-radio {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    
+}
+
+.custom-radio input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    
+}
+
+.custom-radio .circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: -1px -3px 0px 0px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    line-height: 26px; 
+    font-size: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+
+}
+.readM{
+    width: 92px;
+    height: 35px;
+    top: 125px;
+    left: 18px;
+    padding: 10px 30px;
+    gap: 10px;
+    border-radius: 50px;
+    background: #D1FBF0;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 11.42px;
+    text-align: left;
+    color: #00BA88;
+}
+.categoryMLoading{
+    position: relative;
+    overflow: hidden;
+    background-color: #d9d9d9;
+    padding: 1rem 2rem;
+}
+.circle>img{
+    width: 2.1rem;
+    height: 2.1rem;
+}
+.categories{
+    gap: 10px;
+    justify-content: left;
+}
+
+.custom-radio input:checked + .circle {
+    background-color: #007bff;
+    border: 2px solid rgba(86, 207, 247, 0.379);
+    color: #fff;
+}
+
+.maxTablets{
+    max-width: 425px;
+}
+@media only screen and (max-width: 768px) {
+    .mangas{
+        min-width: 100%;
+       
+    }
+    .mangasCards{
+        gap: 1rem;
+    }
+    .categoryMLoading{
+        padding: 1rem 1.5rem;
+    }
+    .cardM{
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+        width: 280px;
+        height: 138px;
+    }
+    .textM{
+        top: 50px;
+        width: 110px;
+        max-height: 40px;
+       
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .type{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+    }
+    .readM{
+        width: 255px;
+        height: 138px;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+        background-color: transparent;
+        color: transparent;
+    }
+    .line{
+        height: 90px;
+    }
+   
+    
+  }
+@media only screen and (max-width: 600px) {
+    .titleMangas{
+        font-size: 40px;
+        padding-bottom: 2rem;
+    }
+    .containerSearch{
+        padding-top:4rem ;
+        height: 15rem;
+    }
+    .imageGirl{
+        height: 27rem;
+        top: -5rem;
+        filter: brightness(.3);
+    }
+    .searchBar{
+        background-color: white;
+        height: 65px;
+        max-width: 300px;
+        border-radius: 5rem;
+    }
+    .searchBar>input{
+        background-color:white;
+        
+        height: 62px;
+        margin-top: 2px;
+       
+    }
+    .searchBar>input::placeholder{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 18.5px;
+        color: #9795A4;
+    }
+    .all{
+        display: none;
+    }
+    .mangas{
+        width: 100%;
+        border-radius: 4rem;
+        background-color: var(--color-secondary);
+        padding: 3rem 1rem;
+        border-radius: 5rem;
+    }
+    .stroke{
+        stroke:#F472B6;
+    }
+    .categories{
+        gap: 10px;
+        justify-content: center;
+    }
+    .categories>button{
+        padding: 6.5px 10px;
+    }
+    .mangasCards{
+        gap: 1rem;
+    }
+    .cardM{
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        height: 138px;
+    }
+    .textM{
+        top: 50px;
+        width: 100px;
+        max-height: 40px;
+       
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+    }
+    .type{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+    }
+    .readM{
+        width: 255px;
+        height: 138px;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+        background-color: transparent;
+        color: transparent;
+    }
+    .line{
+        height: 90px;
+    }
+    .imageM{
+        height: 100%;
+        width: 130px;
+    }
+  }
+
+
+  
+  

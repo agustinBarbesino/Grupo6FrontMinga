@@ -1,16 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { Categories } from "../actions/categoryActions";
-
+import { ChapterFetch } from "../actions/mangaActions";
 const initialState={
-    categories:[],
-    category:"All",
-    search:"",
+    chapters:[],
     loading:true,
     error:false
 }
 
- const categoryReducer = createReducer(initialState,(builder) => {
-    builder.addCase(Categories.fulfilled,(state,action)=>{
+ const chapterReducer = createReducer(initialState,(builder) => {
+    builder.addCase(ChapterFetch.fulfilled,(state,action)=>{
         
         console.log("Se ejecuto correctamente");
        
@@ -18,15 +15,15 @@ const initialState={
         
         state.loading = false,
         state.error = false
-        state.categories = action.payload
+        state.chapters = action.payload
     })
-    .addCase(Categories.pending,(state,action)=>{
+    .addCase(ChapterFetch.pending,(state,action)=>{
         console.log("cargando...");
         console.log(action);
         state.loading = true,
         state.error = false
     })
-    .addCase(Categories.rejected,(state,action)=>{
+    .addCase(ChapterFetch.rejected,(state,action)=>{
         console.log("Error",action.error.message);
         state.loading = false,
         state.error = action.error.message
@@ -34,4 +31,4 @@ const initialState={
 
 })
 
-export default categoryReducer;
+export default chapterReducer;

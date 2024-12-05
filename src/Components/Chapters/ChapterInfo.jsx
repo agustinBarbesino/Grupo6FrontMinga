@@ -4,7 +4,7 @@ import surprise from "../../Resources/emojiSorpresa.webp";
 import hearthEyes from "../../Resources/coras-removebg-preview.png";
 import { useState } from "react";
 
-function ChapterInfo(){
+function ChapterInfo({name,author,category}){
   const [selectedValue, setSelectedValue] = useState(null);
 
   const handleRadioChange = (value) => {
@@ -13,23 +13,23 @@ function ChapterInfo(){
     
   };
     return(<>
-   <p className="mangaTitle maxTablets">
-            Naruto: And That's Why You're Disqualified!! #8
+   <p className="maxTablets font-montserrat font-normal text-[30px] leading-[28px] py-2 text-black">
+            {name}
           </p>
           <div className="flex justify-between w-full maxTablets">
-             <button value="Shonen" className="Shonen buttonCategoryManga">Shonen</button>
-             <p className="companyN">Company Name</p>
+             <button value="Shonen" className={`${category} px-3 h-9 rounded-full font-montserrat font-medium text-xs`}>{category}</button>
+             <p className="px-[5px] py-[8.5px] font-montserrat font-medium text-[16px] text-gray-500">{author}</p>
           </div>
           
 
-          <div className="radio-container maxTablets">
+          <div className="flex items-center gap-2 w-full justify-center pt-4 maxTablets">
             <label className="custom-radio">
               <input
                 type="radio"
                 name="opcion"
-                value="1"
-                checked={selectedValue === "1"}
-                onClick={() => handleRadioChange("1")}
+                value="like"
+                checked={selectedValue === "like"}
+                onClick={() => handleRadioChange("like")}
               />
               <span className="circle">
                 <img src={thumbUp} alt="Pulgar arriba" />
@@ -39,9 +39,9 @@ function ChapterInfo(){
               <input
                 type="radio"
                 name="opcion"
-                value="2"
-                checked={selectedValue === "2"}
-                onClick={() => handleRadioChange("2")}
+                value="dislike"
+                checked={selectedValue === "dislike"}
+                onClick={() => handleRadioChange("dislike")}
               />
               <span className="circle">
                 <img src={thumbDown} alt="Pulgar abajo" />
@@ -51,9 +51,9 @@ function ChapterInfo(){
               <input
                 type="radio"
                 name="opcion"
-                value="3"
-                checked={selectedValue === "3"}
-                onClick={() => handleRadioChange("3")}
+                value="amazing"
+                checked={selectedValue === "amazing"}
+                onClick={() => handleRadioChange("amazing")}
               />
               <span className="circle">
                 <img src={surprise} alt="Emoji sorpresa" />
@@ -63,27 +63,27 @@ function ChapterInfo(){
               <input
                 type="radio"
                 name="opcion"
-                value="4"
-                checked={selectedValue === "4"}
-                onClick={() => handleRadioChange("4")}
+                value="love"
+                checked={selectedValue === "love"}
+                onClick={() => handleRadioChange("love")}
               />
               <span className="circle">
                 <img src={hearthEyes} alt="Emoji ojos de corazón" />
               </span>
             </label>
           </div>
-          <div className="stadistics maxTablets">
-             <div className="stat">
-                <p className="statRating">4.5/5</p>
-                <p className="Rating">Rating</p>
+          <div className="bg-white w-full shadow-[0_2px_7px_0px_rgba(0,0,0,0.15)] rounded-[20px] h-[60px] flex mt-[1.2rem] p-2 items-center justify-center maxTablets">
+             <div className="w-[33.5%]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">4.5/5</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Rating</p>
              </div>
-             <div className="stat statLine">
-                <p className="statRating">265</p>
-                <p className="Rating">Chapters</p>
+             <div className="w-[33.5%] border-l border-r border-[#9D9D9D]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">265</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Chapters</p>
              </div>
-             <div className="stat">
-                <p className="statRating">Eng</p>
-                <p className="Rating">Language</p>
+             <div className="w-[33.5%]">
+                <p className="font-montserrat text-[18px] font-normal h-[1.2rem] text-center text-[#424242]">Eng</p>
+                <p className="font-montserrat text-[10px] font-normal text-center text-[#9D9D9D]">Language</p>
              </div>
           </div>
     </>)
