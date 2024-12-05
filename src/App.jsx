@@ -32,7 +32,7 @@ const router = createBrowserRouter([{
     { path: "/home", element: <Home /> },
     { path: "/editProfile", element: <EditProfile /> },      
     { path: "/chapter", element: <Chapter /> },
-    { path: "/editManga", element: <EditManga /> },
+    { path: "/editManga/:title", element: <EditManga /> },
     { path: "/editChapter", element: <EditChapter /> },
     { path: "/newManga", element: <NewManga /> },
     { path: `/newChapter/:id`, element: <NewChapter /> },
