@@ -1,22 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { companyRegister } from '../actions/companyActions';
+import { registerCompany } from '../actions/companyActions';
 
 const initialState = {
-    status: idle,
+    status: 'idle',
     error: null,
     data: null
 }
 
 const companyReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase (companyRegister.pending, (state) => {
+        .addCase (registerCompany.pending, (state) => {
             state.status = 'loading'
         })
-        .addCase (companyRegister.fulfilled, (state, action) => {
+        .addCase (registerCompany.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.data = action.payload
         })
-        .addCase (companyRegister.rejected, (state, action) => {
+        .addCase (registerCompany.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
         })

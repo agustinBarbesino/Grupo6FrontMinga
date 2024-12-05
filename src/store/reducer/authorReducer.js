@@ -1,22 +1,22 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { authorRegister } from "../actions/authorActions"
+import { registerAuthor } from "../actions/authorActions"
 
 const initialState = {
-    status: idle,
+    status: 'idle',
     error: null,
     data: null
 }
 
 const authorReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase (authorRegister.pending, (state) => {
+        .addCase (registerAuthor.pending, (state) => {
             state.status = 'loading'
         })
-        .addCase (authorRegister.fulfilled, (state, action) => {
+        .addCase (registerAuthor.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.data = action.payload
         })
-        .addCase (authorRegister.rejected, (state, action) => {
+        .addCase (registerAuthor.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
         })
