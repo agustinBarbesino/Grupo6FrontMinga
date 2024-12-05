@@ -15,6 +15,50 @@ export default function Home() {
   const error = useSelector(selectCategoriesError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024); 
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev === categories.length - 1 ? 0 : prev + 1));
+      }, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [categories]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === categories.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === 0 ? categories.length - 1 : prev - 1
+    );
+  };
+
+  const handleAuthAction = () => {
+    if (isAuthenticated) {
+      navigate('/mangas');
+    } else {
+      navigate('/signin');
+    }
+  };
+
+  const currentCategory = categories && categories[currentSlide];
+
   return (
     <div className="flex flex-col w-full bg-[#F4F4F4] pb-16 pt-16">
       <div className="min-h-[calc(100vh-40vh)]">
