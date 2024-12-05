@@ -83,11 +83,41 @@ const CreateCompany = () => {
       };
       
 
+      const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        
+        setFormData(prev => ({
+          ...prev,
+          [id]: value
+        }));
+    
+        const error = validateCompanyField(id, value);
+        setValidationErrors(prev => ({
+          ...prev,
+          [id]: error
+        }));
+      };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(registerCompany({ ...formData, user_id: user._id }));
-        setShowSendModal(true);
+
+        const errors = {
+            name: validateCompanyField('name', formData.name),
+            website: validateCompanyField('website', formData.website),
+            photo: validateCompanyField('photo', formData.photo),
+            description: validateCompanyField('description', formData.description),
+          };
+          
+        setValidationErrors(errors);
+          
+        if (Object.values(errors).some(error => error !== '')) {
+            return;
+        }
+        console.log(formData)
+        dispatch(registerCompany({...formData, user_id: userId}));
         rolChange()
+        setShowSendModal(true)
+        navigate('/home')
       }
 
     return (
@@ -101,53 +131,72 @@ const CreateCompany = () => {
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="name"
+                                id="name"
                                 value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.name ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
+                            {validationErrors.name && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+                            )}
                         </div>
                         {/*website*/}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="url"
-                                name="website"
+                                id="website"
                                 value={formData.website}
-                                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.website ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Website"
                             />
+                            {validationErrors.website && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.website}</p>
+                            )}
                         </div>
                         {/*photo*/}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="url"
-                                name="photo"
+                                id="photo"
                                 value={formData.photo}
-                                onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.photo ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
+                            {validationErrors.photo && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
+                            )}
                         </div>
                          {/* description of company*/}
                          <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
-                                name="description"
+                                id="description"
                                 value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                onChange={handleInputChange}
+                                className={`w-64 border-b
+                                    ${validationErrors.description ? 'border-red-400' : 'border-gray-300'
+                                    } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Description"
                             />
+                            {validationErrors.description && (
+                                <p className="text-red-500 text-xs mt-1">{validationErrors.description}</p>
+                            )}
                         </div>
                         
                         {/* buttons */}
 
                         <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
-                                onClick={() => setShowSendModal(true)}
+                                type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
                             >
                                 Send

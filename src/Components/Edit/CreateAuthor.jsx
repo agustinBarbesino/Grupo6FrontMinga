@@ -170,7 +170,7 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
-                            {validationErrors.email && (
+                            {validationErrors.name && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
                             )}
                         </div>
@@ -187,7 +187,7 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Last Name"
                             />
-                            {validationErrors.email && (
+                            {validationErrors.last_name && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.last_name}</p>
                             )}
                         </div>
@@ -199,7 +199,7 @@ const CreateAuthor = () => {
                                 value={formData.city}
                                 onChange={handleInputChange}
                                 className={`w-64 border-b
-                                    ${validationErrors.email ? 'border-red-400' : 'border-gray-300'
+                                    ${validationErrors.city ? 'border-red-400' : 'border-gray-300'
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="City"
                             />
@@ -219,7 +219,7 @@ const CreateAuthor = () => {
                                     }border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Country"
                             />
-                            {validationErrors.email && (
+                            {validationErrors.country && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.country}</p>
                             )}
                         </div>
@@ -235,7 +235,7 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Date"
                             />
-                            {validationErrors.email && (
+                            {validationErrors.date && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.date}</p>
                             )}
                         </div>
@@ -252,7 +252,7 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
-                            {validationErrors.email && (
+                            {validationErrors.photo && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
                             )}
                         </div>
