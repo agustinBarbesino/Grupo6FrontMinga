@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const BASE_URL = 'https://grupo6backminga.onrender.com/api';
 
 export const fetchCategories = createAsyncThunk(
+  
   'categories/fetchAll',
   async (_, { rejectWithValue }) => {
     try {

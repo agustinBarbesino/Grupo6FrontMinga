@@ -1,6 +1,6 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
-const BASE_URL = 'https://grupo6backminga.onrender.com/api';
+const BASE_URL = 'http://localhost:8080/api';
 
 export const clearError = createAction('auth/clearError');
 export const clearSuccess = createAction('auth/clearSuccess');

@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ChapterFetch } from "../actions/mangaActions";
 const initialState={
-    chapters:"All",
+    chapters:[],
     loading:true,
     error:false
 }
@@ -15,7 +15,7 @@ const initialState={
         
         state.loading = false,
         state.error = false
-        state.mangas = action.payload
+        state.chapters = action.payload
     })
     .addCase(ChapterFetch.pending,(state,action)=>{
         console.log("cargando...");

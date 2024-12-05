@@ -9,7 +9,7 @@ function ChapterInfo({name,author,category}){
 
   const handleRadioChange = (value) => {
     setSelectedValue(selectedValue === value ? null : value);
-    console.log(author);
+    console.log(selectedValue);
     
   };
     return(<>
@@ -27,9 +27,9 @@ function ChapterInfo({name,author,category}){
               <input
                 type="radio"
                 name="opcion"
-                value="1"
-                checked={selectedValue === "1"}
-                onClick={() => handleRadioChange("1")}
+                value="like"
+                checked={selectedValue === "like"}
+                onClick={() => handleRadioChange("like")}
               />
               <span className="circle">
                 <img src={thumbUp} alt="Pulgar arriba" />
@@ -39,9 +39,9 @@ function ChapterInfo({name,author,category}){
               <input
                 type="radio"
                 name="opcion"
-                value="2"
-                checked={selectedValue === "2"}
-                onClick={() => handleRadioChange("2")}
+                value="dislike"
+                checked={selectedValue === "dislike"}
+                onClick={() => handleRadioChange("dislike")}
               />
               <span className="circle">
                 <img src={thumbDown} alt="Pulgar abajo" />
@@ -51,9 +51,9 @@ function ChapterInfo({name,author,category}){
               <input
                 type="radio"
                 name="opcion"
-                value="3"
-                checked={selectedValue === "3"}
-                onClick={() => handleRadioChange("3")}
+                value="amazing"
+                checked={selectedValue === "amazing"}
+                onClick={() => handleRadioChange("amazing")}
               />
               <span className="circle">
                 <img src={surprise} alt="Emoji sorpresa" />
@@ -63,9 +63,9 @@ function ChapterInfo({name,author,category}){
               <input
                 type="radio"
                 name="opcion"
-                value="4"
-                checked={selectedValue === "4"}
-                onClick={() => handleRadioChange("4")}
+                value="love"
+                checked={selectedValue === "love"}
+                onClick={() => handleRadioChange("love")}
               />
               <span className="circle">
                 <img src={hearthEyes} alt="Emoji ojos de corazón" />
