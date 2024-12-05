@@ -15,15 +15,20 @@ const FormEditManga = () => {
         setCategory(e.target.value) // Actualiza el estado con el valor seleccionado
     }
     const [formData, setFormData] = useState({
+        title: nameManga,
         data: '',
         edit: '',
     })
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(editManga({ formData }))
+    }
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
-                    <form className="space-y-2">
+                    <form onSubmit={handleSubmit} className="space-y-2">
                         {/* name of manga */}
                         <div className="flex justify-start w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500">
                             <p>{nameManga}</p>
@@ -90,7 +95,7 @@ const FormEditManga = () => {
 
                         <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
-                                type="button"
+                                type="submit"
                                 onClick={() => setShowSaveModal(true)}
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
                             >
