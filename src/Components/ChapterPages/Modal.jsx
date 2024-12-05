@@ -2,7 +2,7 @@ import { useState } from "react"
 import { comments } from "../../MockData/dataChapters"
 import { formatDistanceToNow } from 'date-fns'
 export default function Modal() {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const date = new Date('2024-11-29T19:52:02.794+00:00');
     const timeAgo = formatDistanceToNow(date, { addSuffix: true });
     console.log(comments);
