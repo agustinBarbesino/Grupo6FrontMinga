@@ -34,50 +34,71 @@ const authReducer = createReducer(initialState, (builder) => {
       localStorage.removeItem('token');
     })
     .addCase(processGoogleResponse, (state, action) => {
-        try {
-            const data = action.payload;
-            if (data?.success && data?.response?.user && data?.response?.token) {
-                const { user, token } = data.response;
-                
-                
-                if (!user._id || !user.email) {
-                    throw new Error('Invalid user data');
-                }
-    
-                state.user = { ...user, token };
-                state.isAuthenticated = true;
-                state.loading = false;
-                state.error = null;
-                state.success = data.message || 'Successfully signed in with Google';
-    
-                
-                localStorage.setItem('user', JSON.stringify({ ...user, token }));
-                localStorage.setItem('isAuthenticated', 'true');
-                localStorage.setItem('token', token);
-                
-                console.log('Google auth successful:', { user, isAuthenticated: true });
-            } else {
-                throw new Error('Invalid response format');
-            }
-        } catch (error) {
-            console.error('Google auth reducer error:', error);
-            state.error = error.message;
-            state.loading = false;
-            state.isAuthenticated = false;
+      try {
+        console.log('Google Response received:', action.payload);
+        const { token, user } = action.payload;
+
+        if (!user || !user._id || !user.email) {
+          throw new Error('Invalid user data');
         }
+
+        const userData = {
+          ...user,
+          token,
+          role: user.role ?? 0,
+          author_id: user.author_id || null,
+          company_id: user.company_id || null
+        };
+
+        console.log('Processed user data:', userData);
+
+        state.user = userData;
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.error = null;
+        state.success = 'Successfully signed in with Google';
+
+        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('token', token);
+
+        console.log('Data saved to localStorage:', {
+          user: JSON.parse(localStorage.getItem('user')),
+          isAuthenticated: localStorage.getItem('isAuthenticated'),
+          token: localStorage.getItem('token')
+        });
+      } catch (error) {
+        console.error('Google auth reducer error:', error);
+        state.error = error.message;
+        state.loading = false;
+        state.isAuthenticated = false;
+      }
     })
     .addCase(signIn.pending, (state) => {
       state.loading = true;
       state.error = null;
     })
     .addCase(signIn.fulfilled, (state, action) => {
+      const { user, token } = action.payload.response;
       state.loading = false;
-      state.user = action.payload.response.user;
+      state.user = { 
+        ...user, 
+        token,
+        role: user.role ?? 0,
+        author_id: user.author_id || null,
+        company_id: user.company_id || null
+      };
       state.isAuthenticated = true;
       state.error = null;
       state.success = action.payload.message;
-      localStorage.setItem('user', JSON.stringify(action.payload.response.user));
-      localStorage.setItem('token', action.payload.response.token);
+      localStorage.setItem('user', JSON.stringify({ 
+        ...user, 
+        token,
+        role: user.role ?? 0,
+        author_id: user.author_id || null,
+        company_id: user.company_id || null
+      }));
+      localStorage.setItem('token', token);
       localStorage.setItem('isAuthenticated', 'true');
     })
     .addCase(signIn.rejected, (state, action) => {
@@ -94,11 +115,23 @@ const authReducer = createReducer(initialState, (builder) => {
       if (action.payload.response) {
         const { user, token } = action.payload.response;
         state.loading = false;
-        state.user = { ...user, token };
+        state.user = { 
+          ...user, 
+          token,
+          role: user.role ?? 0,
+          author_id: user.author_id || null,
+          company_id: user.company_id || null
+        };
         state.isAuthenticated = true;
         state.error = null;
         state.success = action.payload.message;
-        localStorage.setItem('user', JSON.stringify({ ...user, token }));
+        localStorage.setItem('user', JSON.stringify({ 
+          ...user, 
+          token,
+          role: user.role ?? 0,
+          author_id: user.author_id || null,
+          company_id: user.company_id || null
+        }));
         localStorage.setItem('token', token);
         localStorage.setItem('isAuthenticated', 'true');
       }
@@ -114,13 +147,26 @@ const authReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(signUp.fulfilled, (state, action) => {
+      const { user, token } = action.payload.response;
       state.loading = false;
-      state.user = action.payload.response.user;
+      state.user = { 
+        ...user, 
+        token,
+        role: user.role ?? 0,
+        author_id: user.author_id || null,
+        company_id: user.company_id || null
+      };
       state.isAuthenticated = true;
       state.error = null;
       state.success = action.payload.message;
-      localStorage.setItem('user', JSON.stringify(action.payload.response.user));
-      localStorage.setItem('token', action.payload.response.token);
+      localStorage.setItem('user', JSON.stringify({ 
+        ...user, 
+        token,
+        role: user.role ?? 0,
+        author_id: user.author_id || null,
+        company_id: user.company_id || null
+      }));
+      localStorage.setItem('token', token);
       localStorage.setItem('isAuthenticated', 'true');
     })
     .addCase(signUp.rejected, (state, action) => {
