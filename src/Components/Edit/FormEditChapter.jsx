@@ -2,33 +2,29 @@ import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal } from '../../store/actions/editActions.js'
+import { editManga, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, changeChapter } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
-    const { title } = useParams()
-    const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loading, loadingDelete, deleteSuccess } = useSelector((state) => state.editMangas)
-    const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
+    const { title, id } = useParams() //id y titulo del manga
+    const { showSaveModal, showDeleteModal, showDeletedModal, loading, loadingEdit, loadingDelete, deleteSuccess, chapterSelected } = useSelector((state) => state.editChapters)
+    const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
     useEffect(() => {
         dispatch(fetchCategories()) 
-        dispatch(chapterByTitle(title))
+        dispatch(chapterByManga({id}))
     }, [dispatch])
-    const chapters = ['cap1', 'cap2']
+    const chapters  = chaptersData.map((chapter) => chapter.order)
     const dataToEdit = ['order', 'title']
-    const [chapter, setChapter] = useState('')
     const [data, setData] = useState('')
-    const handleChangeChapter = (e) => {
-        setChapter(e.target.value) // Actualiza el estado con el valor seleccionado
-    }
     const handleChangeData = (e) => {
-        setData(e.target.value) // Actualiza el estado con el valor seleccionado
+        setFormData({ ...formData, data: e.target.value }) // Actualiza el estado con el valor seleccionado
     }
-    const [formData, setFormData] = useState({
-        name: '',
+    const initialFormData = {name: title,
         chapter: '',
         data: '',
         edit: '',
-        })
+        }
+    const [formData, setFormData] = useState(initialFormData)
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -50,10 +46,10 @@ const FormEditChapter = () => {
                         <div className="flex justify-center md:justify-start">
                         <select
                                 name="chapter"
-                                value={chapter}
-                                onChange={handleChangeChapter}
+                                value={chapterSelected}
+                                onChange={()=>dispatch(changeChapter())}
                                 required
-                                className={`w-64 border-b ${chapter ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                                className={`w-64 border-b ${chapterSelected!='' ?  "text-black":"text-gray-400" } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
                                 <option value="" disabled >
                                     select chapter
@@ -69,17 +65,17 @@ const FormEditChapter = () => {
                         <div className="flex justify-center md:justify-start">
                         <select
                                 name="data"
-                                value={data}
+                                value={formData.data}
                                 onChange={handleChangeData}
                                 required
-                                className={`w-64 border-b ${data ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                                className={`w-64 border-b ${formData.data ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
                                 <option value="" disabled >
                                     select data
                                 </option>
-                                {dataToEdit.map((data) => (
+                                {['order', 'title'].map((data) => (
                                     <option key={data} value={data} className='text-black'>
-                                        {data}
+                                        {data.charAt(0).toUpperCase() + data.slice(1)}
                                     </option>
                                 ))}
                             </select>
@@ -103,7 +99,7 @@ const FormEditChapter = () => {
                                 type="submit"
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
                             >
-                                {loading ? "Editing..." : "Edit"} {/* Mostrar "Editing..." mientras está cargando */}
+                                {loadingEdit ? "Editing..." : "Edit"} {/* Mostrar "Editing..." mientras está cargando */}
                             </button>
                         </div>
 
