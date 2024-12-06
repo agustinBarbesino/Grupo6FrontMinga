@@ -203,6 +203,59 @@
     text-align: left;
     color: #00BA88;
 }
+.iconos{
+    position: absolute;
+    
+    width: 34px;
+    display: flex;
+    justify-content: space-between;
+    left: 20px;
+    top: 15px;
+}
+.iconos>button{
+    border: 1.5px solid #222222;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    display: flex;
+    justify-content: center
+    
+}
+.minW{
+    min-width: 300px;
+}
+.editM{
+    width: 47px;
+    height: 35px;
+    top: 125px;
+    left: 18px;
+   
+    gap: 10px;
+    border-radius: 50px;
+    background: #E0DBFF;
+    font-family: "Roboto", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 35.42px;
+    text-align: center;
+    color: #8883F0;
+}
+.deleteM{
+    width: 62px;
+    height: 35px;
+    top: 125px;
+    left: 75px;
+   
+    gap: 10px;
+    border-radius: 50px;
+    background: #FBDDDC;
+    font-family: "Roboto", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 35.42px;
+    text-align: center;
+    color: #EE8380;
+}
 .categoryMLoading{
     position: relative;
     overflow: hidden;
