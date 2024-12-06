@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { fetchCategories } from "../store/actions/categoryActions"
 import { MangasFetch } from "../store/actions/mangasActions";
+import { AuthorsFetch } from "../store/actions/authorsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../Components/Manager/Cards";
 import { category, search } from "../store/mangaSlice";
@@ -12,14 +13,20 @@ import '../Components/Mangas/mangaPages.css';
 function Manager(){
     const {categories} = useSelector(state=>state.categories)
     const {mangas} = useSelector(state=>state.mangasStore)
+    const authors = useSelector(state=>state.authors.authores)
     const mangasStore = useSelector(state=>state.mangasStore)
     const {categoryM} = useSelector((state=>state.mangasFilterStore))
     const loading = mangasStore.loading
 
-    const params = new URLSearchParams(window.location.search)
-   const idAuthor = params.get("idAuthor")
-   const nameAuthor = params.get("nameAuthor")
+  
     
+   const idAuthor = JSON.parse(localStorage.getItem("user"))
+ 
+   const nameAuthorBase = authors.filter(e=>e._id == idAuthor.author_id) 
+   let nameAuthor = nameAuthorBase[0]?.name
+   console.log(nameAuthor);
+   
+   
     
 
     const dispatch = useDispatch()
@@ -30,8 +37,9 @@ function Manager(){
           let value2=c.company_id?._id||c.author_id?._id
 
           let filt1=c.category_id.name.toLowerCase()
-          let filt2=idAuthor
+          let filt2=idAuthor.author_id
 
+          console.log(value1);
           
           
           if(value1=="all"){
@@ -67,6 +75,7 @@ function Manager(){
     useEffect(()=>{
         dispatch(fetchCategories())
         dispatch(MangasFetch())
+        dispatch(AuthorsFetch())
     },[])
   
     

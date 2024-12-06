@@ -9,6 +9,7 @@ import { editMangas } from './reducer/editReducer'
 import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
+import authorsReducer from './reducer/authorsReducer';
 
 const store = configureStore({
   reducer: {
@@ -22,7 +23,9 @@ const store = configureStore({
     mangasFilterStore:mangasFilterReducer,
     mangasStore:mangasReducer,
     company: companyReducer,
-    author: authorReducer
+    author: authorReducer,
+    authors: authorsReducer
+
   },
 })
 
