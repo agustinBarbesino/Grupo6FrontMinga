@@ -25,9 +25,9 @@ function NavBar() {
 
     return (
         <>
-            <div className="relative ">
+            <div className="relative flex justify-center items-center">
                 <button className={`
-                    z-10 p-2 
+                    z-10  
                     ${isActive ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
                     ${isOpen ? 'hidden' : 'block z-10 md:min-w-80'}
                     `}
@@ -52,7 +52,7 @@ function NavBar() {
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
                                 <span className="text-sm sm:text-base text-ellipsis pl-2 text-white overflow-hidden whitespace-nowrap">
-                                    {user.email}
+                                <NavLink to="/profile" onClick={() => setIsOpen(!isOpen)}> {user.email}</NavLink>
                                 </span>
                             </div>
                             <div className="flex items-end justify-end w-1/2">
