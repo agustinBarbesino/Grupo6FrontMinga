@@ -1,6 +1,6 @@
 
 import './mangaPages.css'
-function Card({category,name,image,id,autor}){
+function Card({category,name,image,id,autor,description}){
     let hexColor
                    switch(category){
                        case "Shonen":
@@ -19,7 +19,7 @@ function Card({category,name,image,id,autor}){
                
                    
     function manga(id){
-        window.location.href=`/manga?category=${category}&name=${name}&image=${image}&autor=${autor}&mangaId=${id}`
+        window.location.href=`/manga?category=${category}&name=${name}&image=${image}&autor=${autor}&mangaId=${id}&descp=${description}`
         
         
     }
