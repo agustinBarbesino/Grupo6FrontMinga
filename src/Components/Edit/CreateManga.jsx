@@ -11,7 +11,7 @@ const CreateManga = () => {
     const modifier = '6750a0c15da1e9bc5c771f08' // traer del estado global el id de usuario o compania
     useEffect(() => {
         dispatch(fetchCategories())  //
-    }, [dispatch])
+    }, )
     /* estado de modal, data de mangas y cargando */
     const {showSendModal, mangaData, loading} = useSelector((state) => state.newManga)
     /* para los nombres de las categoras */
@@ -52,7 +52,7 @@ const CreateManga = () => {
         if (mangaData) {
           dispatch(setShowSendModal(true))
         }
-      }, [mangaData, dispatch])
+      }, [mangaData])
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -90,7 +90,6 @@ const CreateManga = () => {
                             </select>
                         </div>
                         {/* cover photo */}
-                        {/* title of manga */}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"

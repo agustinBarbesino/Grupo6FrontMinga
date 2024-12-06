@@ -2,35 +2,61 @@ import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editManga, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, changeChapter } from '../../store/actions/editActions.js'
+import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
     const { title, id } = useParams() //id y titulo del manga
-    const { showSaveModal, showDeleteModal, showDeletedModal, loading, loadingEdit, loadingDelete, deleteSuccess, chapterSelected } = useSelector((state) => state.editChapters)
+    const { showSaveModal, showDeleteModal, showDeletedModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter } = useSelector((state) => state.editChapters)
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
-    useEffect(() => {
-        dispatch(fetchCategories()) 
-        dispatch(chapterByManga({id}))
-    }, [dispatch])
-    const chapters  = chaptersData.map((chapter) => chapter.order)
-    const dataToEdit = ['order', 'title']
-    const [data, setData] = useState('')
-    const handleChangeData = (e) => {
-        setFormData({ ...formData, data: e.target.value }) // Actualiza el estado con el valor seleccionado
+    const [formData, setFormData] = useState(initialFormDataChapter)
+    const [filteredChapters, setFilteredChapters] = useState([])
+    const [textAreaHeight, setTextAreaHeight] = useState('auto')
+    const handlePagesChange = (e) => {
+        const inputValue = e.target.value
+        const pagesArray = inputValue.split(",").map(page => page.trim())
+        setFormData({ ...formData, pages: pagesArray })
+        // Ajustar la altura del textarea en función del contenido
+        setTextAreaHeight("auto")
+        setTextAreaHeight(`${e.target.scrollHeight}px`)
+
     }
-    const initialFormData = {name: title,
-        chapter: '',
-        data: '',
-        edit: '',
+    useEffect(() => {
+        dispatch(fetchCategories())
+        dispatch(chapterByManga({ id }))
+        setFormData({ ...formData, name: title })
+    }, [])
+    const chapters = chaptersData.map((chapter) => chapter.order)
+    useEffect(() => {
+        if (formData.chapter) {
+            const filtered = chaptersData.filter(chapter => chapter.order === parseInt(formData.chapter))
+            setFilteredChapters(filtered)
         }
-    const [formData, setFormData] = useState(initialFormData)
+    }, [formData.chapter])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(editChapter({ filteredChapters, formData }))
+        setFormData(initialFormDataChapter)
+    }
+
+    useEffect(() => {
+        if (chaptersTrigger) {
+            dispatch(setShowSaveModal(true))
+            setFormData({ ...formData, title: title })
+        } else if (deleteSuccess) {
+            dispatch(setShowDeleteModal(false))
+            dispatch(setShowDeletedModal(true))
+        }
+    }, [chaptersTrigger, deleteSuccess])
+
+
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
-                    <form className="space-y-2">
+                    <form onSubmit={handleSubmit} className="space-y-2">
                         {/* name of manga */}
                         <div className="flex justify-center md:justify-start">
                             <input
@@ -44,12 +70,12 @@ const FormEditChapter = () => {
                         </div>
                         {/* select chapter */}
                         <div className="flex justify-center md:justify-start">
-                        <select
+                            <select
                                 name="chapter"
-                                value={chapterSelected}
-                                onChange={()=>dispatch(changeChapter())}
+                                value={formData.chapter}
+                                onChange={(e) => setFormData({ ...formData, chapter: e.target.value })}
                                 required
-                                className={`w-64 border-b ${chapterSelected!='' ?  "text-black":"text-gray-400" } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                                className={`w-64 border-b ${formData.chapter != '' ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
                                 <option value="" disabled >
                                     select chapter
@@ -63,17 +89,18 @@ const FormEditChapter = () => {
                         </div>
                         {/* select data */}
                         <div className="flex justify-center md:justify-start">
-                        <select
+                            <select
                                 name="data"
                                 value={formData.data}
-                                onChange={handleChangeData}
+                                onChange={(e) => { setFormData({ ...formData, data: e.target.value }) }}
                                 required
                                 className={`w-64 border-b ${formData.data ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
                                 <option value="" disabled >
                                     select data
                                 </option>
-                                {['order', 'title'].map((data) => (
+                                {/* variables */}
+                                {['order', 'title', 'cover photo', 'pages'].map((data) => (
                                     <option key={data} value={data} className='text-black'>
                                         {data.charAt(0).toUpperCase() + data.slice(1)}
                                     </option>
@@ -81,10 +108,71 @@ const FormEditChapter = () => {
                             </select>
                         </div>
                         {/* data to edit */}
-                        <div className="flex justify-center md:justify-start">
+                        {/* title of chapter */}
+                        <div className={`flex justify-center md:justify-start ${formData.data == 'title' ? '' : 'hidden'}`}>
                             <input
                                 type="text"
-                                name="data"
+                                name="title"
+                                value={formData.data == 'title' ? formData.edit:''}
+                                onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
+                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                placeholder="Insert title"
+                            />
+                        </div>
+                        {/* order of the chapter*/}
+                        <div className={`flex justify-center md:justify-start ${formData.data == 'order' ? '' : 'hidden'}`}>
+                            <input
+                                type="number"
+                                name="order"
+                                value={formData.data == 'order' ?formData.edit:''}
+                                onChange={(e) => {
+                                    const newOrder = Number(e.target.value)
+
+                                    // Verificar si el nuevo 'order' ya está en los capítulos
+                                    const isOrderTaken = chapters.includes(newOrder)
+
+                                    if (isOrderTaken) {
+                                        alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
+                                    } else {
+                                        // Solo actualizar el estado si el número no está tomado
+                                        setFormData({ ...formData, edit:Number(e.target.value)})
+                                    }
+                                }}
+                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                placeholder="Insert order"
+                            />
+                        </div>
+
+                        {/*pages*/}
+
+                        <div className={`flex justify-center md:justify-start ${formData.data == 'pages' ? '' : 'hidden'}`}>
+                            <textarea
+                                name="pages"
+                                value={formData.data == 'pages' ?formData.edit:''}
+                                onChange={handlePagesChange}
+                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500 resize-none overflow-hidden"
+                                placeholder="Insert pages"
+                                rows={1}
+                                style={{ height: textAreaHeight }}
+                            />
+
+                        </div>
+                        {/* cover photo */}
+                        <div className={`flex justify-center md:justify-start ${formData.data == 'cover photo' ? '' : 'hidden'}`}>
+                            <input
+                                type="url"
+                                name="pages"
+                                value={formData.data == 'cover photo' ? formData.edit:''}
+                                onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
+                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                placeholder="URL of the cover photo"
+                            />
+                        </div>
+                        {/* cover photo */}
+                        <div className={`flex justify-center md:justify-start ${formData.data == '' ? '' : 'hidden'}`}>
+                            <input
+                                type="string"
+                                name="cover_photo"
                                 value={formData.edit}
                                 onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
@@ -92,9 +180,9 @@ const FormEditChapter = () => {
                             />
                         </div>
 
-                         {/* buttons */}
+                        {/* buttons */}
 
-                         <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
@@ -103,7 +191,7 @@ const FormEditChapter = () => {
                             </button>
                         </div>
 
-                        <div className="flex justify-center w-[90%] py-4 md:justify-start font-semibold">
+                        <div className="flex pb-8 justify-center w-[90%] pt-4 md:justify-start font-semibold">
                             <button
                                 type="button"
                                 onClick={() => dispatch(setShowDeleteModal(true))}
@@ -128,7 +216,7 @@ const FormEditChapter = () => {
                                 <hr className="border-gray-300 my-4" />
                                 <div className="flex items-center">
                                     <button
-                                        onClick={handleDelete} //debe mandar al endpoint de delete manga
+                                        onClick={() => dispatch(deleteChapter({ filteredChapters }))} //debe mandar al endpoint de delete chapter
                                         className="flex-1 text-red-500 py-2"
                                     >
                                         {loadingDelete ? "Deliting..." : "Yes, I'm sure"} {/* Mostrar "Deliting..." mientras está cargando */}
@@ -178,6 +266,7 @@ const FormEditChapter = () => {
             )}
         </>
     )
+
 
 }
 
