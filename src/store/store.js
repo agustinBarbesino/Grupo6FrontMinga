@@ -9,7 +9,7 @@ import { editChapters, editMangas } from './reducer/editReducer'
 import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
-
+import {chapterReadReducer} from './reducer/chapterReducer'
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -23,7 +23,9 @@ const store = configureStore({
     mangasStore:mangasReducer,
     company: companyReducer,
     author: authorReducer,
-    editChapters: editChapters
+    editChapters: editChapters,
+    chapterStore: chapterReadReducer
+
   },
 })
 
