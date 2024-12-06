@@ -15,18 +15,24 @@ const GoogleAuthHandler = () => {
     if (token && userParam) {
       try {
         const user = JSON.parse(decodeURIComponent(userParam));
+
+      
+        const processedUser = {
+          ...user,
+          role: user.role ?? 0, 
+          author_id: user.author_id || null,
+          company_id: user.company_id || null
+        };
+
         
-        // Dispatch la acción para procesar la respuesta de Google
+
+       
         dispatch(processGoogleResponse({
-          success: true,
-          response: {
-            token,
-            user
-          },
-          message: 'Successfully signed in with Google'
+          token,
+          user: processedUser
         }));
 
-        // Navega a home después de procesar
+       
         navigate('/home');
       } catch (error) {
         console.error('Error processing Google auth response:', error);
