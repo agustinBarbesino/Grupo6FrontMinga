@@ -39,8 +39,7 @@ const authReducer = createReducer(initialState, (builder) => {
             if (data?.success && data?.response?.user && data?.response?.token) {
                 const { user, token } = data.response;
                 
-                
-                if (!user._id || !user.email) {
+                if (!user._id || !user.email || user.role === undefined) {
                     throw new Error('Invalid user data');
                 }
     
@@ -50,7 +49,6 @@ const authReducer = createReducer(initialState, (builder) => {
                 state.error = null;
                 state.success = data.message || 'Successfully signed in with Google';
     
-                
                 localStorage.setItem('user', JSON.stringify({ ...user, token }));
                 localStorage.setItem('isAuthenticated', 'true');
                 localStorage.setItem('token', token);
@@ -71,13 +69,14 @@ const authReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(signIn.fulfilled, (state, action) => {
+      const { user, token } = action.payload.response;
       state.loading = false;
-      state.user = action.payload.response.user;
+      state.user = { ...user, token }; // Include all user data including role
       state.isAuthenticated = true;
       state.error = null;
       state.success = action.payload.message;
-      localStorage.setItem('user', JSON.stringify(action.payload.response.user));
-      localStorage.setItem('token', action.payload.response.token);
+      localStorage.setItem('user', JSON.stringify({ ...user, token }));
+      localStorage.setItem('token', token);
       localStorage.setItem('isAuthenticated', 'true');
     })
     .addCase(signIn.rejected, (state, action) => {
@@ -94,7 +93,7 @@ const authReducer = createReducer(initialState, (builder) => {
       if (action.payload.response) {
         const { user, token } = action.payload.response;
         state.loading = false;
-        state.user = { ...user, token };
+        state.user = { ...user, token }; // Include all user data including role
         state.isAuthenticated = true;
         state.error = null;
         state.success = action.payload.message;
@@ -114,13 +113,14 @@ const authReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(signUp.fulfilled, (state, action) => {
+      const { user, token } = action.payload.response;
       state.loading = false;
-      state.user = action.payload.response.user;
+      state.user = { ...user, token }; // Include all user data including role
       state.isAuthenticated = true;
       state.error = null;
       state.success = action.payload.message;
-      localStorage.setItem('user', JSON.stringify(action.payload.response.user));
-      localStorage.setItem('token', action.payload.response.token);
+      localStorage.setItem('user', JSON.stringify({ ...user, token }));
+      localStorage.setItem('token', token);
       localStorage.setItem('isAuthenticated', 'true');
     })
     .addCase(signUp.rejected, (state, action) => {
