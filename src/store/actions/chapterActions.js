@@ -14,3 +14,35 @@ export const getComments = createAsyncThunk("GET_COMMENTS", async (id) => {
 
     return response.data.response
 })
+
+export const addComment = createAsyncThunk("ADD_COMMENT", async ({ chapterId, authorId, companyId, message }) => {
+    let commentData;
+
+   
+    if (authorId) {
+      commentData = {
+        chapterId,
+        authorId,
+        message,
+      };
+    } else {
+      commentData = {
+        chapterId,
+        companyId,
+        message,
+      };
+    }
+    console.log(commentData);
+    
+    try {
+     
+      const response = await axios.post("http://localhost:8080/api/comments/create", commentData);
+
+      
+      return response.data;
+    } catch (error) {
+      
+      throw new Error("Error adding comment: " + error.message);
+    }
+  }
+);

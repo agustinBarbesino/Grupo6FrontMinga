@@ -1,17 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getChapter } from "../actions/chapterActions";
-import { getComments } from "../actions/chapterActions";
+import { getChapter,getComments,addComment } from "../actions/chapterActions";
 
 const initialState = {
     chapters: [],
-    loading: false,
-    loadingComments: false,
+    loading: false,   
     nameChapter: "",
     comments:[]
 };
 
 export const chapterReadReducer = createReducer(initialState, (builder) => {
     builder
+    // get chapter
         .addCase(getChapter.pending, (state) => {
             state.loading = true;
         })
@@ -23,6 +22,8 @@ export const chapterReadReducer = createReducer(initialState, (builder) => {
         .addCase(getChapter.rejected, (state) => {
             state.loading = false;
         })
+
+        // get comments
         .addCase(getComments.pending, (state) => {
             state.loadingComments = true;
         })
@@ -32,5 +33,14 @@ export const chapterReadReducer = createReducer(initialState, (builder) => {
         })
         .addCase(getComments.rejected, (state) => {
             state.loadingComments = false;
-        });
+        })
+
+        //create comment
+        .addCase(addComment.pending, (state) => {
+            state.loadingComments = true;
+        })
+        .addCase(addComment.fulfilled, (state) => {
+            state.loadingComments = false;
+        })
+        ;
 });
