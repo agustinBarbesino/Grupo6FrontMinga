@@ -22,3 +22,9 @@ export const deleteManga = createAsyncThunk('deleteManga', async({title})=>{
 export const setShowDeleteModal = createAction("setShowDeleteModal")
 export const setShowDeletedModal = createAction("setShowDeletedModal")
 
+/* export const chapterByManga = createAsyncThunk('chapterByTitle', async({title})=>{
+    const response = await axios.get(`${BASE_URL}/chapter/all?title=${title}`)
+        console.log("Response",response.data);
+       
+        return response.data.response
+}) */

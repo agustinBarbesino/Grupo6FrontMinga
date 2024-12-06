@@ -29,21 +29,22 @@ const FormEditManga = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(editManga({ formData }))
+        setFormData(initialFormData)
     }
     const handleDelete = () => {
-        dispatch(deleteManga({title}))
+        dispatch(deleteManga({ title }))
     }
     useEffect(() => {
         if (mangaData) {
-          dispatch(setShowSaveModal(true))
+            dispatch(setShowSaveModal(true))
         }
-      }, [mangaData, dispatch])
+    }, [mangaData, dispatch])
     useEffect(() => {
         if (deleteSuccess) {
-          dispatch(setShowDeleteModal(false))
-          dispatch(setShowDeletedModal(true))
+            dispatch(setShowDeleteModal(false))
+            dispatch(setShowDeletedModal(true))
         }
-      }, [deleteSuccess, dispatch])
+    }, [deleteSuccess, dispatch])
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -114,7 +115,7 @@ const FormEditManga = () => {
 
                         {/* buttons */}
 
-                        <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"

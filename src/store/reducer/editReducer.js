@@ -10,6 +10,7 @@ const initialState = {
     showDeleteModal: false,
     showDeletedModal: false,
     mangaData: null,
+    chapterData: null,
     initialFormData: {
         title: '',
         data: '',

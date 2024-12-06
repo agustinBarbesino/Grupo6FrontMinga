@@ -1,8 +1,18 @@
-import {React, useState }from 'react'
+import { React, useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from "react-redux"
+import { fetchCategories } from '../../store/actions/categoryActions.js'
+import { editManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [showSaveModal, setShowSaveModal] = useState(false)
+    const dispatch = useDispatch()
+    const { title } = useParams()
+    const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loading, loadingDelete, deleteSuccess } = useSelector((state) => state.editMangas)
+    const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
+    useEffect(() => {
+        dispatch(fetchCategories()) 
+        dispatch(chapterByTitle(title))
+    }, [dispatch])
     const chapters = ['cap1', 'cap2']
     const dataToEdit = ['order', 'title']
     const [chapter, setChapter] = useState('')
@@ -86,22 +96,21 @@ const FormEditChapter = () => {
                             />
                         </div>
 
-                        {/* buttons */}
+                         {/* buttons */}
 
-                        <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
+                         <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
-                                onClick={() => setShowSaveModal(true)}
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
                             >
-                                Edit
+                                {loading ? "Editing..." : "Edit"} {/* Mostrar "Editing..." mientras está cargando */}
                             </button>
                         </div>
 
-                        <div className="flex justify-center w-[90%] pt-4 md:justify-start font-semibold">
+                        <div className="flex justify-center w-[90%] py-4 md:justify-start font-semibold">
                             <button
                                 type="button"
-                                onClick={() => setShowDeleteModal(true)}
+                                onClick={() => dispatch(setShowDeleteModal(true))}
                                 className="w-full text-lg bg-red-100 text-[#EE8380] py-2 rounded-full hover:bg-red-200 transition-colors"
                             >
                                 Delete
@@ -110,7 +119,7 @@ const FormEditChapter = () => {
                     </form>
                 </div>
 
-                
+
             </div>
             {/* Modals */}
             {showDeleteModal && (
@@ -123,14 +132,14 @@ const FormEditChapter = () => {
                                 <hr className="border-gray-300 my-4" />
                                 <div className="flex items-center">
                                     <button
-                                        onClick={() => setShowDeleteModal(false)}
+                                        onClick={handleDelete} //debe mandar al endpoint de delete manga
                                         className="flex-1 text-red-500 py-2"
                                     >
-                                        Yes, I'm sure
+                                        {loadingDelete ? "Deliting..." : "Yes, I'm sure"} {/* Mostrar "Deliting..." mientras está cargando */}
                                     </button>
                                     <div className="w-px bg-gray-400 h-8 mx-4" />
                                     <button
-                                        onClick={() => setShowDeleteModal(false)}
+                                        onClick={() => dispatch(setShowDeleteModal(false))}
                                         className="flex-1 text-blue-500 py-2"
                                     >
                                         No
@@ -149,7 +158,21 @@ const FormEditChapter = () => {
                         <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
                         <hr className="border-gray-300 my-4" />
                         <button
-                            onClick={() => setShowSaveModal(false)}
+                            onClick={() => dispatch(setShowSaveModal(false))}
+                            className="w-full text-blue-500 py-2"
+                        >
+                            Accept
+                        </button>
+                    </div>
+                </div>
+            )}
+            {showDeletedModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                        <h3 className="text-lg font-medium mb-4 text-center">Your chapter is deleted!</h3>
+                        <hr className="border-gray-300 my-4" />
+                        <button
+                            onClick={() => dispatch(setShowDeletedModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
                             Accept

@@ -19,7 +19,7 @@ const Footer = () => {
                     <div className=" flex flex-row md:w-1/3 justify-center items-center" >
                         <div className="flex align-center md:ml-6 mb-2">
                             <NavLink to="/Home" className={({ isActive }) => isActive ? "place-content-center pl-2 md:px-6 underline" : "place-content-center pl-2 md:px-6 drop-shadow"}>Home</NavLink>
-                            <NavLink to="/mamgas" className={({ isActive }) => isActive ? "place-content-center pl-2 md:px-6 underline" : "place-content-center pl-2 md:px-6 drop-shadow"}>Mangas</NavLink>
+                            <NavLink to="/mangas" className={({ isActive }) => isActive ? "place-content-center pl-2 md:px-6 underline" : "place-content-center pl-2 md:px-6 drop-shadow"}>Mangas</NavLink>
 
                         </div>
 
