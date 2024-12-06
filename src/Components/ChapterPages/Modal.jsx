@@ -16,9 +16,7 @@ export default function Modal() {
         dispatch(getComments(id));
     }, []);
     
-    useEffect(() => {
-        console.log(commentSend);
-    }, [commentSend]);
+   
     return (
         <>
             <button onClick={() => setIsOpen(!isOpen)} className=" py-2 px-4 ">

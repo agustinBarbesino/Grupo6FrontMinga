@@ -29,7 +29,7 @@ function Manga() {
 },[])
 
   const mangaChapters = chapters.filter(c=>c.manga_id?._id == mangaId)
-  console.log(mangaChapters);
+  console.log( "mangas chapters",mangaChapters);
   
   
   function buttonInfoLeft(){
@@ -61,7 +61,7 @@ function Manga() {
               <button style={{color:colorButton.color}} onClick={buttonInfoLeft} className="w-[50%] rounded-[20px] text-[10px] z-[1] font-montserrat font-normal text-center transition-all duration-300">Manga</button><button style={{color:colorButton2.color}} onClick={buttonInfoRight} className="w-[50%] z-[1] rounded-[20px] text-[10px] font-montserrat font-normal text-center transition-all duration-300">Chapters</button>
 
             </div>
-            {colorButton.boolean?<p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse molestie est nec gravida dictum. Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpat vel vitae quam.Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpatc tum lectus quam, non ma.</p>:mangaChapters.map(c=><Chapter title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter>) }
+            {colorButton.boolean?<p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse molestie est nec gravida dictum. Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpat vel vitae quam.Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpatc tum lectus quam, non ma.</p>:mangaChapters.map(c=><Chapter title={c.title} pages={c.pages.length} mangaId={c._id} image={image}></Chapter>) }
             
            
           </div>

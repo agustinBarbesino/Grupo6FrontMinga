@@ -1,7 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { getChapter } from "../actions/chapterActions";
 import { getComments } from "../actions/chapterActions";
-import { act } from "react";
 
 const initialState = {
     chapters: [],
@@ -11,7 +10,7 @@ const initialState = {
     comments:[]
 };
 
-export const chapterReducer = createReducer(initialState, (builder) => {
+export const chapterReadReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(getChapter.pending, (state) => {
             state.loading = true;

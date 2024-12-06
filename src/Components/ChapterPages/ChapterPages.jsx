@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChapter } from '../../store/actions/chapterActions';
-import { getComments } from "../../store/actions/chapterActions";
-
 
 //componenets
 import Modal from './Modal';
