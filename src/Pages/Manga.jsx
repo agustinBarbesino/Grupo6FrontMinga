@@ -18,6 +18,7 @@ function Manga() {
   const author = params.get("autor")
   const category = params.get("category")
   const mangaId = params.get("mangaId")
+  const descp = params.get("descp")
   
   
   const dispatch = useDispatch()
@@ -56,7 +57,7 @@ function Manga() {
           />
           {colorButton.boolean?<ChapterInfo name={name} author={author} category={category}></ChapterInfo>:<p className="w-full text-center font-montserrat text-[18px] pt-4 font-normal text-[#222222]">Chapters</p>}
           <div className="max-w-[360px]">
-            <div className="h-[28px] rounded-[20px] flex mt-[1.5rem] shadow-[0_0px_7px_0px_rgba(0,0,0,0.15)] relative">
+            <div className="minW h-[28px] rounded-[20px] flex mt-[1.5rem] shadow-[0_0px_7px_0px_rgba(0,0,0,0.15)] relative">
               <div className={classInfo}></div>
               <button style={{color:colorButton.color}} onClick={buttonInfoLeft} className="w-[50%] rounded-[20px] text-[10px] z-[1] font-montserrat font-normal text-center transition-all duration-300">Manga</button><button style={{color:colorButton2.color}} onClick={buttonInfoRight} className="w-[50%] z-[1] rounded-[20px] text-[10px] font-montserrat font-normal text-center transition-all duration-300">Chapters</button>
 

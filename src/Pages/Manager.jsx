@@ -2,43 +2,46 @@ import { useEffect } from "react";
 import { fetchCategories } from "../store/actions/categoryActions"
 import { MangasFetch } from "../store/actions/mangasActions";
 import { useDispatch, useSelector } from "react-redux";
-import { Card } from "../Components/Mangas/Cards";
+import { Card } from "../Components/Manager/Cards";
 import { category, search } from "../store/mangaSlice";
 import { LoadingMangas } from "../Components/Mangas/LoadingMangas";
 import { LoadingCategories } from "../Components/Mangas/LoadingCategories";
 import '../Components/Mangas/mangaPages.css';
 
 
-function Mangas(){
+function Manager(){
     const {categories} = useSelector(state=>state.categories)
     const {mangas} = useSelector(state=>state.mangasStore)
     const mangasStore = useSelector(state=>state.mangasStore)
-    const {searchM} = useSelector((state=>state.mangasFilterStore))
     const {categoryM} = useSelector((state=>state.mangasFilterStore))
-
     const loading = mangasStore.loading
-    console.log(searchM);
+
+    const params = new URLSearchParams(window.location.search)
+   const idAuthor = params.get("idAuthor")
+   const nameAuthor = params.get("nameAuthor")
     
     
 
     const dispatch = useDispatch()
     
-    function PlaceCards({mangas, text, category}){
-        let data=mangas?.filter(c=>{
+    function PlaceCards({mangas, category}){
+        let data=mangas?.filter(c=>{ 
+          let value1=category.toLowerCase()
+          let value2=c.company_id?._id||c.author_id?._id
 
-          let value1=text.toLowerCase()
-          let value2=category.toLowerCase()
-          let filt1=c.title.toLowerCase()
-          let filt2=c.category_id.name.toLowerCase()
+          let filt1=c.category_id.name.toLowerCase()
+          let filt2=idAuthor
+
           
-          if(value2=="all"){
-            return filt1.startsWith(value1)
+          
+          if(value1=="all"){
+            return filt2.startsWith(value2)
           }else{
             return filt1.startsWith(value1) && filt2.startsWith(value2)
               
           }
           
-          
+            
          })
         if(data?.length!=0){
           console.log(data);
@@ -46,16 +49,14 @@ function Mangas(){
         return(
           <>
           {
-            
-            
-            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo} id={m._id} autor={m.author_id?.name||m.company_id?.name} description={m.
-              description}></Card>)
+      
+            data?.map(m=><Card category={m.category_id.name} name={m.title} image={m.cover_photo} id={m._id} autor={m.author_id?.name||m.company_id?.name}></Card>)
            
            }
           </>
         )}else{
           return(<>
-              <p className="text-[#F472B6] text-center w-full text-[1.3rem] font-montserrat font-bold">Sorry, we couldn't find what you were looking for.</p>
+              <p className="text-[#F472B6] py-28 text-center w-full text-[1.3rem] font-montserrat font-bold">You don't have any manga of this type</p>
       
           </>)
         }
@@ -73,20 +74,10 @@ function Mangas(){
     <>
    
     <div className=" bodyManga flex-wrap flex justify-center  font-sans text-white">
-        <img className="absolute imageGirl object-cover w-full filter brightness-50" src="https://s3-alpha-sig.figma.com/img/f0d0/3e80/2ae29b0afaf84c3dc0f77973947cfb6b?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jM4YzCS2maTpYLKMLSX7l3-HbMuW6kkY3prbqcR2D3X~W4yKcLlQs~O1XgA~DP7X2-6HvXTgmCTdp1ZzChQvLzzWIvki1FjUETKsL6KEoQhs-RuTSWXela6gcgTLsmBVx5sg9wtD585MquSDbR0uuDRgjJFOXrD7cLXhjXCChCV3nLEDw1BRiFr7bV8ZyQ-WXXc41BzB242phZNuOyURY8WRGTiuoeoKrIiT9t0rQJsIp1dPwQIpByamNfMKIvIzF2aKscBdIE2D-5J1pn5RIglF3EkbQurznjo~vWOfvoX8VFEyaCYlbcljHy-IWBFHu0U0M6sy~d~H5ITi3HXG2g__" alt="" />
+        <img className="absolute imageGirl object-cover w-full filter brightness-50" src="https://s3-alpha-sig.figma.com/img/b3d2/1981/f49a850ffc6520d4e5bbb1e113008d97?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J~nxkbfD0o1AXMvETNOBuexBhAMP~M4w88pk8vIrcfE63zLAhsZ8Ndz5Uor0vO~p7KOvRnoG1tzPuRwBXENsU0aCPkEC96rq8NE83ibN9kAmORcA8PSPzn3nnQQEckVFrxX9eIPJEDuIXutUVQnHvlqCV-0N8Jz84XIBLeUr49akZOO6BfaiGsbRNETWcSiV2Lx6ka-n5yZMW4EHC9t2XWX~R3~NCKEF5dLmeZ2552-xpuNlLeH~9VFYTMY51KgXi4gC7O7jsruQJr8JVbLfD7SBFQ60BNbdRpBR6C38f3vth3SHyP0a4XLcIWk~bM2W8Edr10BTSCqDuKRgxDAhZA__" alt="" />
 
         <div className="containerSearch flex flex-row flex-wrap justify-center content-center items-end">
-            <h1 className="titleMangas font-montserrat font-bold text-center pb-16 w-full">Mangas</h1>
-            <div className="searchBar w-full flex">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
-                    <circle className="stroke" cx="16.9582" cy="16.9584" r="10.7917" stroke="#999999" stroke-width="2"/>
-                    <path className="stroke" d="M30.8335 30.8333L26.2085 26.2083" stroke="#999999" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </button>
-            
-                <input type="text" className="w-full font-roboto font-normal outline-none placeholder:font-normal" placeholder="Find your manga here" value={searchM} onChange={e=>dispatch(search({searchM:e.target.value}))} />
-            </div>
+            <h1 className="titleMangas font-montserrat font-bold text-center pb-16 w-full">{nameAuthor}</h1>
             
         </div>
         <div className="mangas w-11/12 flex justify-center flex-wrap mt-8 max-w-[1400px]">
@@ -104,7 +95,7 @@ function Mangas(){
            </div>
            <div className="flex w-full max-w-[840px] mt-8 flex-wrap gap-8 justify-between">
             {
-            !loading?<PlaceCards mangas={mangas} text={searchM} category={categoryM}></PlaceCards>
+            !loading?<PlaceCards mangas={mangas} category={categoryM} ></PlaceCards>
             :<LoadingMangas></LoadingMangas>
             
             
@@ -120,4 +111,4 @@ function Mangas(){
   
 }
 
-export default Mangas
+export default Manager
