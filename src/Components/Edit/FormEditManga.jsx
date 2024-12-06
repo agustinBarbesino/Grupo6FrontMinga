@@ -7,43 +7,30 @@ import { editManga, deleteManga, setShowSaveModal, setShowDeleteModal, setShowDe
 const FormEditManga = () => {
     const dispatch = useDispatch()
     const { title } = useParams()
-    const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loading, loadingDelete, deleteSuccess } = useSelector((state) => state.editMangas)
+    const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loadingEdit, loadingDelete, deleteSuccess, initialFormDataManga } = useSelector((state) => state.editMangas)
     const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
-    useEffect(() => {
-        dispatch(fetchCategories())  //
-    }, [dispatch])
     const categorias = categories.map((category) => category.name)
-    const [category, setCategory] = useState('')
-    const handleChangeData = (e) => {
-        setFormData({ ...formData, data: e.target.value })
-    }
-    const handleChangeCategory = (e) => {
-        setCategory(e.target.value) // Actualiza el estado con el valor seleccionado
-    }
-    const initialFormData = {
-        title: title,
-        data: '',
-        edit: '',
-    }
-    const [formData, setFormData] = useState(initialFormData)
+    const [formData, setFormData] = useState(initialFormDataManga)
+    useEffect(() => {
+        dispatch(fetchCategories())  
+        setFormData({ ...formData, title: title})
+    }, [])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(editManga({ formData }))
-    }
-    const handleDelete = () => {
-        dispatch(deleteManga({title}))
+        setFormData(initialFormDataManga)
     }
     useEffect(() => {
         if (mangaData) {
-          dispatch(setShowSaveModal(true))
+            dispatch(setShowSaveModal(true))
+            setFormData({ ...formData, title: title})
+        } else if (deleteSuccess) {
+            dispatch(setShowDeleteModal(false))
+            dispatch(setShowDeletedModal(true))
         }
-      }, [mangaData, dispatch])
-    useEffect(() => {
-        if (deleteSuccess) {
-          dispatch(setShowDeleteModal(false))
-          dispatch(setShowDeletedModal(true))
-        }
-      }, [deleteSuccess, dispatch])
+    }, [mangaData, deleteSuccess])
+    
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -59,7 +46,7 @@ const FormEditManga = () => {
                             <select
                                 name="data"
                                 value={formData.data}
-                                onChange={handleChangeData}
+                                onChange={(e) => setFormData({ ...formData, data: e.target.value })}
                                 required
                                 className={`w-64 border-b ${formData.data ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
@@ -81,10 +68,10 @@ const FormEditManga = () => {
                                     <div className="flex justify-center md:justify-start">
                                         <select
                                             name="category"
-                                            value={category}
-                                            onChange={handleChangeCategory}
+                                            value={formData.edit}
+                                            onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
                                             required
-                                            className={`w-64 border-b ${category ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                                            className={`w-64 border-b ${formData.edit ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                         >
                                             <option value="" disabled >
                                                 select category
@@ -114,16 +101,16 @@ const FormEditManga = () => {
 
                         {/* buttons */}
 
-                        <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
                             >
-                                {loading ? "Editing..." : "Edit"} {/* Mostrar "Editing..." mientras está cargando */}
+                                {loadingEdit ? "Editing..." : "Edit"} {/* Mostrar "Editing..." mientras está cargando */}
                             </button>
                         </div>
 
-                        <div className="flex justify-center w-[90%] pt-4 md:justify-start font-semibold">
+                        <div className="flex pb-8 justify-center w-[90%] pt-4 md:justify-start font-semibold">
                             <button
                                 type="button"
                                 onClick={() => dispatch(setShowDeleteModal(true))}
@@ -148,7 +135,7 @@ const FormEditManga = () => {
                                 <hr className="border-gray-300 my-4" />
                                 <div className="flex items-center">
                                     <button
-                                        onClick={handleDelete} //debe mandar al endpoint de delete manga
+                                        onClick={()=>dispatch(deleteManga({ title }))} //debe mandar al endpoint de delete manga
                                         className="flex-1 text-red-500 py-2"
                                     >
                                         {loadingDelete ? "Deliting..." : "Yes, I'm sure"} {/* Mostrar "Deliting..." mientras está cargando */}
@@ -185,7 +172,7 @@ const FormEditManga = () => {
             {showDeletedModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                        <h3 className="text-lg font-medium mb-4 text-center">Your chapter is deleted!</h3>
+                        <h3 className="text-lg font-medium mb-4 text-center">Your manga is deleted!</h3>
                         <hr className="border-gray-300 my-4" />
                         <button
                             onClick={() => dispatch(setShowDeletedModal(false))}

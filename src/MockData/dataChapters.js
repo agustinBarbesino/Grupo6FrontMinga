@@ -693,7 +693,7 @@ export const mangas = [
     }
 ]
 
-export const comments = 
+export const commentss = 
     [
         {
           "_id": "674a58b0b9cd6633e668acc9",

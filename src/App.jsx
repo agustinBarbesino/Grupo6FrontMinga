@@ -24,6 +24,7 @@ import Profile from "./Pages/Profile";
 import GoogleAuthHandler from "./Components/Login/GoogleHandler";
 import Mangas from "./Pages/Mangas"
 import Manga from "./Pages/Manga"
+import Manager from './Pages/Manager';
 
 const router = createBrowserRouter([{
   element: <StandarLayout />,
@@ -33,7 +34,7 @@ const router = createBrowserRouter([{
     { path: "/editProfile", element: <EditProfile /> },      
     { path: "/chapter", element: <Chapter /> },
     { path: "/editManga/:title", element: <EditManga /> },
-    { path: "/editChapter", element: <EditChapter /> },
+    { path: "/editChapter/:title/:id", element: <EditChapter /> },
     { path: "/newManga", element: <NewManga /> },
     { path: `/newChapter/:id`, element: <NewChapter /> },
     { path: "/newAuthor", element: <NewAuthor /> },
@@ -45,7 +46,8 @@ const router = createBrowserRouter([{
     { path: "/signup", element: <Register /> },
     { path: "/rol", element: <ChangeRol /> },
     { path: "/mangas", element: <Mangas /> },
-    { path: "/manga", element: <Manga /> }
+    { path: "/manga", element: <Manga /> },
+    { path: "/manager", element: <Manager /> }
   ]
 }, {
   path: "/auth/google/callback",

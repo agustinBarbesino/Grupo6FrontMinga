@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom"
+
+
 function Chapter({mangaId,image, title, pages}){
+  const navigate = useNavigate();
     return(<>
     <div className="flex flex-wrap py-2 items-center justify-center">
               <div className="w-full flex flex-nowrap items-center justify-center">
@@ -12,7 +16,7 @@ function Chapter({mangaId,image, title, pages}){
             alt="iconComment" className="w-[25px] h-[20px]" />
             <p className="font-montserrat text-[13px] font-normal px-2 text-black">{pages}</p>
             </div>
-            <button className="w-[91px] rounded-full h-[44px] bg-gradient-to-r from-[#F9A8D4] to-[#F472B6] font-montserrat text-[15px] font-bold text-white">Read</button>
+            <button onClick={() => navigate(`/chapter?id=${mangaId}`)} className="w-[91px] rounded-full h-[44px] bg-gradient-to-r from-[#F9A8D4] to-[#F472B6] font-montserrat text-[15px] font-bold text-white">Read</button>
             </div>
           </div>
     </>)
