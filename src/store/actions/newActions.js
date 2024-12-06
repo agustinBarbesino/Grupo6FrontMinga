@@ -3,7 +3,6 @@ import axios from "axios"
 const BASE_URL = 'http://localhost:8080/api'
 
 export const createManga = createAsyncThunk('createManga', async({formData}) => {
-    console.log("updatedFormBack", formData)
     const response = await axios.post(`${BASE_URL}/mangas/create`, formData)
     return response.data
 }
