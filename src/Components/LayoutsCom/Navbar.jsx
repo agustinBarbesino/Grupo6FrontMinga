@@ -16,7 +16,7 @@ function NavBar() {
     const handleLogout = async () => {
         try {
             await dispatch(signOut()).unwrap();
-            setIsOpen(false);
+            setIsOpen(false)
             navigate('/');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -85,12 +85,12 @@ function NavBar() {
 
                     {/* navegacion */}
                     <div className="flex place-content-center justify-center md:w-80 ">
-                        <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                        <button onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             <NavLink to="/home"> Home</NavLink>
                         </button>
                     </div>
                     <div className="flex place-content-center justify-center md:w-80 z-50">
-                        <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                        <button onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             <NavLink to="/mangas"> Mangas</NavLink>
                         </button>
                     </div>
@@ -98,14 +98,14 @@ function NavBar() {
                     {/* inciar/cerrar sesion */}
                     {!isAuthenticated ? (
                         <div className="flex place-content-center justify-center mb-2 md:w-80 z-50">
-                            <button className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                            <button onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                                 <NavLink to="/signin"> Sign In</NavLink>
                             </button>
                         </div>
                     ) : (
                         <div className="flex place-content-center justify-center ml-0 mt-0 md:mt-2 mb-2 md:w-80 z-50">
                             <button 
-                                onClick={handleLogout}
+                                onClick={handleLogout }
                                 className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" 
                             >
                                 Logout

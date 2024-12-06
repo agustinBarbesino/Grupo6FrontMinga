@@ -5,10 +5,12 @@ import mangasReducer from "./reducer/mangasReducer";
 import  mangasFilterReducer from "./mangaSlice";
 import chapterReducer from "./reducer/mangaReducer";
 import { newChapter, newManga } from './reducer/newReducer'
-import { editMangas } from './reducer/editReducer'
+import { editChapters, editMangas } from './reducer/editReducer'
 import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
+import {chapterReadReducer} from './reducer/chapterReducer'
+import profileReducer from './reducer/profileReducer'
 
 const store = configureStore({
   reducer: {
@@ -22,7 +24,10 @@ const store = configureStore({
     mangasFilterStore:mangasFilterReducer,
     mangasStore:mangasReducer,
     company: companyReducer,
-    author: authorReducer
+    author: authorReducer,
+    editChapters: editChapters,
+    chapterStore: chapterReadReducer,
+    profile: profileReducer
   },
 })
 
