@@ -14,8 +14,8 @@ function NavBar() {
 
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const user = useSelector(selectUser);
-    const role = useSelector((state) => state.auth.role);
-    
+    const role = useSelector((state) => state.role);
+
 
     const handleLogout = async () => {
         try {
@@ -39,7 +39,10 @@ function NavBar() {
             dispatch(setRole(user.role))
         }
     })
-     
+
+    console.log("validacion",(role?.role === 1 ||   2 || 3));
+    
+
     return (
         <>
             <div className="relative flex justify-center items-center">
@@ -62,7 +65,11 @@ function NavBar() {
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 ">
-                            <div className={`flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full `}>
+
+                            <NavLink
+                                to="/profile"
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full ">
                                 <img
                                     src={user.company_id || user.author_id ? user.photo_company || user.photo_author : user.photo}
                                     onError={'https://s3-alpha-sig.figma.com/img/1f46/b78f/285f261e619b3b7253ad628c64f0acc5?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iLKdnvNOvZ1Ef7nA1GjyEaGlwe-yQSSOZpKx~O3GXlUUMERzl3ZU3yiaX927p3h4FQhUOMKnoda1GniRqS84LThpPoxozoLx3gyStafMuyBhMv9vUlFhfZgw1afGJ9LNtGc4HlN5TUo1q-GxFZafoDyHO~L5yWyeQLakrXs0MUPH9Vc1jXzy1hZsjkkSMtbeZ9kJ1I04ZL-tR1rrFXOrs3zB8EJJRo88hu~fuRVfoAk63k9cS~fT9UZY5gjb-ETPTB0WiqRMr34kdzOR-a0eekiwzT9GtU~oOiGJruvJdtbtKFtBP90~~F1qzJcOd4HtMYgd3T-z9qme2QjwUgs3QQ__'}
@@ -70,9 +77,10 @@ function NavBar() {
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
                                 <span className="text-sm sm:text-base text-ellipsis pl-2 text-white overflow-hidden whitespace-nowrap">
-                                    {user.nameCompany ? user.nameCompany : user.nameAuhtor}
+                                    {role?.role === 0 ? user.email : user.nameAuhtor || user.nameCompany}
                                 </span>
-                            </div>
+                            </NavLink>
+
                             <div className="flex items-end justify-end w-1/2">
                                 <button className="z-10 p-2 text-white hover:text-rose-light"
                                     onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
@@ -117,6 +125,13 @@ function NavBar() {
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
                             <NavLink to={'/rol'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 Change to role
+                            </NavLink>
+                        </div>)}
+                    {/* My mangas */}
+                    {(role?.role === 1 || role?.role === 2 || role?.role === 3) && (
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                            <NavLink  onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                                My Mangas
                             </NavLink>
                         </div>)}
                     {/* inciar/cerrar sesion */}
