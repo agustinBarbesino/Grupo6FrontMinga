@@ -1,10 +1,9 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const setSearch = createAction("SET_SEARCH")
-export const setCategory = createAction("SET_CATEGORY")
 
-export const MangasFetch = createAsyncThunk("GetMangas", async() => {
+
+export const reactionsAll = createAsyncThunk("GetreactionsAll", async() => {
        
         console.log("Se entro a la solicitud");
         

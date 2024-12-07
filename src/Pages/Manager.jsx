@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { fetchCategories } from "../store/actions/categoryActions"
 import { MangasFetch } from "../store/actions/mangasActions";
+import { AuthorsFetch } from "../store/actions/authorsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../Components/Manager/Cards";
 import { category, search } from "../store/mangaSlice";
@@ -12,14 +13,20 @@ import '../Components/Mangas/mangaPages.css';
 function Manager(){
     const {categories} = useSelector(state=>state.categories)
     const {mangas} = useSelector(state=>state.mangasStore)
+    const authors = useSelector(state=>state.authors.authores)
     const mangasStore = useSelector(state=>state.mangasStore)
     const {categoryM} = useSelector((state=>state.mangasFilterStore))
     const loading = mangasStore.loading
 
-    const params = new URLSearchParams(window.location.search)
-   const idAuthor = params.get("idAuthor")
-   const nameAuthor = params.get("nameAuthor")
+  
     
+   const idAuthor = JSON.parse(localStorage.getItem("user"))
+ 
+   const nameAuthorBase = authors.filter(e=>e._id == idAuthor.author_id||idAuthor.company_id) 
+   let nameAuthor = nameAuthorBase[0]?.name
+   console.log(nameAuthor);
+   
+   
     
 
     const dispatch = useDispatch()
@@ -30,8 +37,9 @@ function Manager(){
           let value2=c.company_id?._id||c.author_id?._id
 
           let filt1=c.category_id.name.toLowerCase()
-          let filt2=idAuthor
+          let filt2=idAuthor.author_id||idAuthor.company_id
 
+          console.log(value1);
           
           
           if(value1=="all"){
@@ -67,9 +75,12 @@ function Manager(){
     useEffect(()=>{
         dispatch(fetchCategories())
         dispatch(MangasFetch())
+        dispatch(AuthorsFetch())
     },[])
   
-    
+    function newManga() {
+      window.location.href="/newManga"
+    }
     return(
     <>
    
@@ -92,6 +103,7 @@ function Manager(){
              !loading?categories.map(c=><button value={c.name} className={`${c.name} px-3 py-2 rounded-full font-roboto font-bold text-xs`} onClick={e=>dispatch(category({categoryM:e.target.value}))}>{c.name}</button>)
             :<LoadingCategories></LoadingCategories>
             }
+            <button onClick={newManga} className="newMangaCat px-3 py-2 rounded-full font-roboto font-bold text-xs">+ New Manga</button>
            </div>
            <div className="flex w-full max-w-[840px] mt-8 flex-wrap gap-8 justify-between">
             {

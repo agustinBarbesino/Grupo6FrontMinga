@@ -224,6 +224,7 @@
 .minW{
     min-width: 300px;
 }
+
 .editM{
     width: 47px;
     height: 35px;
@@ -280,6 +281,43 @@
 .maxTablets{
     max-width: 425px;
 }
+.cardM{
+    view-timeline-name: --card;
+    view-timeline-axis: block;
+    animation-timeline: --card;
+    animation-name: show;
+    animation-range: entry 5% cover 40%;
+}
+@keyframes show{
+    from{
+        opacity: 0;
+        scale: 25%;
+    }
+    to{
+        opacity: 1;
+        scale: 100%;
+    }
+}
+.mesagge{
+    color: #00BA88;
+    font-family: "Monserrat", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding-top: 1rem;
+}
+.editChap{
+    padding: 5px;
+    background-color: orange;
+    position: absolute;
+    border-radius: 1rem;
+    left: 3px;
+    top: 13px;
+}
+.newMangaCat{
+    background-color: #00BA88;
+    color: white;
+    margin-left: 1rem;
+}
 @media only screen and (max-width: 768px) {
     .mangas{
         min-width: 100%;
@@ -321,10 +359,35 @@
     .line{
         height: 90px;
     }
-   
-    
+    .boxDatos{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .estRadBox{
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+     }
+     .titleCatBox{
+        width: 100%;
+       display: flex;
+       flex-flow: column;
+       align-content: center;
+       align-items: center;
+    }
+    .buttonMangaBox{
+     
+        width: 30rem;
+    }
   }
 @media only screen and (max-width: 600px) {
+    .boxDatos{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .titleMangas{
         font-size: 40px;
         padding-bottom: 2rem;
@@ -413,7 +476,79 @@
         height: 100%;
         width: 130px;
     }
+    .estRadBox{
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+     }
+     .titleCatBox{
+        width: 100%;
+       display: flex;
+       flex-flow: column;
+       align-content: center;
+       align-items: center;
+    }
+    .buttonMangaBox{
+     
+        width: 100%;
+    }
+    
   }
+
+  @media only screen and (min-width: 1024px) {
+      .boxDatos{
+        align-items: start; 
+        gap: 1rem;
+        flex-direction: column;
+        width:80%;
+        height: 35rem;
+        flex-wrap: wrap; 
+        justify-content: center;
+        position: relative;
+    }
+    .boxDatos>img{
+        width: 20rem;
+        height: 26rem;
+    }
+    .estRadBox{
+       width: 30rem;
+       display: flex;
+       flex-flow: column;
+    }
+    .titleCatBox{
+        width: 26rem;
+       display: flex;
+       flex-flow: column;
+       align-content: center;
+       align-items: center;
+    }
+    .radios{
+       margin-right: 25%;
+    }
+    .buttonMangaBox{
+     
+        width: 47%;
+    }
+    .chapterBox{
+        overflow-y: scroll;
+        height: 20rem;
+    }
+    .textChapBox{
+        width: 28rem;
+        margin-top:1rem ;
+        text-align: center;
+    }
+    .chapterBox::-webkit-scrollbar{
+        background-color: transparent;
+        width: 7px;
+    }
+    .chapterBox::-webkit-scrollbar-thumb{
+        background-color: #F472B6;
+        border-radius: 1rem;
+    }
+   }
+
 
 
   

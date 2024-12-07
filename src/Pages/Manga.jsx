@@ -1,5 +1,6 @@
 import { ChapterInfo } from "../Components/Chapters/ChapterInfo";
 import { Chapter } from "../Components/Chapters/Chapter";
+import { Chapter2 } from "../Components/Chapters/Chapter2";
 import { ChapterFetch } from "../store/actions/mangaActions";
 import { useState } from "react";
 import '../Components/Mangas/mangaPages.css';
@@ -16,10 +17,12 @@ function Manga() {
   const image = params.get("image")
   const name = params.get("name")
   const author = params.get("autor")
+  const authorId = params.get("autorId")
   const category = params.get("category")
   const mangaId = params.get("mangaId")
   const descp = params.get("descp")
-  
+  const authorSign = JSON.parse(localStorage.getItem("user"))
+  const authorCompany = authorSign.author_id||authorSign.company_id
   
   const dispatch = useDispatch()
 
@@ -48,21 +51,25 @@ function Manga() {
   return (
     <>
       <div className="bgColor flex-wrap flex justify-center">
-        <div className="w-full mb-16 min-w-[320px] p-2 pt-16 flex flex-col justify-center items-center">
+       
+        <div className=" mb-16  p-2 pt-16 flex boxDatos">
           
+          {authorCompany==authorId?<p className="mesagge">You are the author of this Manga!</p>:null}
           <img
           className="maxTablets w-full h-[260px] object-cover rounded-[8px]"
             src={image}
             alt="Portada del manga"
           />
-          {colorButton.boolean?<ChapterInfo name={name} author={author} category={category}></ChapterInfo>:<p className="w-full text-center font-montserrat text-[18px] pt-4 font-normal text-[#222222]">Chapters</p>}
-          <div className="max-w-[360px]">
+         
+          {colorButton.boolean?<ChapterInfo name={name} author={author} category={category} mangaId={mangaId}></ChapterInfo>:<p className="textChapBox text-center font-montserrat text-[18px] pt-4 font-normal text-[#222222]">Chapters</p>}
+        
+          <div className=" buttonMangaBox">
             <div className="minW h-[28px] rounded-[20px] flex mt-[1.5rem] shadow-[0_0px_7px_0px_rgba(0,0,0,0.15)] relative">
               <div className={classInfo}></div>
               <button style={{color:colorButton.color}} onClick={buttonInfoLeft} className="w-[50%] rounded-[20px] text-[10px] z-[1] font-montserrat font-normal text-center transition-all duration-300">Manga</button><button style={{color:colorButton2.color}} onClick={buttonInfoRight} className="w-[50%] z-[1] rounded-[20px] text-[10px] font-montserrat font-normal text-center transition-all duration-300">Chapters</button>
 
             </div>
-            {colorButton.boolean?<p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse molestie est nec gravida dictum. Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpat vel vitae quam.Nunc dictum lectus quam, non maximus urna ornare sit amet. Aliquam id sapien in massa commodo volutpatc tum lectus quam, non ma.</p>:mangaChapters.map(c=><Chapter title={c.title} pages={c.pages.length} mangaId={c._id} image={image}></Chapter>) }
+            {colorButton.boolean?<p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">{descp}</p>:<div className="chapterBox">{authorCompany==authorId?mangaChapters.map(c=><Chapter2 title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter2>):mangaChapters.map(c=><Chapter title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter>)}</div> }
             
            
           </div>
