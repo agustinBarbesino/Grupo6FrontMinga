@@ -17,7 +17,7 @@ export const panelReducer = createReducer (initialState,(builder)=> {
         state.loadingCompanies = true
     })
     .addCase(getCompanies.fulfilled, (state, action)=>{
-        console.log('Reducer received data:', action.payload);
+        console.log('Reducer received data:', action.payload)
         state.loadingCompanies = false
         state.companies = action.payload
     })
@@ -29,7 +29,7 @@ export const panelReducer = createReducer (initialState,(builder)=> {
         state.loadingAuthor=true
     })
     .addCase(getAuthor.fulfilled, (state, action)=>{
-        console.log('Reducer received data:', action.payload);
+        console.log('Reducer received data:', action.payload)
         state.loadingAuthor = false
         state.authors = action.payload
     })
