@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Camera } from 'lucide-react';
+import { UserRoundPen } from 'lucide-react';
 import { fetchAuthorData, fetchCompanyData } from '../store/actions/profileActions';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [isNew, setIsNew] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const user = useSelector(state => state.auth.user);
   const { profile, mangas, loading, error, profileType } = useSelector(state => state.profile);
@@ -18,6 +20,9 @@ const Profile = () => {
     }
   }, [dispatch, user]);
 
+  const manager=()=>{
+    window.location.href="/manager"
+  }
   const getSortedMangas = () => {
     if (!mangas) return [];
     
@@ -56,11 +61,8 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-center w-full max-w-6xl mx-auto p-4 lg:py-8">
       {/* Header */}
-      <div className="w-full flex items-center justify-between mb-8 lg:px-8 pt-16">
-        <div className="w-8 h-8" />
-        <div className="flex items-center gap-2">
+      <div className="w-full flex items-center justify-center mb-8 lg:px-8 pt-16">
           <h2 className="text-xl font-bold">{profileType === 'author' ? 'Author' : 'Company'}</h2>
-        </div>
       </div>
 
       {/* Main Content */}
@@ -78,12 +80,9 @@ const Profile = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <button className="absolute bottom-0 right-0 bg-white rounded-full p-2 lg:p-3 shadow-lg">
-              <Camera className="w-4 h-4 lg:w-6 lg:h-6" />
-            </button>
           </div>
 
-          <div className="text-center mt-4">
+          <div className="flex flex-col items-center text-center mt-4">
             <h1 className="text-xl lg:text-3xl font-bold mb-2">
               {profileType === 'author' ? `${profile.name} ${profile.last_name}` : profile.name}
             </h1>
@@ -100,11 +99,16 @@ const Profile = () => {
                 {profile.website}
               </a>
             )}
+            <button
+              className='mt-2 text-gray-600 hover:text-gray-800'
+              onClick={() => navigate('/editprofile')}>
+              <UserRoundPen className='w-8 h-8' />
+            </button>
           </div>
 
           {/* Toggle Switch */}
-          <div className="flex items-center justify-center space-x-4 w-full max-w-xs mt-6 lg:mt-8">
-            <span className="text-gray-700 font-medium text-base">New</span>
+          <div className="flex items-center justify-between w-1/2 max-w-xs mt-2 lg:mt-4">
+            <span className="text-gray-700 font-medium text-center">New</span>
             <button 
               onClick={handleToggleChange}
               className="w-12 h-6 bg-emerald-500 rounded-full relative transition-all duration-300 cursor-pointer"
@@ -114,7 +118,7 @@ const Profile = () => {
                   ${isNew ? 'right-1' : 'left-1'}`}
               />
             </button>
-            <span className="text-gray-700 font-medium text-base">Old</span>
+            <span className="text-gray-700 font-medium text-center mr-2.5">Old</span>
           </div>
         </div>
 
@@ -142,7 +146,7 @@ const Profile = () => {
       </div>
 
       {/* Manage Button */}
-      <button className="w-full max-w-md lg:max-w-xs bg-pink-500 text-white rounded-lg py-3 mt-8 hover:bg-pink-600 transition-colors">
+      <button onClick={manager} className="w-full max-w-md lg:max-w-xs bg-pink-500 text-white rounded-lg py-3 mt-8 hover:bg-pink-600 transition-colors">
         Manage!
       </button>
     </div>

@@ -12,6 +12,11 @@ import companyReducer from './reducer/companyReducer'
 import {chapterReadReducer} from './reducer/chapterReducer'
 import profileReducer from './reducer/profileReducer'
 import { panelReducer } from './reducer/panelReducer'
+import authorsReducer from './reducer/authorsReducer';
+import reactionsAllReducer from './reducer/reactionsAllReducer';
+import reactionsCreateReducer from './reducer/reactionsCreateReducer';
+
+
 
 const store = configureStore({
   reducer: {
@@ -30,6 +35,9 @@ const store = configureStore({
     chapterStore: chapterReadReducer,
     profile: profileReducer, 
     panelReducer: panelReducer,
+    authors: authorsReducer,
+    reactions:reactionsAllReducer,
+    reactionCreate:reactionsCreateReducer
   },
 })
 
