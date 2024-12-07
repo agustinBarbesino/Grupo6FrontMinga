@@ -42,9 +42,9 @@ function NavBar() {
      
     return (
         <>
-            <div className="relative ">
+            <div className="relative flex justify-center items-center">
                 <button className={`
-                    z-10 p-2 
+                    z-10  
                     ${isActive ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
                     ${isOpen ? 'hidden' : 'block z-10 md:min-w-80'}
                     `}
@@ -58,7 +58,7 @@ function NavBar() {
                     </svg>
                 </button>
 
-                <nav className={`md:absolute fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? "block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80" : "hidden"} `} >
+                <nav className={`fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? "block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80" : "hidden"} `} >
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 ">

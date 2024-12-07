@@ -8,6 +8,12 @@ const initialState = {
     showSendModal: false,
     mangaData: null,
     chapterData: null,
+    initialFormDataManga : {
+      title: '',
+      category_id: '',
+      description: '',
+      cover_photo: '',
+  }
   }
 
 export const newManga = createReducer(initialState, (builder)=>{

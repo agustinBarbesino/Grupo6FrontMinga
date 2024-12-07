@@ -10,6 +10,9 @@ import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
 import {chapterReadReducer} from './reducer/chapterReducer'
+import profileReducer from './reducer/profileReducer'
+import { panelReducer } from './reducer/panelReducer'
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -24,8 +27,9 @@ const store = configureStore({
     company: companyReducer,
     author: authorReducer,
     editChapters: editChapters,
-    chapterStore: chapterReadReducer
-
+    chapterStore: chapterReadReducer,
+    profile: profileReducer, 
+    panelReducer: panelReducer,
   },
 })
 
