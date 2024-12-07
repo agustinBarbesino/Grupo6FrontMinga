@@ -2,7 +2,6 @@ import { React, useState, useEffect } from 'react'
 import { User, Users } from 'lucide-react'
 import { getCompanies, getAuthor, updateActiveCompanies, updateActiveAuthors } from '../../store/actions/panelActions.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { use } from 'react';
 
 const Panel = () => {
   const [activeTab, setActiveTab] = useState('companies')
@@ -111,7 +110,7 @@ const Panel = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Panel;
+export default Panel
