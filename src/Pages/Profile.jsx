@@ -20,6 +20,9 @@ const Profile = () => {
     }
   }, [dispatch, user]);
 
+  const manager=()=>{
+    window.location.href="/manager"
+  }
   const getSortedMangas = () => {
     if (!mangas) return [];
     
@@ -143,7 +146,7 @@ const Profile = () => {
       </div>
 
       {/* Manage Button */}
-      <button className="w-full max-w-md lg:max-w-xs bg-pink-500 text-white rounded-lg py-3 mt-8 hover:bg-pink-600 transition-colors">
+      <button onClick={manager} className="w-full max-w-md lg:max-w-xs bg-pink-500 text-white rounded-lg py-3 mt-8 hover:bg-pink-600 transition-colors">
         Manage!
       </button>
     </div>

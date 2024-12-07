@@ -23,13 +23,16 @@ function Card({category,name,image,id,autor}){
     function manga(){
         window.location.href=`/editManga/${name}`
     }
+    function newChapter(){
+        window.location.href=`/newChapter/${id}`
+    }
     const handleDelete = (title) => {
         dispatch(deleteManga({title}))
     }
     return(<>
      <div className="cardM relative w-[362px] h-[168px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] rounded-[10px] border border-[rgba(0,0,0,0.05)] bg-white">
                 <div className='iconos'>
-                    <button >
+                    <button onClick={newChapter}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 100 100">
                     
                     <line x1="50" y1="25" x2="50" y2="75" stroke="#222222" stroke-width="10" stroke-linecap="round"/>
@@ -55,7 +58,12 @@ function Card({category,name,image,id,autor}){
                    <p style={{color:hexColor,fontSize:15}} className="type">Type</p>
                 </div>
                 <button className="editM absolute" onClick={manga}>EDIT</button>
-                <button className="deleteM absolute" onClick={()=>handleDelete(name)}>DELETE</button>
+                <button className="deleteM absolute" onClick={()=>
+                {handleDelete(name)
+                 window.location.reload()
+                }
+
+            }>DELETE</button>
                 <img className="imageM absolute" src={image}alt="" />
      </div>
     </>)
