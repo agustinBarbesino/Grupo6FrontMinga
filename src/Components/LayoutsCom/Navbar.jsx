@@ -43,7 +43,7 @@ function NavBar() {
     })
 
     console.log("validacion", (role?.role === 1 || 2 || 3));
-
+  
 
     return (
         <>

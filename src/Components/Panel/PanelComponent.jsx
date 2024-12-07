@@ -59,7 +59,7 @@ const Panel = () => {
                       <div className="flex items-center justify-between w-1/3">
                         <div className='flex md:w-1/3 md:items-left justify-center '>
                           <img
-                            src="https://w7.pngwing.com/pngs/177/20/png-transparent-question-mark-pink-magenta-color-question-mark-miscellaneous-purple-text-thumbnail.png"
+                            src={company.photo == null ?`https://i.pinimg.com/736x/0e/9c/c6/0e9cc65bde115ecfa5ba8056d877690a.jpg`:company.photo}
                             alt="Company avatar"
                             className="w-8 h-8 rounded-full hidden md:block "
                           />
@@ -90,7 +90,7 @@ const Panel = () => {
                       <div className="flex items-center justify-between w-1/3">
                         <div className='flex md:w-1/2 md:items-left justify-center '>
                           <img
-                            src="https://w7.pngwing.com/pngs/177/20/png-transparent-question-mark-pink-magenta-color-question-mark-miscellaneous-purple-text-thumbnail.png"
+                            src={author.photo == null ?'https://i.pinimg.com/736x/5b/89/f1/5b89f121462393c9144af1dfaa3aa85b.jpg':author.photo}
                             alt="Company avatar"
                             className="w-8 h-8 rounded-full hidden md:block "
                           />
