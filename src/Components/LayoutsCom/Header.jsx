@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <>
       <header className="relative w-full bg-transparent z-50">
-        <div className={isActive ? 'flex fixed bg-gradient-to-r from-[#f9a8d4] to-[#f472b6] w-full justify-between font-montserrat px-2 md: py-4' : 'flex fixed w-full justify-between font-montserrat px-2 md:px-6 py-4'}>
+        <div className={isActive ? 'flex fixed bg-gradient-to-r from-[#f9a8d4] to-[#f472b6] w-full justify-between font-montserrat px-2 md:px-6 py-4' : 'flex fixed w-full justify-between font-montserrat px-2 md:px-6 py-4'}>
           <NavBar />
           {/* logo */}
           <NavLink to="/Home" className="flex justify-center  md:justify-end md:w-1/4">
