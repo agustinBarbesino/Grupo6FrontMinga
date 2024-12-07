@@ -7,52 +7,42 @@ import { createManga, setShowSendModal } from '../../store/actions/newActions.js
 const CreateManga = () => {
     const dispatch = useDispatch()
     const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
-    const rol = 1 // rol del usuario traer con estado
-    const modifier = '6750a0c15da1e9bc5c771f08' // traer del estado global el id de usuario o compania
-    useEffect(() => {
-        dispatch(fetchCategories())  //
-    }, [dispatch])
+    const user = JSON.parse(localStorage.getItem('user'))
     /* estado de modal, data de mangas y cargando */
-    const {showSendModal, mangaData, loading} = useSelector((state) => state.newManga)
+    const { showSendModal, mangaData, loading, initialFormDataManga } = useSelector((state) => state.newManga)
+    const [formData, setFormData] = useState(initialFormDataManga)
+    useEffect(() => {
+        dispatch(fetchCategories())
+        if (user.author_id) {
+            setFormData({ ...formData, author_id: user.author_id })
+        } else if (user.company_id) {
+            setFormData({ ...formData, company_id: user.company_id })
+        }
+    }, [])
     /* para los nombres de las categoras */
     const categorias = categories.map((category) => category.name)
     /* para actualizar la categoria segun la seleccionada */
     const [category, setCategory] = useState('')
-    /* se manda el id de la categoria selecionada al form para crear manga */
-    const handleChangeCategory = (e) => {
-        const selectedCategory = e.target.value
-        setCategory(e.target.value)
-        let cat = categories.find(c => c.name == selectedCategory)
-        setFormData({ ...formData, category_id: cat._id })
-    }
-    /* estado inicial de los datos que se van a mandar a creacion */
-    const initialFormData = {
-        title: '',
-        category_id: '',
-        description: '',
-        cover_photo: '',
-    }
-    const [formData, setFormData] = useState(initialFormData)
+    useEffect(() => {
+        if (category) {
+            let cat = categories.find(c => c.name == category)
+            setFormData({ ...formData, category_id: cat._id })
+        }
+    }, [category])
+    
     /* boton de enviar para enviar la info y limpiar formulario, segun el rol se manda autor o compania id */
     const handleSubmit = (e) => {
         e.preventDefault()
-        let updatedFormData = { ...formData }
-        // Agregar `author_id` o `company_id` basado en el rol
-        if (rol === 1) {
-            updatedFormData.author_id = modifier
-        } else if (rol === 2) {
-            updatedFormData.company_id = modifier
-        }
-        dispatch(createManga({ updatedFormData }))
-        setFormData(initialFormData)
+        dispatch(createManga({ formData }))
+        setFormData(initialFormDataManga)
         setCategory('')
     }
     /* Si el manga fue creado con éxito, mostramos el modal */
     useEffect(() => {
         if (mangaData) {
-          dispatch(setShowSendModal(true))
+            dispatch(setShowSendModal(true))
         }
-      }, [mangaData, dispatch])
+    }, [mangaData])
     return (
         <>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
@@ -75,7 +65,7 @@ const CreateManga = () => {
                             <select
                                 name="data"
                                 value={category}
-                                onChange={handleChangeCategory}
+                                onChange={(e) => setCategory(e.target.value)}
                                 required
                                 className={`w-64 border-b ${category ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
@@ -90,7 +80,6 @@ const CreateManga = () => {
                             </select>
                         </div>
                         {/* cover photo */}
-                        {/* title of manga */}
                         <div className="flex justify-center md:justify-start">
                             <input
                                 type="text"
@@ -120,7 +109,7 @@ const CreateManga = () => {
 
                         {/* buttons */}
 
-                        <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"

@@ -88,7 +88,7 @@ const CreateChapter = () => {
 
                         {/* buttons */}
 
-                        <div className="flex pt-16 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"

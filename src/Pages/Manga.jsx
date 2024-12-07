@@ -33,7 +33,7 @@ function Manga() {
 },[])
 
   const mangaChapters = chapters.filter(c=>c.manga_id?._id == mangaId)
-  console.log(mangaChapters);
+  console.log( "mangas chapters",mangaChapters);
   
   
   function buttonInfoLeft(){
@@ -51,9 +51,9 @@ function Manga() {
   return (
     <>
       <div className="bgColor flex-wrap flex justify-center">
-        {/*w-full min-w-[320px] */}
+       
         <div className=" mb-16  p-2 pt-16 flex boxDatos">
-          {/* flex-col justify-center items-center */}
+          
           {authorCompany==authorId?<p className="mesagge">You are the author of this Manga!</p>:null}
           <img
           className="maxTablets w-full h-[260px] object-cover rounded-[8px]"
@@ -62,17 +62,14 @@ function Manga() {
           />
          
           {colorButton.boolean?<ChapterInfo name={name} author={author} category={category} mangaId={mangaId}></ChapterInfo>:<p className="textChapBox text-center font-montserrat text-[18px] pt-4 font-normal text-[#222222]">Chapters</p>}
-         {/* max-w-[360px] */}
+        
           <div className=" buttonMangaBox">
             <div className="minW h-[28px] rounded-[20px] flex mt-[1.5rem] shadow-[0_0px_7px_0px_rgba(0,0,0,0.15)] relative">
               <div className={classInfo}></div>
               <button style={{color:colorButton.color}} onClick={buttonInfoLeft} className="w-[50%] rounded-[20px] text-[10px] z-[1] font-montserrat font-normal text-center transition-all duration-300">Manga</button><button style={{color:colorButton2.color}} onClick={buttonInfoRight} className="w-[50%] z-[1] rounded-[20px] text-[10px] font-montserrat font-normal text-center transition-all duration-300">Chapters</button>
 
             </div>
-            
             {colorButton.boolean?<p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">{descp}</p>:<div className="chapterBox">{authorCompany==authorId?mangaChapters.map(c=><Chapter2 title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter2>):mangaChapters.map(c=><Chapter title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter>)}</div> }
-            
-            
             
            
           </div>

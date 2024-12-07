@@ -10,3 +10,4 @@ export const ChapterFetch = createAsyncThunk("GetChapters", async() => {
        
         return response.data.response
         })
+

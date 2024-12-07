@@ -5,15 +5,17 @@ import mangasReducer from "./reducer/mangasReducer";
 import  mangasFilterReducer from "./mangaSlice";
 import chapterReducer from "./reducer/mangaReducer";
 import { newChapter, newManga } from './reducer/newReducer'
-import { editMangas } from './reducer/editReducer'
+import { editChapters, editMangas } from './reducer/editReducer'
 import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
+import {chapterReadReducer} from './reducer/chapterReducer'
+import profileReducer from './reducer/profileReducer'
+import { panelReducer } from './reducer/panelReducer'
 import authorsReducer from './reducer/authorsReducer';
 import reactionsAllReducer from './reducer/reactionsAllReducer';
-import reactionsUpdateReducer from './reducer/reactionsUpdateReducer';
-import reactionsDeleteReducer from './reducer/reactionsDeleteReducer';
 import reactionsCreateReducer from './reducer/reactionsCreateReducer';
+
 
 
 const store = configureStore({
@@ -29,13 +31,13 @@ const store = configureStore({
     mangasStore:mangasReducer,
     company: companyReducer,
     author: authorReducer,
+    editChapters: editChapters,
+    chapterStore: chapterReadReducer,
+    profile: profileReducer, 
+    panelReducer: panelReducer,
     authors: authorsReducer,
     reactions:reactionsAllReducer,
-    reactionUpdate:reactionsUpdateReducer,
-    reactionsDeleteReducer:reactionsDeleteReducer,
     reactionCreate:reactionsCreateReducer
-
-
   },
 })
 
