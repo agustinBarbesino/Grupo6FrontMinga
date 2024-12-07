@@ -58,7 +58,12 @@ function Card({category,name,image,id,autor}){
                    <p style={{color:hexColor,fontSize:15}} className="type">Type</p>
                 </div>
                 <button className="editM absolute" onClick={manga}>EDIT</button>
-                <button className="deleteM absolute" onClick={()=>handleDelete(name)}>DELETE</button>
+                <button className="deleteM absolute" onClick={()=>
+                {handleDelete(name)
+                 window.location.reload()
+                }
+
+            }>DELETE</button>
                 <img className="imageM absolute" src={image}alt="" />
      </div>
     </>)
