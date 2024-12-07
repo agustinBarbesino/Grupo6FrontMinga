@@ -1,14 +1,13 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const setSearch = createAction("SET_SEARCH")
-export const setCategory = createAction("SET_CATEGORY")
 
-export const MangasFetch = createAsyncThunk("GetMangas", async() => {
+export const reactionsUpdate = createAsyncThunk("reactionsUpdate", async({dataUpdate}) => {
        
         console.log("Se entro a la solicitud");
+        const {id,reaction} = dataUpdate
         
-            const response = await axios.get("http://localhost:8080/api/reactions/update/:id")
+            const response = await axios.put(`https://grupo6backminga.onrender.com/api/reactions/update/${id}`,reaction)
         console.log("Response",response.data);
        
         return response.data.response

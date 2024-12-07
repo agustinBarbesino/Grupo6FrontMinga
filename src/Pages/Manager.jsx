@@ -22,7 +22,7 @@ function Manager(){
     
    const idAuthor = JSON.parse(localStorage.getItem("user"))
  
-   const nameAuthorBase = authors.filter(e=>e._id == idAuthor.author_id) 
+   const nameAuthorBase = authors.filter(e=>e._id == idAuthor.author_id||idAuthor.company_id) 
    let nameAuthor = nameAuthorBase[0]?.name
    console.log(nameAuthor);
    
@@ -37,7 +37,7 @@ function Manager(){
           let value2=c.company_id?._id||c.author_id?._id
 
           let filt1=c.category_id.name.toLowerCase()
-          let filt2=idAuthor.author_id
+          let filt2=idAuthor.author_id||idAuthor.company_id
 
           console.log(value1);
           
@@ -78,7 +78,9 @@ function Manager(){
         dispatch(AuthorsFetch())
     },[])
   
-    
+    function newManga() {
+      window.location.href="/newManga"
+    }
     return(
     <>
    
@@ -101,6 +103,7 @@ function Manager(){
              !loading?categories.map(c=><button value={c.name} className={`${c.name} px-3 py-2 rounded-full font-roboto font-bold text-xs`} onClick={e=>dispatch(category({categoryM:e.target.value}))}>{c.name}</button>)
             :<LoadingCategories></LoadingCategories>
             }
+            <button onClick={newManga} className="newMangaCat px-3 py-2 rounded-full font-roboto font-bold text-xs">+ New Manga</button>
            </div>
            <div className="flex w-full max-w-[840px] mt-8 flex-wrap gap-8 justify-between">
             {

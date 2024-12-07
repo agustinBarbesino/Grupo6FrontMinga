@@ -10,6 +10,11 @@ import roleReducer from './reducer/roleReducer'
 import authorReducer from './reducer/authorReducer'
 import companyReducer from './reducer/companyReducer'
 import authorsReducer from './reducer/authorsReducer';
+import reactionsAllReducer from './reducer/reactionsAllReducer';
+import reactionsUpdateReducer from './reducer/reactionsUpdateReducer';
+import reactionsDeleteReducer from './reducer/reactionsDeleteReducer';
+import reactionsCreateReducer from './reducer/reactionsCreateReducer';
+
 
 const store = configureStore({
   reducer: {
@@ -24,7 +29,12 @@ const store = configureStore({
     mangasStore:mangasReducer,
     company: companyReducer,
     author: authorReducer,
-    authors: authorsReducer
+    authors: authorsReducer,
+    reactions:reactionsAllReducer,
+    reactionUpdate:reactionsUpdateReducer,
+    reactionsDeleteReducer:reactionsDeleteReducer,
+    reactionCreate:reactionsCreateReducer
+
 
   },
 })
