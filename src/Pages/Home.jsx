@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024); 
+      setIsMobile(window.innerWidth < 1024);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -62,10 +62,10 @@ export default function Home() {
   return (
     <div className={`flex flex-col w-full ${isMobile ? '' : 'bg-[#F4F4F4] pb-16 pt-16'}`}>
       <div className={`${isMobile ? 'min-h-screen' : 'min-h-[calc(100vh-40vh)]'}`}>
-        {/* Carousel Section - Solo se muestra en desktop */}
+        {/* Carousel Section*/}
         {!isMobile && (
-          <section className="hidden lg:block w-full py-8 px-4 bg-[#F4F4F4]">
-            <div className="relative w-full max-w-[1258px] h-[265px] mx-auto">
+          <section className="hidden lg:block w-full py-8 px-4 bg-[#F4F4F4] pt-16">
+            <div className="relative w-full mx-auto h-[265px] max-w-[1258px] 2xl:max-w-[1458px] 3xl:max-w-[1658px] 4xl:max-w-[1858px]">
               <div
                 className="w-full h-full flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg transition-colors duration-300"
                 style={{ backgroundColor: currentCategory?.color || '#F472B6' }}
@@ -143,9 +143,9 @@ export default function Home() {
           </section>
         )}
 
-        {/* Hero Section - Responsivo */}
+        {/* Hero Section */}
         <section className="relative mx-auto">
-          <div className="relative w-full max-w-[1258px] lg:h-[551px] h-screen mx-auto flex items-center">
+          <div className="relative w-full mx-auto lg:h-[551px] h-screen flex items-center max-w-[1258px] 2xl:max-w-[1458px] 3xl:max-w-[1658px] 4xl:max-w-[1858px]">
             {/* Background image */}
             <div className={`${isMobile ? 'fixed top-0 left-0 right-0 h-screen' : 'absolute inset-0 h-full'}`}>
               <img
