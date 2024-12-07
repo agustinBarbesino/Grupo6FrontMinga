@@ -32,6 +32,7 @@ const authReducer = createReducer(initialState, (builder) => {
       localStorage.removeItem('user');
       localStorage.removeItem('isAuthenticated');
       localStorage.removeItem('token');
+      localStorage.removeItem('role');
     })
     .addCase(processGoogleResponse, (state, action) => {
       try {
@@ -187,6 +188,7 @@ const authReducer = createReducer(initialState, (builder) => {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
       localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('role');
     })
     .addCase(signOut.rejected, (state, action) => {
       state.loading = false;
