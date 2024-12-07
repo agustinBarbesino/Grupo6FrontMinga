@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signOut, selectUser, selectIsAuthenticated } from '../../store/actions/authActions';
 import { setRole } from "../../store/actions/roleActions";
 
+//css
+import './Navbar.css'
 
 function NavBar() {
     const location = useLocation();
@@ -40,8 +42,8 @@ function NavBar() {
         }
     })
 
-    console.log("validacion",(role?.role === 1 ||   2 || 3));
-    
+    console.log("validacion", (role?.role === 1 || 2 || 3));
+
 
     return (
         <>
@@ -61,7 +63,8 @@ function NavBar() {
                     </svg>
                 </button>
 
-                <nav className={`fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? "block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80" : "hidden"} `} >
+                <nav className={`fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
+                block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80`} >
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 ">
@@ -77,7 +80,7 @@ function NavBar() {
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
                                 <span className="text-sm sm:text-base text-ellipsis pl-2 text-white overflow-hidden whitespace-nowrap">
-                                    {role?.role === 0 ? user.email : user.nameAuhtor || user.nameCompany}
+                                    {role?.role === 0 ? user.email : user.nameAuhtor || user.nameCompany || user.email}
                                 </span>
                             </NavLink>
 
@@ -128,10 +131,17 @@ function NavBar() {
                             </NavLink>
                         </div>)}
                     {/* My mangas */}
-                    {(role?.role === 1 || role?.role === 2 || role?.role === 3) && (
+                    {(role?.role === 1 || role?.role === 2) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <NavLink  onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 My Mangas
+                            </NavLink>
+                        </div>)}
+                    {/* My mangas */}
+                    {role?.role === 3 && (
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                            <NavLink to={'/panel'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                                Panel ADM
                             </NavLink>
                         </div>)}
                     {/* inciar/cerrar sesion */}
