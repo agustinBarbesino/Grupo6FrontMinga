@@ -42,9 +42,6 @@ function NavBar() {
         }
     })
 
-    console.log("validacion", (role?.role === 1 || 2 || 3));
-
-
     return (
         <>
             <div className="relative flex justify-center items-center">
@@ -75,7 +72,7 @@ function NavBar() {
                                 className="flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full ">
                                 <img
                                     src={user.company_id || user.author_id ? user.photo_company || user.photo_author : user.photo}
-                                    onError={'https://s3-alpha-sig.figma.com/img/1f46/b78f/285f261e619b3b7253ad628c64f0acc5?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iLKdnvNOvZ1Ef7nA1GjyEaGlwe-yQSSOZpKx~O3GXlUUMERzl3ZU3yiaX927p3h4FQhUOMKnoda1GniRqS84LThpPoxozoLx3gyStafMuyBhMv9vUlFhfZgw1afGJ9LNtGc4HlN5TUo1q-GxFZafoDyHO~L5yWyeQLakrXs0MUPH9Vc1jXzy1hZsjkkSMtbeZ9kJ1I04ZL-tR1rrFXOrs3zB8EJJRo88hu~fuRVfoAk63k9cS~fT9UZY5gjb-ETPTB0WiqRMr34kdzOR-a0eekiwzT9GtU~oOiGJruvJdtbtKFtBP90~~F1qzJcOd4HtMYgd3T-z9qme2QjwUgs3QQ__'}
+                                    onError={(e) => e.target.src = '../../../public/285f261e619b3b7253ad628c64f0acc5.png'}
                                     alt={`${user.company_id || user.author_id ? user.photo_company || user.photo_author : user.email}'s profile`}
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
