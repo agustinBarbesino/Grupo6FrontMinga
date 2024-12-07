@@ -159,7 +159,7 @@ const CreateAuthor = () => {
                     <form className="space-y-2 flex flex-col justify-center items-center"
                         onSubmit={handleSubmit}>
                          {/* name of author */}
-                         <div className="flex justify-center">
+                         <div className="flex flex-col justify-center">
                             <input
                                 type="text"
                                 id="name"
@@ -170,12 +170,16 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
-                            {validationErrors.name && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.name || ''}
+                            </p>
                         </div>
                          {/* last name of author */}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="text"
                                 id="last_name"
@@ -187,12 +191,16 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Last Name"
                             />
-                            {validationErrors.last_name && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.last_name}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.last_name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.last_name || ''}
+                            </p>
                         </div>
                          {/* city of author */}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="text"
                                 id="city"
@@ -203,12 +211,16 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="City"
                             />
-                            {validationErrors.city && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.city}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.city ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.city || ''}
+                            </p>
                         </div>
                          {/* country of author */}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="text"
                                 id="country"
@@ -219,12 +231,16 @@ const CreateAuthor = () => {
                                     }border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Country"
                             />
-                            {validationErrors.country && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.country}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.country ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.country || ''}
+                            </p>
                         </div>
                          {/* date*/}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="date"
                                 id="date"
@@ -235,13 +251,17 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Date"
                             />
-                            {validationErrors.date && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.date}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.date ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.date || ''}
+                            </p>
                         </div>
                        
                         {/*photo*/}
-                        <div className="flex justify-center md:justify-start">
+                        <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="url"
                                 id="photo"
@@ -252,16 +272,20 @@ const CreateAuthor = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
-                            {validationErrors.photo && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.photo || ''}
+                            </p>
                         </div>
                         {/* buttons */}
 
-                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex justify-center py-8 w-full font-semibold">
                             <button
                                 type="submit"
-                                className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
+                                className="w-64 text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg hover:transition-colors"
                             >
                                 Send
                             </button>
