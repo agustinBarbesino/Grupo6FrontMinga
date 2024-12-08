@@ -98,7 +98,7 @@ export default function Home() {
                         <img
                           src={currentCategory.characterPhoto}
                           alt={`${currentCategory.name} character`}
-                          className="w-48 md:w-[277px] h-56 md:h-[302px] object-contain absolute -top-16"
+                          className="w-48 md:w-[277px] h-56 md:h-[298px] object-contain absolute -top-16"
                         />
                       </div>
 
