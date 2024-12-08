@@ -6,7 +6,7 @@ import { getComments } from "../../store/actions/chapterActions";
 import { addComment } from "../../store/actions/chapterActions";
 
 export default function Modal() {
-    const [isOpen, setIsOpen] = useState(false);    
+    const [isOpen, setIsOpen] = useState(false);
     const { comments } = useSelector((state) => state.chapterStore);
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
@@ -22,11 +22,11 @@ export default function Modal() {
 
     const sendComment = async () => {
         if (commentSend.length >= 5) {
-            setLoading(true); 
-            await dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
-            dispatch(getComments(id)); 
-            setCommentSend(""); 
-            setLoading(false); 
+            setLoading(true);
+            dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
+            dispatch(getComments(id));
+            setCommentSend("");
+            setLoading(false);
         } else {
             alert("El comentario debe tener al menos 5 caracteres.");
         }
@@ -42,7 +42,7 @@ export default function Modal() {
                     {/* Button close */}
                     <div className="relative bg-[#EBEBEB] p-5 rounded flex flex-col justify-center items-center gap-4 w-full h-[88vh] md:h-[86vh] lg:h-[88vh]">
                         <button onClick={() => setIsOpen(!isOpen)} className="absolute top-3 right-3 lg:top-10 lg:right-10 bg-black text-white py-2 px-4 rounded-full"> X</button>
-                        
+
                         {/* Loading Screen */}
                         {loading && (
                             <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 z-20">
