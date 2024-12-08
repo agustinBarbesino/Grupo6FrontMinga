@@ -1,4 +1,4 @@
-import { TOGGLE_THEME, SET_THEME } from '../actions/themeActions';
+import { TOGGLE_THEME, SET_THEME } from '../actions/darkModeActions';
 
 const getInitialTheme = () => {
   const savedTheme = localStorage.getItem('theme');

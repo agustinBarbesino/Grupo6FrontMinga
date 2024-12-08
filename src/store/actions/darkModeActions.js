@@ -14,4 +14,4 @@ export const setTheme = (isDark) => {
   };
 };
 
-export const selectIsDarkMode = (state) => state.theme.isDarkMode;
+export const selectIsDarkMode = (state) => state.darkMode.isDarkMode;

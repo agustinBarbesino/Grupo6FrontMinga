@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut, selectUser, selectIsAuthenticated } from '../../store/actions/authActions';
 import { setRole } from "../../store/actions/roleActions";
+import { DarkMode } from "../DarkMode/DarkMode"
 
 //css
 import './Navbar.css'
@@ -65,6 +66,9 @@ function NavBar() {
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 ">
+                            <div className="ml-auto mr-4">
+                                <DarkMode />
+                            </div>
 
                             <NavLink
                                 to="/profile"
