@@ -4,15 +4,19 @@ import { formatDistanceToNow } from 'date-fns';
 import { useSearchParams } from "react-router-dom";
 import { getComments } from "../../store/actions/chapterActions";
 import { addComment } from "../../store/actions/chapterActions";
+import { use } from "react";
 
 export default function Modal() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const { comments } = useSelector((state) => state.chapterStore);
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
     const author_id = useSelector((state) => state.auth.user?.author_id);
     const company_id = useSelector((state) => state.auth.user?.company_id);
     const id = searchParams.get('id');
+
+    const [editingComment, setEditingComment] = useState(null);
+    const [newCommentText, setNewCommentText] = useState('');
     const [commentSend, setCommentSend] = useState("");
     const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
@@ -31,6 +35,10 @@ export default function Modal() {
             alert("El comentario debe tener al menos 5 caracteres.");
         }
     };
+
+    const handleEditComment = (commentId, message) => {
+        setEditingComment(commentId);
+    }
 
     return (
         <>
@@ -61,19 +69,53 @@ export default function Modal() {
                                     </p>
                                 </div>
                             ) : (
+
+
                                 comments.map((comment) => (
                                     <div key={comment._id} className="bg-white w-screen flex flex-col justify-evenly items-start gap-3 py-3">
-                                        <div className="flex justify-items-start items-center ms-4">
-                                            <img
-                                                src={comment.authorId?.photo || comment.companyId?.photo}
-                                                alt="Profile Image"
-                                                className="w-14 h-14 rounded-full mr-2 bg-black"
-                                            />
-                                            <p>{comment.authorId?.name || comment.companyId?.name}</p>
+                                        <div className="flex justify-between w-full items-center">
+                                            <div className="flex justify-items-start items-center ms-4">
+                                                <img
+                                                    src={comment.authorId?.photo || comment.companyId?.photo}
+                                                    alt="Profile Image"
+                                                    className="w-14 h-14 rounded-full mr-2 bg-black"
+                                                />
+                                                <p>
+                                                    {comment.authorId?.name || comment.companyId?.name}
+                                                </p>
+                                            </div>
+                                            {(comment?.companyId?._id || comment?.authorId?._id) === (company_id || author_id) && (
+                                                
+                                                <div className=" me-4">
+                                                    <button
+                                                        onClick={() => handleEditComment(comment._id, comment.message)}
+                                                        className="text-blue-500 hover:text-blue-700"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </div>
+                                            )}
+
                                         </div>
-                                        <div className="ms-4 text-[#999999]">
+                                        {editingComment === comment._id ? (
+                                            <div className="flex justify-evenly w-screen">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Say something..."
+                                                    className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
+                                                    value={newCommentText}
+                                                    onChange={(e) => setNewCommentText(e.target.value)}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="ms-4 text-[#999999]">
+                                                <p>{comment.message}</p>
+                                            </div>
+                                        )}
+                                        {/* <div className="ms-4 text-[#999999]">
                                             <p>{comment.message}</p>
-                                        </div>
+                                        </div> */}
+
                                         <div className="text-[#999999] self-center">
                                             <p>{formatDistanceToNow(new Date(comment.updatedAt), { addSuffix: true })}</p>
                                         </div>
