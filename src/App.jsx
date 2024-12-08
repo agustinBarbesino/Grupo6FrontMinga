@@ -1,8 +1,6 @@
 // src/App.jsx
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Navigate} from "react-router-dom";
-import { selectIsAuthenticated, selectUser } from "./store/actions/authActions";
+import ProtectedRoute from "./Components/PrivateRouter/ProtectedRoutes";
 
 // Layouts
 import StandarLayout from "./Layouts/StandarLayout";
@@ -28,26 +26,6 @@ import GoogleAuthHandler from "./Components/Login/GoogleHandler";
 import Mangas from "./Pages/Mangas";
 import Manga from "./Pages/Manga";
 import Manager from './Pages/Manager';
-
-const ProtectedRoute = ({ children, allowedRoles, requiresAuth = true, noAuth = false }) => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectUser);
-
-  if (noAuth) {
-    return isAuthenticated ? <Navigate to="/" replace /> : children;
-  }
-
-  if (requiresAuth && !isAuthenticated) {
-    return <Navigate to="/signin" replace />;
-  }
-
-  // Verificación de roles
-  if (allowedRoles && (!user || !allowedRoles.includes(user.role))) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
-};
 
 function App() {
   const router = createBrowserRouter([
