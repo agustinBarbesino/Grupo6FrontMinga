@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsAuthenticated, selectUser } from "../store/actions/authActions";
+import { selectIsAuthenticated, selectUser } from "../../store/actions/authActions.js";
 
 const ProtectedRoutes = ({ children, allowedRoles, requiresAuth = true, noAuth = false }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);

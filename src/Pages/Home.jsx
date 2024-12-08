@@ -67,12 +67,16 @@ export default function Home() {
           <section className="hidden lg:block w-full py-8 px-4 bg-[#F4F4F4] pt-16">
             <div className="relative w-full mx-auto h-[265px] max-w-[1258px] 2xl:max-w-[1458px] 3xl:max-w-[1658px] 4xl:max-w-[1858px]">
               <div
-                className="w-full h-full flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg transition-colors duration-300"
+                onClick={() => navigate('/mangas')}
+                className="w-full h-full flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg transition-colors duration-300 cursor-pointer"
                 style={{ backgroundColor: currentCategory?.color || '#F472B6' }}
               >
                 {/* Button left */}
                 <button
-                  onClick={prevSlide}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                  }}
                   className="hidden md:flex text-white p-2 md:p-3 rounded-full items-center justify-center z-10 transition-all duration-300"
                   style={{
                     backgroundColor: currentCategory?.color || '#F9A8D4',
@@ -126,7 +130,10 @@ export default function Home() {
 
                 {/* button right */}
                 <button
-                  onClick={nextSlide}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
                   className="hidden md:flex text-white p-2 md:p-3 rounded-full items-center justify-center z-10 transition-all duration-300"
                   style={{
                     backgroundColor: currentCategory?.color || '#F9A8D4',
