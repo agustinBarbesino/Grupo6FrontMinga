@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, selectCategories, selectCategoriesLoading, selectCategoriesError } from '../store/actions/categoryActions';
+import { fetchCategories, selectCategoriesLoading, selectCategoriesError } from '../store/actions/categoryActions';
 import { selectIsAuthenticated } from '../store/actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
