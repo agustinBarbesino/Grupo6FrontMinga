@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { deleteManga, changeChapter, editManga, setShowDeleteModal, setShowDeletedModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter } from '../actions/editActions'
+import { deleteManga, changeChapter, editManga, setShowDeleteModal, setShowDeletedModal,setShowNoChaptersModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter } from '../actions/editActions'
 
 const initialState = {
   categories: [],
@@ -10,6 +10,7 @@ const initialState = {
   showSaveModal: false,
   showDeleteModal: false,
   showDeletedModal: false,
+  showNoChaptersModal: false,
   mangaData: null,
   chaptersTrigger: null,
   chaptersData: null,
@@ -37,6 +38,9 @@ export const editMangas = createReducer(initialState, (builder) => {
     })
     .addCase(setShowDeletedModal, (state, action) => {
       state.showDeletedModal = action.payload
+    })
+    .addCase(setShowNoChaptersModal, (state, action) => {
+      state.showNoChaptersModal = action.payload
     })
     .addCase(editManga.pending, (state) => {
       state.loadingEdit = true

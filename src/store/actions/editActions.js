@@ -21,6 +21,7 @@ export const deleteManga = createAsyncThunk('deleteManga', async ({ title }) => 
 
 export const setShowDeleteModal = createAction("setShowDeleteModal")
 export const setShowDeletedModal = createAction("setShowDeletedModal")
+export const setShowNoChaptersModal = createAction("setShowNoChaptersModal")
 export const changeChapter = createAction("changeChapter")
 
 export const chapterByManga = createAsyncThunk('chapterByTitle', async ({ id }) => {

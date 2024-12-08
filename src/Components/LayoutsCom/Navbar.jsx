@@ -130,7 +130,7 @@ function NavBar() {
                     {/* My mangas */}
                     {(role?.role === 1 || role?.role === 2) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/manager'}>
                                 My Mangas
                             </NavLink>
                         </div>)}

@@ -18,7 +18,7 @@ function Manager(){
     const {categoryM} = useSelector((state=>state.mangasFilterStore))
     const loading = mangasStore.loading
 
-  
+  console.log(mangas)
     
    const idAuthor = JSON.parse(localStorage.getItem("user"))
  

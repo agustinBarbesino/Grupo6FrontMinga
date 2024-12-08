@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { createChapter, setShowSendModal } from '../../store/actions/newActions.js'
+import {chapterByManga} from "../../store/actions/editActions.js"
 
 
 const CreateChapter = () => {
@@ -10,6 +11,9 @@ const CreateChapter = () => {
     const {showSendModal, chapterData, loading} = useSelector((state) => state.newChapter)
     /* estado para controlar la altura dinámica del text area */
     const [textAreaHeight, setTextAreaHeight] = useState('auto')
+    const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
+    const chapters = chaptersData.map((chapter) => chapter.order)
+    console.log("", chapters)
     const {id} = useParams()
     const initialFormData = {
         manga_id: id,
@@ -41,6 +45,7 @@ const CreateChapter = () => {
         if (chapterData) {
           dispatch(setShowSendModal(true))
         }
+        dispatch(chapterByManga({id}))
       }, [chapterData, dispatch])
     return (
         <>
@@ -65,7 +70,17 @@ const CreateChapter = () => {
                                 type="number"
                                 name="order"
                                 value={formData.order}
-                                onChange={(e) => setFormData({ ...formData, order: Number(e.target.value) })}
+                                onChange={(e) => {
+                                    const newOrder = Number(e.target.value)
+                                    // Verificar si el nuevo 'order' ya está en los capítulos
+                                    const isOrderTaken = chapters.includes(newOrder)
+                                    if (isOrderTaken) {
+                                        alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
+                                    } else {
+                                        // Solo actualizar el estado si el número no está tomado
+                                        setFormData({ ...formData, order:Number(e.target.value)})
+                                    }
+                                }}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert order"
                             />
@@ -112,7 +127,7 @@ const CreateChapter = () => {
                             onClick={(e) => dispatch(setShowSendModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                            <NavLink to={'/manager'}> Accept</NavLink> 
                         </button>
                     </div>
                 </div>

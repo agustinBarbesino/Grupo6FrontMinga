@@ -1,14 +1,16 @@
 import { React, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter } from '../../store/actions/editActions.js'
+import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
     const { title, id } = useParams() //id y titulo del manga
-    const { showSaveModal, showDeleteModal, showDeletedModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter } = useSelector((state) => state.editChapters)
+    console.log("id", id)
+    const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter } = useSelector((state) => state.editChapters)
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
+    console.log("chapters", chaptersData)
     const [formData, setFormData] = useState(initialFormDataChapter)
     const [filteredChapters, setFilteredChapters] = useState([])
     const [textAreaHeight, setTextAreaHeight] = useState('auto')
@@ -25,8 +27,14 @@ const FormEditChapter = () => {
         dispatch(fetchCategories())
         dispatch(chapterByManga({ id }))
         setFormData({ ...formData, name: title })
-    }, [])
+    }, [dispatch])
     const chapters = chaptersData.map((chapter) => chapter.order)
+    useEffect( () => {
+            if (chaptersData.length===0){
+                dispatch(setShowNoChaptersModal(true))
+            }
+        }
+        ,[chaptersData, dispatch])
     useEffect(() => {
         if (formData.chapter) {
             const filtered = chaptersData.filter(chapter => chapter.order === parseInt(formData.chapter))
@@ -77,9 +85,9 @@ const FormEditChapter = () => {
                                 required
                                 className={`w-64 border-b ${formData.chapter != '' ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
-                                <option value="" disabled >
+                                {chapters.length===0 ? <option >You don't have chapters</option> :<option value="" disabled >
                                     select chapter
-                                </option>
+                                </option>}
                                 {chapters.map((chapter) => (
                                     <option key={chapter} value={chapter} className='text-black'>
                                         {chapter}
@@ -127,10 +135,8 @@ const FormEditChapter = () => {
                                 value={formData.data == 'order' ?formData.edit:''}
                                 onChange={(e) => {
                                     const newOrder = Number(e.target.value)
-
                                     // Verificar si el nuevo 'order' ya está en los capítulos
                                     const isOrderTaken = chapters.includes(newOrder)
-
                                     if (isOrderTaken) {
                                         alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
                                     } else {
@@ -245,7 +251,7 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowSaveModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                           <NavLink to={'/manager'}> Accept</NavLink> 
                         </button>
                     </div>
                 </div>
@@ -259,12 +265,27 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowDeletedModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                            <NavLink to={'/manager'}> Accept</NavLink> 
+                        </button>
+                    </div>
+                </div>
+            )}
+            {showNoChaptersModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                        <h3 className="text-lg font-medium mb-4 text-center">You don't have chapter, please go back to your panel!</h3>
+                        <hr className="border-gray-300 my-4" />
+                        <button
+                            onClick={() => dispatch(setShowNoChaptersModal(true))}
+                            className="w-full text-blue-500 py-2"
+                        >
+                            <NavLink to={'/manager'}> Accept</NavLink> 
                         </button>
                     </div>
                 </div>
             )}
         </>
+        
     )
 
 
