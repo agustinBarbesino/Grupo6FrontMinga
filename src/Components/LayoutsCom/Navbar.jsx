@@ -26,6 +26,7 @@ function NavBar() {
         try {
             await dispatch(signOut()).unwrap();
             setIsOpen(false)
+            dispatch(setRole(0))
             navigate('/');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -83,7 +84,7 @@ function NavBar() {
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
                                 <span className="text-sm sm:text-base text-ellipsis pl-2 text-white overflow-hidden whitespace-nowrap">
-                                    {role?.role === 0 ? user.email : user.nameAuhtor || user.nameCompany || user.email}
+                                    {role?.role === 0 ? user.email :  user.nameCompany || user.nameAuhtor || user.email}
                                 </span>
                             </NavLink>
 
@@ -122,12 +123,12 @@ function NavBar() {
                         </NavLink>
                     </div>
                     <div className="flex place-content-center justify-center md:w-80 z-50">
-                        <button onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
-                            <NavLink to="/mangas"> Mangas</NavLink>
-                        </button>
+                        <NavLink to="/mangas"  onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                         Manga
+                        </NavLink >
                     </div>
                     {/* changeRole and register */}
-                    {role?.role === 0 && (
+                    {(isAuthenticated &&  role?.role === 0) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
                             <NavLink to={'/rol'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 Change to role
@@ -136,7 +137,7 @@ function NavBar() {
                     {/* My mangas */}
                     {(role?.role === 1 || role?.role === 2) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/manager'}>
                                 My Mangas
                             </NavLink>
                         </div>)}

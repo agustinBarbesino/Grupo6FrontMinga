@@ -1,16 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { deleteManga, changeChapter, editManga, setShowDeleteModal, setShowDeletedModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter } from '../actions/editActions'
+import { deleteManga, changeChapter, editManga, getMangaPhoto, getChapterPhoto, setShowDeleteModal, setShowDeletedModal,setShowNoChaptersModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter } from '../actions/editActions'
 
 const initialState = {
   categories: [],
   loading: false,
   loadingEdit: false,
   loadingDelete: false,
+  loadingPhoto: false,
   error: null,
   showSaveModal: false,
   showDeleteModal: false,
   showDeletedModal: false,
+  showNoChaptersModal: false,
   mangaData: null,
+  mangaPhoto: null,
   chaptersTrigger: null,
   chaptersData: null,
   initialFormDataManga: {
@@ -38,6 +41,9 @@ export const editMangas = createReducer(initialState, (builder) => {
     .addCase(setShowDeletedModal, (state, action) => {
       state.showDeletedModal = action.payload
     })
+    .addCase(setShowNoChaptersModal, (state, action) => {
+      state.showNoChaptersModal = action.payload
+    })
     .addCase(editManga.pending, (state) => {
       state.loadingEdit = true
     })
@@ -59,6 +65,17 @@ export const editMangas = createReducer(initialState, (builder) => {
     .addCase(deleteManga.rejected, (state, action) => {
       state.loadingDelete = false
       state.error = action.payload
+    })
+    .addCase(getMangaPhoto.pending, (state) => {
+      state.loadingPhoto = true
+    })
+    .addCase(getMangaPhoto.fulfilled, (state, action) => {
+      state.loadingPhoto = false
+      state.mangaPhoto = action.payload
+    })
+    .addCase(getMangaPhoto.rejected, (state, action) => {
+      state.loadingPhoto = false
+      state.error = action.error.message
     })
 })
 export const editChapters = createReducer(initialState, (builder) => {
@@ -106,5 +123,15 @@ export const editChapters = createReducer(initialState, (builder) => {
     .addCase(deleteChapter.rejected, (state, action) => {
       state.loadingDelete = false
       state.error = action.payload
+    })
+    .addCase(getChapterPhoto.pending, (state) => {
+      state.loadingPhoto = true
+    })
+    .addCase(getChapterPhoto.fulfilled, (state, action) => {
+      state.loadingPhoto = false
+      state.mangaPhoto = action.payload
+    })
+    .addCase(getChapterPhoto.rejected, (state, action) => {
+      state.loadingPhoto = false
     })
 })
