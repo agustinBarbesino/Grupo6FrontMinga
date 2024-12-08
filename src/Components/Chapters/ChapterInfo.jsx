@@ -13,7 +13,7 @@ function ChapterInfo({ name, author, category, mangaId }) {
 
   const [selectedValue, setSelectedValue] = useState(null);
 
-  let reactionsFiltered = reactions?.filter((m) => m?.manga_id === mangaId);
+  let reactionsFiltered = reactions?.filter((m) => m?.manga_id?._id === mangaId);
 
   const dispatch = useDispatch();
 

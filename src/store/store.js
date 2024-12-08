@@ -18,6 +18,7 @@ import reactionsCreateReducer from './reducer/reactionsCreateReducer';
 
 
 
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -37,7 +38,7 @@ const store = configureStore({
     panelReducer: panelReducer,
     authors: authorsReducer,
     reactions:reactionsAllReducer,
-    reactionCreate:reactionsCreateReducer
+    reactionCreate:reactionsCreateReducer,
   },
 })
 
