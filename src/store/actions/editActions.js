@@ -44,3 +44,9 @@ export const editChapter = createAsyncThunk('editChapters', async ({ filteredCha
     return response.data
 }
 )
+
+export const getMangaPhoto = createAsyncThunk("getMangaPhoto", async ({title}) => {
+    const response = await axios.get(`${BASE_URL}/mangas/all?title=${title}`)
+    const photo = response.data.response[0].cover_photo
+    return photo
+})

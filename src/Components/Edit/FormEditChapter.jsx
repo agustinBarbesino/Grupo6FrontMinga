@@ -7,10 +7,8 @@ import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setS
 const FormEditChapter = () => {
     const dispatch = useDispatch()
     const { title, id } = useParams() //id y titulo del manga
-    console.log("id", id)
     const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter } = useSelector((state) => state.editChapters)
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
-    console.log("chapters", chaptersData)
     const [formData, setFormData] = useState(initialFormDataChapter)
     const [filteredChapters, setFilteredChapters] = useState([])
     const [textAreaHeight, setTextAreaHeight] = useState('auto')
@@ -29,12 +27,12 @@ const FormEditChapter = () => {
         setFormData({ ...formData, name: title })
     }, [dispatch])
     const chapters = chaptersData.map((chapter) => chapter.order)
-    useEffect( () => {
-            if (chaptersData.length===0){
-                dispatch(setShowNoChaptersModal(true))
-            }
+    useEffect(() => {
+        if (chaptersData.length === 0) {
+            dispatch(setShowNoChaptersModal(true))
         }
-        ,[chaptersData, dispatch])
+    }
+        , [chaptersData, dispatch])
     useEffect(() => {
         if (formData.chapter) {
             const filtered = chaptersData.filter(chapter => chapter.order === parseInt(formData.chapter))
@@ -61,6 +59,9 @@ const FormEditChapter = () => {
 
     return (
         <>
+         <div className="flex ">
+                <div className="flex py-2 pt-24 flex-col justify-center justify-items-center items-center w-full md:w-1/2 font-montserrat">
+                    <h1 className="text-2xl my-16">Edit Chapter</h1>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
@@ -85,7 +86,7 @@ const FormEditChapter = () => {
                                 required
                                 className={`w-64 border-b ${formData.chapter != '' ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                             >
-                                {chapters.length===0 ? <option >You don't have chapters</option> :<option value="" disabled >
+                                {chapters.length === 0 ? <option >You don't have chapters</option> : <option value="" disabled >
                                     select chapter
                                 </option>}
                                 {chapters.map((chapter) => (
@@ -121,7 +122,7 @@ const FormEditChapter = () => {
                             <input
                                 type="text"
                                 name="title"
-                                value={formData.data == 'title' ? formData.edit:''}
+                                value={formData.data == 'title' ? formData.edit : ''}
                                 onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert title"
@@ -132,7 +133,7 @@ const FormEditChapter = () => {
                             <input
                                 type="number"
                                 name="order"
-                                value={formData.data == 'order' ?formData.edit:''}
+                                value={formData.data == 'order' ? formData.edit : ''}
                                 onChange={(e) => {
                                     const newOrder = Number(e.target.value)
                                     // Verificar si el nuevo 'order' ya está en los capítulos
@@ -141,7 +142,7 @@ const FormEditChapter = () => {
                                         alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
                                     } else {
                                         // Solo actualizar el estado si el número no está tomado
-                                        setFormData({ ...formData, edit:Number(e.target.value)})
+                                        setFormData({ ...formData, edit: Number(e.target.value) })
                                     }
                                 }}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
@@ -154,7 +155,7 @@ const FormEditChapter = () => {
                         <div className={`flex justify-center md:justify-start ${formData.data == 'pages' ? '' : 'hidden'}`}>
                             <textarea
                                 name="pages"
-                                value={formData.data == 'pages' ?formData.edit:''}
+                                value={formData.data == 'pages' ? formData.edit : ''}
                                 onChange={handlePagesChange}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500 resize-none overflow-hidden"
                                 placeholder="Insert pages"
@@ -168,7 +169,7 @@ const FormEditChapter = () => {
                             <input
                                 type="url"
                                 name="pages"
-                                value={formData.data == 'cover photo' ? formData.edit:''}
+                                value={formData.data == 'cover photo' ? formData.edit : ''}
                                 onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="URL of the cover photo"
@@ -203,6 +204,7 @@ const FormEditChapter = () => {
                                 onClick={() => dispatch(setShowDeleteModal(true))}
                                 className="w-full text-lg bg-red-100 text-[#EE8380] py-2 rounded-full hover:bg-red-200 transition-colors"
                             >
+
                                 Delete
                             </button>
                         </div>
@@ -211,6 +213,15 @@ const FormEditChapter = () => {
 
 
             </div>
+            </div>
+                <div className="w-full md:w-1/2 hidden md:flex ">
+                    <img
+                        className="w-full h-full object-cover"
+                        src={chaptersData[0].cover_photo}
+                        alt="Background"
+                    />
+                </div>
+            </div>
             {/* Modals */}
             {showDeleteModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -218,13 +229,23 @@ const FormEditChapter = () => {
                         <h3 className="text-lg font-medium mb-4">Are you sure you want to delete?</h3>
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                             <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                                <h3 className="text-lg font-medium mb-4">Are you sure you want to delete this?</h3>
+                                {chapters.length === 1 ?
+                                    <h3 className="text-lg font-medium mb-4">Are you sure you want to delete this?
+                                    You only have 1 chapter
+                                    </h3>
+                                    :
+                                    <h3 className="text-lg font-medium mb-4">Are you sure you want to delete this?</h3>
+
+                                        
+                                }
+
                                 <hr className="border-gray-300 my-4" />
                                 <div className="flex items-center">
                                     <button
                                         onClick={() => dispatch(deleteChapter({ filteredChapters }))} //debe mandar al endpoint de delete chapter
                                         className="flex-1 text-red-500 py-2"
                                     >
+
                                         {loadingDelete ? "Deliting..." : "Yes, I'm sure"} {/* Mostrar "Deliting..." mientras está cargando */}
                                     </button>
                                     <div className="w-px bg-gray-400 h-8 mx-4" />
@@ -251,7 +272,7 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowSaveModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                           <NavLink to={'/manager'}> Accept</NavLink> 
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
@@ -265,7 +286,7 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowDeletedModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            <NavLink to={'/manager'}> Accept</NavLink> 
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
@@ -279,13 +300,13 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowNoChaptersModal(true))}
                             className="w-full text-blue-500 py-2"
                         >
-                            <NavLink to={'/manager'}> Accept</NavLink> 
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
             )}
         </>
-        
+
     )
 
 

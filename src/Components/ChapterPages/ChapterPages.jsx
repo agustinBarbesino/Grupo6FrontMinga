@@ -20,7 +20,7 @@ export default function ChapterPages() {
     const { chapters } = useSelector(state => state.chapterStore);
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
-    const id = searchParams.get('id');
+    const {id }= useParams();
     const [currentPage, setCurrentPage] = useState(1)
 
 
