@@ -3,6 +3,8 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut, selectUser, selectIsAuthenticated } from '../../store/actions/authActions';
 import { setRole } from "../../store/actions/roleActions";
+import { DarkMode } from "../DarkMode/DarkMode"
+import { selectIsDarkMode } from '../../store/actions/darkModeActions';
 
 //css
 import './Navbar.css'
@@ -17,6 +19,7 @@ function NavBar() {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const user = useSelector(selectUser);
     const role = useSelector((state) => state.role);
+    const isDarkMode = useSelector(selectIsDarkMode);
 
 
     const handleLogout = async () => {
@@ -48,7 +51,8 @@ function NavBar() {
             <div className="relative flex justify-center items-center">
                 <button className={`
                     z-10  
-                    ${isActive ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
+                    ${isActive ? 'text-white hover:text-gray-300' :
+                        isDarkMode ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
                     ${isOpen ? 'hidden' : 'block z-10 md:min-w-80'}
                     `}
                     onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
@@ -61,16 +65,18 @@ function NavBar() {
                     </svg>
                 </button>
 
-                <nav className={`fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
+                <nav className={`fixed flex md:justify-center md:items-center flex-col ${isDarkMode ? 'bg-gray-800' : 'bg-pink-gradient'} z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
                 block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80`} >
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
-                        <div className="flex justify-center items-center w-full p-4 ">
-
+                        <div className="flex justify-center items-center w-full p-4 dark:bg-gray-800/50">
+                            <div className="ml-auto mr-4">
+                                <DarkMode />
+                            </div>
                             <NavLink
                                 to="/profile"
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full ">
+                                className="flex flex-row bg-opacity-20 dark:bg-gray-700/50 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full">
                                 <img
                                     src={user.company_id || user.author_id ? user.photo_company || user.photo_author : user.photo}
                                     onError={(e) => e.target.src = '../../../public/285f261e619b3b7253ad628c64f0acc5.png'}
