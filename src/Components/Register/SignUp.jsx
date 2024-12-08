@@ -149,7 +149,7 @@ export default function SignUp() {
         )}
 
         <form onSubmit={handleSubmit} className="w-4/5 sm:w-3/5">
-          <div className="relative w-full mb-6">
+          <div className="relative w-full">
             <label
               htmlFor="email"
               className="absolute -top-3 left-4 px-1 bg-white text-sm text-pink-400"
@@ -169,12 +169,15 @@ export default function SignUp() {
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-pink-400">
               @
             </span>
-            {validationErrors.email && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.email}</p>
-            )}
           </div>
-
-          <div className="relative w-full mb-6">
+          <p
+            className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
+            validationErrors.email ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+            }`}
+          >
+            {validationErrors.email || ''}
+          </p>
+          <div className="relative w-full">
             <label
               htmlFor="photo"
               className="absolute -top-3 left-4 px-1 -py-0 bg-white text-sm text-pink-400"
@@ -192,12 +195,15 @@ export default function SignUp() {
               placeholder="https://example.com/photo.jpg"
             />
             <Camera className="absolute w-4 h-4 right-4 top-1/2 -translate-y-1/2 text-pink-400"/>
-            {validationErrors.photo && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
-            )}
           </div>
-
-          <div className="relative w-full mb-6">
+          <p
+            className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
+            validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+            }`}
+          >
+            {validationErrors.photo || ''}
+          </p>
+          <div className="relative w-full">
             <label
               htmlFor="password"
               className="absolute -top-3 left-4 px-1 -py-0 bg-white text-sm text-pink-400"
@@ -215,11 +221,14 @@ export default function SignUp() {
               placeholder="Min. 8 characters with numbers and letters"
             />
             <Lock className="absolute w-4 h-4 right-4 top-1/2 -translate-y-1/2 text-pink-400"/>
-            {validationErrors.password && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>
-            )}
           </div>
-
+          <p
+            className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
+            validationErrors.password ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+            }`}
+          >
+            {validationErrors.password || ''}
+          </p>
           <div className="flex items-center mb-4">
             <input
               id="notifications"

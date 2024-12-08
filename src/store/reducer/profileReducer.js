@@ -20,6 +20,7 @@ const profileReducer = createReducer(initialState, (builder) => {
       state.profile = action.payload.profile;
       state.mangas = action.payload.mangas;
       state.profileType = 'author';
+      localStorage.setItem('profile', JSON.stringify(action.payload.profile));
     })
     .addCase(fetchAuthorData.rejected, (state, action) => {
       state.loading = false;
@@ -34,6 +35,7 @@ const profileReducer = createReducer(initialState, (builder) => {
       state.profile = action.payload.profile;
       state.mangas = action.payload.mangas;
       state.profileType = 'company';
+      localStorage.setItem('profile', JSON.stringify(action.payload.profile));
     })
     .addCase(fetchCompanyData.rejected, (state, action) => {
       state.loading = false;
