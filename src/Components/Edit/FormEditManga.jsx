@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
 import { editManga, deleteManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, getMangaPhoto } from '../../store/actions/editActions.js'
@@ -185,7 +185,7 @@ const FormEditManga = () => {
                             onClick={() => dispatch(setShowSaveModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
@@ -199,7 +199,7 @@ const FormEditManga = () => {
                             onClick={() => dispatch(setShowDeletedModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
