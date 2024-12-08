@@ -13,6 +13,16 @@
     transform: scaleX(-1);
     z-index:1000;
   }
+  @media only screen and (max-width: 600px) {
+    #imagen{
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    #imagen{
+      display: none;
+    }
+  }
   
   #gira {
     animation: rotar 700ms infinite linear;
