@@ -71,8 +71,8 @@ function Manga() {
             </div>
             {colorButton.boolean ?
               <p className="p-4 font-montserrat text-[10px] font-normal text-[#424242] text-left">{descp}</p> :
-              <div className="chapterBox">{authorCompany == authorId ? mangaChapters.map(c => <Chapter2 title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter2>) :
-                mangaChapters.map(c => <Chapter title={c.title} pages={c.pages.length} mangaId={mangaId} image={image}></Chapter>)}
+              <div className="chapterBox">{authorCompany == authorId ? mangaChapters.map(c => <Chapter2 title={c.title} pages={c.pages.length} mangaId={c._id} image={image}></Chapter2>) :
+                mangaChapters.map(c => <Chapter title={c.title} pages={c.pages.length} mangaId={c._id} image={image}></Chapter>)}
               </div>}
 
 

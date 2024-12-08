@@ -53,8 +53,12 @@ export const getMangaPhoto = createAsyncThunk("getMangaPhoto", async ({title}) =
 
 export const getMangaPhotoID = createAsyncThunk("getMangaPhoto", async ({id}) => {
     const response = await axios.get(`${BASE_URL}/mangas/mangaByID/${id}`)
-    console.log("response", response.data.response)
     const photo = response.data.response.cover_photo
-    console.log("photo", photo)
+    return photo
+})
+
+export const getChapterPhoto = createAsyncThunk("getChapterPhoto", async ({id}) => {
+    const response = await axios.get(`${BASE_URL}/chapter/chapterByID/${id}`)
+    const photo = response.data.response.cover_photo
     return photo
 })

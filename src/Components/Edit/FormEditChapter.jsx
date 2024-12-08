@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal, getMangaPhotoID } from '../../store/actions/editActions.js'
+import { editChapter, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal, getChapterPhoto } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const FormEditChapter = () => {
     }
     useEffect(() => {
         dispatch(fetchCategories())
-        dispatch(getMangaPhotoID({ id }))
+        dispatch(getChapterPhoto({ id }))
         setFormData({ ...formData, name: title })
     }, [dispatch])
     const chapters = chaptersData.map((chapter) => chapter.order)
@@ -60,7 +60,7 @@ const FormEditChapter = () => {
     return (
         <>
          <div className="flex justify-between">
-                <div className="flex pb-2 pt-24 md:pt-0 flex-col justify-center justify-items-center items-center w-full md:w-1/2 font-montserrat">
+                <div className="flex pb-2 pt-24 md:pt-16 flex-col justify-center justify-items-center items-center w-full md:w-1/2 font-montserrat">
                     <h1 className="text-2xl my-16 md:mt-0">Edit Chapter</h1>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
@@ -222,8 +222,11 @@ const FormEditChapter = () => {
                                 <div className="w-full md:w-full hidden md:flex">
                                 <img
                                   className="w-full h-auto "
-                                  src={mangaPhoto}
+                                  src={mangaPhoto? mangaPhoto: 'https://media.wired.com/photos/59546725be605811a2fdceae/master/w_1600,c_limit/BobasWonderfulReturn.jpg'}
                                   alt="Background"
+                                  onError={(e) => {
+                                    e.target.src = 'https://images.squarespace-cdn.com/content/v1/593f201de3df288fc6465e6f/1621949179769-ZEZNWEU0ODIFGPCNGP5J/Saga+%2354.jpeg?format=1500w'
+                                  }}
                                 />
                               </div>
                             )
