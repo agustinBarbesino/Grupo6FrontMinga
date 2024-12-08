@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
 import { createManga, setShowSendModal } from '../../store/actions/newActions.js'
+import { NavLink } from 'react-router-dom'
 
 
 const CreateManga = () => {
@@ -18,7 +19,7 @@ const CreateManga = () => {
         } else if (user.company_id) {
             setFormData({ ...formData, company_id: user.company_id })
         }
-    }, [])
+    }, [dispatch])
     /* para los nombres de las categoras */
     const categorias = categories.map((category) => category.name)
     /* para actualizar la categoria segun la seleccionada */
@@ -27,12 +28,15 @@ const CreateManga = () => {
         if (category) {
             let cat = categories.find(c => c.name == category)
             setFormData({ ...formData, category_id: cat._id })
+           
         }
+       
     }, [category])
     
     /* boton de enviar para enviar la info y limpiar formulario, segun el rol se manda autor o compania id */
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('datos', formData)
         dispatch(createManga({ formData }))
         setFormData(initialFormDataManga)
         setCategory('')
@@ -58,6 +62,7 @@ const CreateManga = () => {
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert title"
+                                required
                             />
                         </div>
                         {/* select category */}
@@ -68,6 +73,7 @@ const CreateManga = () => {
                                 onChange={(e) => setCategory(e.target.value)}
                                 required
                                 className={`w-64 border-b ${category ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                            
                             >
                                 <option value="" disabled >
                                     Insert category
@@ -88,6 +94,7 @@ const CreateManga = () => {
                                 onChange={(e) => setFormData({ ...formData, cover_photo: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert link of the cover photo"
+                                required
                             />
                         </div>
 
@@ -104,6 +111,7 @@ const CreateManga = () => {
                                     e.target.style.height = "auto"
                                     e.target.style.height = `${e.target.scrollHeight}px`
                                 }}
+                                required
                             />
                         </div>
 
@@ -127,13 +135,13 @@ const CreateManga = () => {
             {showSendModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                        <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
+                        <h3 className="text-lg font-medium mb-4">Your manga has been created correctly!</h3>
                         <hr className="border-gray-300 my-4" />
                         <button
-                            onClick={(e) => dispatch(setShowSendModal(false))}
+                            onClick={() => dispatch(setShowSendModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            Accept
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>

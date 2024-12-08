@@ -21,9 +21,10 @@ export const deleteManga = createAsyncThunk('deleteManga', async ({ title }) => 
 
 export const setShowDeleteModal = createAction("setShowDeleteModal")
 export const setShowDeletedModal = createAction("setShowDeletedModal")
+export const setShowNoChaptersModal = createAction("setShowNoChaptersModal")
 export const changeChapter = createAction("changeChapter")
 
-export const chapterByManga = createAsyncThunk('chapterByTitle', async ({ id }) => {
+export const chapterByManga = createAsyncThunk('chapterByManga', async ({ id }) => {
     const response = await axios.get(`${BASE_URL}/chapter/all?manga_id=${id}`)
     return response.data.response
 })
@@ -43,3 +44,21 @@ export const editChapter = createAsyncThunk('editChapters', async ({ filteredCha
     return response.data
 }
 )
+
+export const getMangaPhoto = createAsyncThunk("getMangaPhoto", async ({title}) => {
+    const response = await axios.get(`${BASE_URL}/mangas/all?title=${title}`)
+    const photo = response.data.response[0].cover_photo
+    return photo
+})
+
+export const getMangaPhotoID = createAsyncThunk("getMangaPhoto", async ({id}) => {
+    const response = await axios.get(`${BASE_URL}/mangas/mangaByID/${id}`)
+    const photo = response.data.response.cover_photo
+    return photo
+})
+
+export const getChapterPhoto = createAsyncThunk("getChapterPhoto", async ({id}) => {
+    const response = await axios.get(`${BASE_URL}/chapter/chapterByID/${id}`)
+    const photo = response.data.response.cover_photo
+    return photo
+})

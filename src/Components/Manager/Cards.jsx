@@ -1,6 +1,9 @@
-import { useDispatch } from 'react-redux'
-import { deleteManga } from '../../store/actions/editActions'
+import { useSelector, useDispatch } from 'react-redux'
+import {  NavLink } from 'react-router-dom'
+import {  useEffect } from 'react'
+import { setShowDeleteModal, setShowDeletedModal,deleteManga } from '../../store/actions/editActions'
 import '../Mangas/mangaPages.css'
+
 function Card({category,name,image,id,autor}){
     let hexColor
                    switch(category){
@@ -19,6 +22,7 @@ function Card({category,name,image,id,autor}){
                    }
                
     const dispatch=useDispatch()
+    const { showDeleteModal, showDeletedModal, loadingDelete, deleteSuccess } = useSelector((state) => state.editMangas)
                    
     function manga(){
         window.location.href=`/editManga/${name}`
@@ -26,9 +30,16 @@ function Card({category,name,image,id,autor}){
     function newChapter(){
         window.location.href=`/newChapter/${id}`
     }
+
     const handleDelete = (title) => {
         dispatch(deleteManga({title}))
     }
+    useEffect(() => {
+        if (deleteSuccess) {
+            dispatch(setShowDeleteModal(false))
+            dispatch(setShowDeletedModal(true))
+        }
+    }, [deleteSuccess])
     return(<>
      <div className="cardM relative w-[362px] h-[168px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] rounded-[10px] border border-[rgba(0,0,0,0.05)] bg-white">
                 <div className='iconos'>
@@ -58,14 +69,53 @@ function Card({category,name,image,id,autor}){
                    <p style={{color:hexColor,fontSize:15}} className="type">Type</p>
                 </div>
                 <button className="editM absolute" onClick={manga}>EDIT</button>
-                <button className="deleteM absolute" onClick={()=>
-                {handleDelete(name)
-                 window.location.reload()
-                }
-
-            }>DELETE</button>
+                <button className="deleteM absolute" onClick={() => dispatch(setShowDeleteModal(true))}
+                    >DELETE</button>
                 <img className="imageM absolute" src={image}alt="" />
      </div>
+     {/* Modals */}
+     {showDeleteModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                        <h3 className="text-lg font-medium mb-4 text-center text-black">Are you sure you want to delete?</h3>
+                                <hr className="border-gray-300 my-4" />
+                                <div className="flex items-center">
+                                    <button
+                                        onClick={()=>
+                                            {handleDelete(name)
+                                             window.location.reload()
+                                            }} //debe mandar al endpoint de delete manga
+                                        className="flex-1 text-red-500 py-2"
+                                    >
+                                        {loadingDelete ? "Deliting..." : "Yes, I'm sure"} {/* Mostrar "Deliting..." mientras está cargando */}
+                                    </button>
+                                    <div className="w-px bg-gray-400 h-8 mx-4" />
+                                    <button
+                                        onClick={() => dispatch(setShowDeleteModal(false))}
+                                        className="flex-1 text-blue-500 py-2"
+                                    >
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+            )}
+
+            {showDeletedModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                        <h3 className="text-lg font-medium mb-4 text-center text-black">Your manga is deleted!</h3>
+                        <hr className="border-gray-300 my-4" />
+                        <button
+                            onClick={() => dispatch(setShowDeletedModal(false))}
+                            className="w-full text-blue-500 py-2"
+                        >
+                            <NavLink to={'/manager'}> Accept</NavLink>
+                        </button>
+                    </div>
+                </div>
+            )}
     </>)
 }
 

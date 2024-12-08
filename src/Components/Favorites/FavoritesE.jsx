@@ -70,9 +70,9 @@ const Favorites = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Background Image Container */}
+      {/* Background Image Container - Ajustado para escritorio */}
       <div 
-        className="fixed top-0 left-0 right-0 h-60 bg-cover bg-center"
+        className="fixed top-0 left-0 right-0 h-60 lg:h-72 bg-cover bg-center"
         style={{
           backgroundImage: `url('https://s3-alpha-sig.figma.com/img/e99b/5da8/a52db4fd64894930c7407e9673bb78ee?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OyxAb8N79rL9NSkepNcxqeXuYtfih-IS1wST3CCQu7z~hYQmYxziuJ~7Cp1IVxXsHUlUIuBk9RfDZ-OlKLupLMgv5nW7Mln34gFAiytq4ldsghnB7vx5iyx2N1xhrdHw9DoFkRlqeui8ABraxf16c1SjbmAHQsT4CX6UGiDG20GUu6vFhmQRMBybWiDoQvWwSOjMST~DbKuKHCUOm2WGgN5Wud6OVd3P1HUcHHlDsRmZBJIpctgH8yjd9l3ADiSiUjAqheUsoba8vJchCqGByl-1esHW8Serp6dY2G-uj2fuOHv3hYvFcBoKawzkR-fLbFjM4bdpn5vDkZGHHkn-Eg__')`
         }}
@@ -80,13 +80,13 @@ const Favorites = () => {
         <div className="absolute inset-0 bg-black bg-opacity-50" />
       </div>
 
-      {/* Content Container */}
-      <div className="relative pt-8">
-        {/* Title */}
-        <h1 className="text-white text-center text-3xl font-bold mb-8">Favourites</h1>
+      {/* Content Container - Centrado y con máximo ancho en escritorio */}
+      <div className="relative pt-8 container mx-auto max-w-7xl">
+        {/* Title - Tamaño aumentado en escritorio */}
+        <h1 className="text-white text-center text-3xl lg:text-4xl font-bold mb-8">Favourites</h1>
 
-        {/* Search Bar */}
-        <div className="px-4 mb-6 pt-8">
+        {/* Search Bar - Centrado y con ancho máximo en escritorio */}
+        <div className="px-4 mb-6 pt-8 max-w-2xl mx-auto">
           <div className="relative">
             <input
               type="text"
@@ -97,29 +97,29 @@ const Favorites = () => {
           </div>
         </div>
 
-        {/* Favorites List */}
-        <div className="px-4 space-y-4 pb-4">
+        {/* Favorites Grid - Transformado en grid para escritorio */}
+        <div className="px-4 space-y-4 lg:space-y-0 pb-4 lg:grid lg:grid-cols-2 lg:gap-6 xl:grid-cols-3 2xl:grid-cols-4">
           {favorites.map((item) => (
             <div
               key={item.id}
-              className="relative bg-white rounded-3xl p-4 shadow-md"
+              className="relative bg-white rounded-3xl p-4 shadow-md transition-transform hover:scale-105"
             >
-              {/* Close Button */}
-              <button className="absolute top-4 left-8 z-10">
+              {/* Close Button - Ajustado para consistencia en escritorio */}
+              <button className="absolute top-4 left-8 z-10 hover:bg-gray-100 p-1 rounded-full transition-colors">
                 <X size={20} className="text-gray-400" />
               </button>
 
               <div className="flex items-center">
                 <div className={`w-1.5 h-24 rounded-full ${item.color} mr-4`}></div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{item.title}</h3>
-                  <p className="text-sm text-gray-500">{item.publisher}</p>
+                  <h3 className="font-semibold text-lg lg:text-xl">{item.title}</h3>
+                  <p className="text-sm lg:text-base text-gray-500">{item.publisher}</p>
                 </div>
-                <div className="w-24 h-24 rounded-2xl overflow-hidden">
+                <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-2xl overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>

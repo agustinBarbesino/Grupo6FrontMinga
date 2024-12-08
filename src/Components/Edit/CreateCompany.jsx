@@ -128,7 +128,7 @@ const CreateCompany = () => {
                     <form className="space-y-2"
                         onSubmit={handleSubmit}>
                          {/* name of company */}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="text"
                                 id="name"
@@ -139,12 +139,16 @@ const CreateCompany = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Name"
                             />
-                            {validationErrors.name && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.name || ''}
+                            </p>
                         </div>
                         {/*website*/}
-                        <div className="flex justify-center md:justify-start">
+                        <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="url"
                                 id="website"
@@ -155,12 +159,16 @@ const CreateCompany = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Website"
                             />
-                            {validationErrors.website && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.website}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.website ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.website || ''}
+                            </p>
                         </div>
                         {/*photo*/}
-                        <div className="flex justify-center md:justify-start">
+                        <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="url"
                                 id="photo"
@@ -171,12 +179,16 @@ const CreateCompany = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="URL Profile Image"
                             />
-                            {validationErrors.photo && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.photo}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.photo || ''}
+                            </p>
                         </div>
                          {/* description of company*/}
-                         <div className="flex justify-center md:justify-start">
+                         <div className="flex flex-col justify-center md:justify-start">
                             <input
                                 type="text"
                                 id="description"
@@ -187,14 +199,18 @@ const CreateCompany = () => {
                                     } border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
                                 placeholder="Description"
                             />
-                            {validationErrors.description && (
-                                <p className="text-red-500 text-xs mt-1">{validationErrors.description}</p>
-                            )}
+                            <p
+                              className={`text-xs text-red-500 transition-all duration-300 ${
+                              validationErrors.description ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                              }`}
+                            >
+                              {validationErrors.description || ''}
+                            </p>
                         </div>
                         
                         {/* buttons */}
 
-                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex py-8 w-full font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"

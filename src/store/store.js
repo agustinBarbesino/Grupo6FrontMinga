@@ -15,8 +15,7 @@ import { panelReducer } from './reducer/panelReducer'
 import authorsReducer from './reducer/authorsReducer';
 import reactionsAllReducer from './reducer/reactionsAllReducer';
 import reactionsCreateReducer from './reducer/reactionsCreateReducer';
-
-
+import darkModeReducer from './reducer/darkModeReducer';
 
 
 const store = configureStore({
@@ -39,6 +38,7 @@ const store = configureStore({
     authors: authorsReducer,
     reactions:reactionsAllReducer,
     reactionCreate:reactionsCreateReducer,
+    darkMode: darkModeReducer
   },
 })
 

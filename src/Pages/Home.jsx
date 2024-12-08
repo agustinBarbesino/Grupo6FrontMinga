@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, selectCategories, selectCategoriesLoading, selectCategoriesError } from '../store/actions/categoryActions';
+import { fetchCategories, selectCategoriesLoading, selectCategoriesError } from '../store/actions/categoryActions';
 import { selectIsAuthenticated } from '../store/actions/authActions';
+import { selectIsDarkMode } from '../store/actions/darkModeActions';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
@@ -14,10 +15,11 @@ export default function Home() {
   const isLoading = useSelector(selectCategoriesLoading);
   const error = useSelector(selectCategoriesError);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isDarkMode = useSelector(selectIsDarkMode);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024); 
+      setIsMobile(window.innerWidth < 1024);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -60,19 +62,23 @@ export default function Home() {
   const currentCategory = categories && categories[currentSlide];
 
   return (
-    <div className={`flex flex-col w-full ${isMobile ? '' : 'bg-[#F4F4F4] pb-16 pt-16'}`}>
+    <div className={`flex flex-col w-full ${isMobile ? '' : `${isDarkMode ? 'bg-gray-900' : 'bg-[#F4F4F4]'} pb-16 pt-16`}`}>
       <div className={`${isMobile ? 'min-h-screen' : 'min-h-[calc(100vh-40vh)]'}`}>
-        {/* Carousel Section - Solo se muestra en desktop */}
+        {/* Carousel Section*/}
         {!isMobile && (
-          <section className="hidden lg:block w-full py-8 px-4 bg-[#F4F4F4]">
-            <div className="relative w-full max-w-[1258px] h-[265px] mx-auto">
+          <section className={`hidden lg:block w-full py-8 px-4 ${isDarkMode ? 'bg-gray-900' : 'bg-[#F4F4F4]'} pt-16`}>
+            <div className="relative w-full mx-auto h-[265px] max-w-[1258px] 2xl:max-w-[1458px] 3xl:max-w-[1658px] 4xl:max-w-[1858px]">
               <div
-                className="w-full h-full flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg transition-colors duration-300"
+                onClick={() => navigate('/mangas')}
+                className="w-full h-full flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg transition-colors duration-300 cursor-pointer"
                 style={{ backgroundColor: currentCategory?.color || '#F472B6' }}
               >
                 {/* Button left */}
                 <button
-                  onClick={prevSlide}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                  }}
                   className="hidden md:flex text-white p-2 md:p-3 rounded-full items-center justify-center z-10 transition-all duration-300"
                   style={{
                     backgroundColor: currentCategory?.color || '#F9A8D4',
@@ -98,7 +104,7 @@ export default function Home() {
                         <img
                           src={currentCategory.characterPhoto}
                           alt={`${currentCategory.name} character`}
-                          className="w-48 md:w-[277px] h-56 md:h-[302px] object-contain absolute -top-16"
+                          className="w-48 md:w-[277px] h-56 md:h-[298px] object-contain absolute -top-16"
                         />
                       </div>
 
@@ -126,7 +132,10 @@ export default function Home() {
 
                 {/* button right */}
                 <button
-                  onClick={nextSlide}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
                   className="hidden md:flex text-white p-2 md:p-3 rounded-full items-center justify-center z-10 transition-all duration-300"
                   style={{
                     backgroundColor: currentCategory?.color || '#F9A8D4',
@@ -143,9 +152,9 @@ export default function Home() {
           </section>
         )}
 
-        {/* Hero Section - Responsivo */}
+        {/* Hero Section */}
         <section className="relative mx-auto">
-          <div className="relative w-full max-w-[1258px] lg:h-[551px] h-screen mx-auto flex items-center">
+          <div className="relative w-full mx-auto lg:h-[551px] h-screen flex items-center max-w-[1258px] 2xl:max-w-[1458px] 3xl:max-w-[1658px] 4xl:max-w-[1858px]">
             {/* Background image */}
             <div className={`${isMobile ? 'fixed top-0 left-0 right-0 h-screen' : 'absolute inset-0 h-full'}`}>
               <img
@@ -153,7 +162,7 @@ export default function Home() {
                 alt="Background"
                 className="w-full h-full object-cover lg:object-[center_-200px]"
               />
-              <div className="absolute inset-0 bg-black/60"></div>
+              <div className={`absolute inset-0 ${isDarkMode ? 'bg-black/50' : 'bg-black/60'}`}></div>
             </div>
 
             {/* Hero content */}
@@ -172,7 +181,8 @@ export default function Home() {
                 </p>
                 <button
                   onClick={handleAuthAction}
-                  className="bg-[#F472B6] w-full max-w-[200px] py-3 text-white font-medium hover:bg-[#F9A8D4] text-xl rounded-md transition-colors duration-300"
+                  className={`${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-[#F472B6] hover:bg-[#F9A8D4]'} 
+                    w-full max-w-[200px] py-3 text-white font-medium text-xl rounded-md transition-colors duration-300`}
                 >
                   {isAuthenticated ? 'Explore!' : 'Sign In!'}
                 </button>

@@ -3,6 +3,8 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut, selectUser, selectIsAuthenticated } from '../../store/actions/authActions';
 import { setRole } from "../../store/actions/roleActions";
+import { DarkMode } from "../DarkMode/DarkMode"
+import { selectIsDarkMode } from '../../store/actions/darkModeActions';
 
 //css
 import './Navbar.css'
@@ -17,6 +19,7 @@ function NavBar() {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const user = useSelector(selectUser);
     const role = useSelector((state) => state.role);
+    const isDarkMode = useSelector(selectIsDarkMode);
 
     const [theme, setTheme] = useState(() => {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -33,6 +36,7 @@ function NavBar() {
         try {
             await dispatch(signOut()).unwrap();
             setIsOpen(false)
+            dispatch(setRole(0))
             navigate('/');
         } catch (error) {
             console.error('Logout failed:', error);
@@ -52,15 +56,13 @@ function NavBar() {
         }
     })
 
-    console.log("validacion", (role?.role === 1 || 2 || 3));
-
-
     return (
         <>
             <div className="relative flex justify-center items-center">
                 <button className={`
                     z-10  
-                    ${isActive ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
+                    ${isActive ? 'text-white hover:text-gray-300' :
+                        isDarkMode ? 'text-white hover:text-gray-300' : 'text-rose-light hover:text-rose-dark'}
                     ${isOpen ? 'hidden' : 'block z-10 md:min-w-80'}
                     `}
                     onClick={() => setIsOpen(!isOpen)} aria-label="menu" >
@@ -73,24 +75,26 @@ function NavBar() {
                     </svg>
                 </button>
 
-                <nav className={`fixed flex md:justify-center md:items-center flex-col bg-pink-gradient z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
+                <nav className={`fixed flex md:justify-center md:items-center flex-col ${isDarkMode ? 'bg-gray-800' : 'bg-pink-gradient'} z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
                 block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80`} >
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
-                        <div className="flex justify-center items-center w-full p-4 ">
-
+                        <div className="flex justify-center items-center w-full p-4 dark:bg-gray-800/50">
+                            <div className="ml-auto mr-4">
+                                <DarkMode />
+                            </div>
                             <NavLink
                                 to="/profile"
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="flex flex-row bg-opacity-20 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full ">
+                                className="flex flex-row bg-opacity-20 dark:bg-gray-700/50 items-center text-center md:text-left rounded text-sm sm:text-base px-4 py-2 w-full">
                                 <img
                                     src={user.company_id || user.author_id ? user.photo_company || user.photo_author : user.photo}
-                                    onError={'https://s3-alpha-sig.figma.com/img/1f46/b78f/285f261e619b3b7253ad628c64f0acc5?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iLKdnvNOvZ1Ef7nA1GjyEaGlwe-yQSSOZpKx~O3GXlUUMERzl3ZU3yiaX927p3h4FQhUOMKnoda1GniRqS84LThpPoxozoLx3gyStafMuyBhMv9vUlFhfZgw1afGJ9LNtGc4HlN5TUo1q-GxFZafoDyHO~L5yWyeQLakrXs0MUPH9Vc1jXzy1hZsjkkSMtbeZ9kJ1I04ZL-tR1rrFXOrs3zB8EJJRo88hu~fuRVfoAk63k9cS~fT9UZY5gjb-ETPTB0WiqRMr34kdzOR-a0eekiwzT9GtU~oOiGJruvJdtbtKFtBP90~~F1qzJcOd4HtMYgd3T-z9qme2QjwUgs3QQ__'}
+                                    onError={(e) => e.target.src = '../../../public/285f261e619b3b7253ad628c64f0acc5.png'}
                                     alt={`${user.company_id || user.author_id ? user.photo_company || user.photo_author : user.email}'s profile`}
                                     className="w-12 h-12 md:w-8 md:h-8 rounded-full object-cover"
                                 />
                                 <span className="text-sm sm:text-base text-ellipsis pl-2 text-white overflow-hidden whitespace-nowrap">
-                                    {role?.role === 0 ? user.email : user.nameAuhtor || user.nameCompany || user.email}
+                                    {role?.role === 0 ? user.email :  user.nameCompany || user.nameAuhtor || user.email}
                                 </span>
                             </NavLink>
 
@@ -129,13 +133,13 @@ function NavBar() {
                         </NavLink>
                     </div>
                     <div className="flex place-content-center justify-center md:w-80 z-50">
-                        <button onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
-                            <NavLink to="/mangas"> Mangas</NavLink>
-                        </button>
+                        <NavLink to="/mangas"  onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
+                         Manga
+                        </NavLink >
                     </div>
                     
                     {/* changeRole and register */}
-                    {role?.role === 0 && (
+                    {(isAuthenticated &&  role?.role === 0) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
                             <NavLink to={'/rol'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 Change to role
@@ -144,7 +148,7 @@ function NavBar() {
                     {/* My mangas */}
                     {(role?.role === 1 || role?.role === 2) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/manager'}>
                                 My Mangas
                             </NavLink>
                         </div>)}
