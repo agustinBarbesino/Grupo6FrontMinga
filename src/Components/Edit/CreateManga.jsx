@@ -28,7 +28,9 @@ const CreateManga = () => {
         if (category) {
             let cat = categories.find(c => c.name == category)
             setFormData({ ...formData, category_id: cat._id })
+           
         }
+       
     }, [category])
     
     /* boton de enviar para enviar la info y limpiar formulario, segun el rol se manda autor o compania id */
@@ -60,6 +62,7 @@ const CreateManga = () => {
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert title"
+                                required
                             />
                         </div>
                         {/* select category */}
@@ -70,6 +73,7 @@ const CreateManga = () => {
                                 onChange={(e) => setCategory(e.target.value)}
                                 required
                                 className={`w-64 border-b ${category ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                            
                             >
                                 <option value="" disabled >
                                     Insert category
@@ -90,6 +94,7 @@ const CreateManga = () => {
                                 onChange={(e) => setFormData({ ...formData, cover_photo: e.target.value })}
                                 className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
                                 placeholder="Insert link of the cover photo"
+                                required
                             />
                         </div>
 
@@ -106,6 +111,7 @@ const CreateManga = () => {
                                     e.target.style.height = "auto"
                                     e.target.style.height = `${e.target.scrollHeight}px`
                                 }}
+                                required
                             />
                         </div>
 
@@ -135,7 +141,7 @@ const CreateManga = () => {
                             onClick={() => dispatch(setShowSendModal(false))}
                             className="w-full text-blue-500 py-2"
                         >
-                            <NavLink> Accept</NavLink> 
+                            <NavLink to={'/manager'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
