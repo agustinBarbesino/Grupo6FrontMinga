@@ -2,12 +2,12 @@ import { React, useState, useEffect } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal } from '../../store/actions/editActions.js'
+import { editChapter, chapterByManga, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal, getMangaPhotoID } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
     const { title, id } = useParams() //id y titulo del manga
-    const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter } = useSelector((state) => state.editChapters)
+    const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter, loadingPhoto, mangaPhoto  } = useSelector((state) => state.editChapters)
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
     const [formData, setFormData] = useState(initialFormDataChapter)
     const [filteredChapters, setFilteredChapters] = useState([])
@@ -23,7 +23,7 @@ const FormEditChapter = () => {
     }
     useEffect(() => {
         dispatch(fetchCategories())
-        dispatch(chapterByManga({ id }))
+        dispatch(getMangaPhotoID({ id }))
         setFormData({ ...formData, name: title })
     }, [dispatch])
     const chapters = chaptersData.map((chapter) => chapter.order)
@@ -59,9 +59,9 @@ const FormEditChapter = () => {
 
     return (
         <>
-         <div className="flex ">
-                <div className="flex py-2 pt-24 flex-col justify-center justify-items-center items-center w-full md:w-1/2 font-montserrat">
-                    <h1 className="text-2xl my-16">Edit Chapter</h1>
+         <div className="flex justify-between">
+                <div className="flex pb-2 pt-24 md:pt-0 flex-col justify-center justify-items-center items-center w-full md:w-1/2 font-montserrat">
+                    <h1 className="text-2xl my-16 md:mt-0">Edit Chapter</h1>
             <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                 {/* Form Section */}
                 <div className="w-full pt-2">
@@ -214,12 +214,20 @@ const FormEditChapter = () => {
 
             </div>
             </div>
-                <div className="w-full md:w-1/2 hidden md:flex ">
-                    <img
-                        className="w-full h-full object-cover"
-                        src={chaptersData[0].cover_photo}
-                        alt="Background"
-                    />
+                <div className="w-full md:w-[45%] hidden md:flex ">
+                {
+                        loadingPhoto ? (<p className='flex text-2xl font-montserrat justify-items-center justify-center items-center text-center'> Loading photo...</p>) :
+
+                            (
+                                <div className="w-full md:w-full hidden md:flex">
+                                <img
+                                  className="w-full h-auto "
+                                  src={mangaPhoto}
+                                  alt="Background"
+                                />
+                              </div>
+                            )
+                    }
                 </div>
             </div>
             {/* Modals */}

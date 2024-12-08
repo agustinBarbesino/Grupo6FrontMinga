@@ -24,7 +24,7 @@ export const setShowDeletedModal = createAction("setShowDeletedModal")
 export const setShowNoChaptersModal = createAction("setShowNoChaptersModal")
 export const changeChapter = createAction("changeChapter")
 
-export const chapterByManga = createAsyncThunk('chapterByTitle', async ({ id }) => {
+export const chapterByManga = createAsyncThunk('chapterByManga', async ({ id }) => {
     const response = await axios.get(`${BASE_URL}/chapter/all?manga_id=${id}`)
     return response.data.response
 })
@@ -48,5 +48,13 @@ export const editChapter = createAsyncThunk('editChapters', async ({ filteredCha
 export const getMangaPhoto = createAsyncThunk("getMangaPhoto", async ({title}) => {
     const response = await axios.get(`${BASE_URL}/mangas/all?title=${title}`)
     const photo = response.data.response[0].cover_photo
+    return photo
+})
+
+export const getMangaPhotoID = createAsyncThunk("getMangaPhoto", async ({id}) => {
+    const response = await axios.get(`${BASE_URL}/mangas/mangaByID/${id}`)
+    console.log("response", response.data.response)
+    const photo = response.data.response.cover_photo
+    console.log("photo", photo)
     return photo
 })

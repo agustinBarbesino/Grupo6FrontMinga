@@ -14,7 +14,7 @@ const CreateChapter = () => {
     const [textAreaHeight, setTextAreaHeight] = useState('auto')
     useEffect(() => {
         dispatch(getMangaPhoto({ id }))
-    },[])
+    }, [])
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
     const chapters = chaptersData.map((chapter) => chapter.order)
     const initialFormData = {
@@ -51,107 +51,109 @@ const CreateChapter = () => {
     }, [chapterData, dispatch])
     return (
         <>
-         <div className="flex ">
-            <div className="flex flex-col py-2 pt-24 justify-center md:justify-normal justify-items-center items-center w-full md:w-1/2 font-montserrat">
-                <h1 className="text-2xl m-16">New Chapter</h1>
-                <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
-                    {/* Form Section */}
-                    <div className="w-full pt-2">
-                        <form onSubmit={handleSubmit} className="space-y-2">
-                            {/* title of chapter */}
-                            <div className="flex justify-center md:justify-start">
-                                <input
-                                    type="text"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
-                                    placeholder="Insert title"
-                                />
-                            </div>
-                            {/* order of the chapter*/}
-                            <div className="flex justify-center md:justify-start">
-                                <input
-                                    type="number"
-                                    name="order"
-                                    value={formData.order}
-                                    onChange={(e) => {
-                                        const newOrder = Number(e.target.value)
-                                        // Verificar si el nuevo 'order' ya está en los capítulos
-                                        const isOrderTaken = chapters.includes(newOrder)
-                                        if (isOrderTaken) {
-                                            alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
-                                        } else {
-                                            // Solo actualizar el estado si el número no está tomado
-                                            setFormData({ ...formData, order: Number(e.target.value) })
-                                        }
-                                    }}
-                                    className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
-                                    placeholder="Insert order"
-                                />
-                            </div>
+            <div className="flex justify-between">
+                <div className="flex flex-col py-2 pt-24 justify-center md:justify-normal justify-items-center items-center w-full md:w-[60%] font-montserrat">
+                    <h1 className="text-2xl m-16">New Chapter</h1>
+                    <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
+                        {/* Form Section */}
+                        <div className="w-full pt-2">
+                            <form onSubmit={handleSubmit} className="space-y-2">
+                                {/* title of chapter */}
+                                <div className="flex justify-center md:justify-start">
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        value={formData.title}
+                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                        className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                        placeholder="Insert title"
+                                    />
+                                </div>
+                                {/* order of the chapter*/}
+                                <div className="flex justify-center md:justify-start">
+                                    <input
+                                        type="number"
+                                        name="order"
+                                        value={formData.order}
+                                        onChange={(e) => {
+                                            const newOrder = Number(e.target.value)
+                                            // Verificar si el nuevo 'order' ya está en los capítulos
+                                            const isOrderTaken = chapters.includes(newOrder)
+                                            if (isOrderTaken) {
+                                                alert(`Chapter ${newOrder} order already exists. Please choose a different order of the chapter.`)
+                                            } else {
+                                                // Solo actualizar el estado si el número no está tomado
+                                                setFormData({ ...formData, order: Number(e.target.value) })
+                                            }
+                                        }}
+                                        className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                        placeholder="Insert order"
+                                    />
+                                </div>
 
-                            {/*pages*/}
+                                {/*pages*/}
 
-                            <div className="flex justify-center md:justify-start">
-                                <textarea
-                                    name="pages"
-                                    value={formData.pages.join(", ")}
-                                    onChange={handlePagesChange}
-                                    className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500 resize-none overflow-hidden"
-                                    placeholder="Insert pages"
-                                    rows={1}
-                                    style={{ height: textAreaHeight }}
-                                />
+                                <div className="flex justify-center md:justify-start">
+                                    <textarea
+                                        name="pages"
+                                        value={formData.pages.join(", ")}
+                                        onChange={handlePagesChange}
+                                        className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500 resize-none overflow-hidden"
+                                        placeholder="Insert pages"
+                                        rows={1}
+                                        style={{ height: textAreaHeight }}
+                                    />
 
-                            </div>
+                                </div>
 
-                            {/* buttons */}
+                                {/* buttons */}
 
-                            <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
-                                <button
-                                    type="submit"
-                                    className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
-                                >
-                                    {loadingSend ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}
-                                </button>
-                            </div>
+                                <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                                    <button
+                                        type="submit"
+                                        className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
+                                    >
+                                        {loadingSend ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}
+                                    </button>
+                                </div>
 
-                        </form>
+                            </form>
+                        </div>
+
+
                     </div>
-
-
                 </div>
-            </div>
-            <div className="w-full md:w-1/2 hidden md:flex ">
+                <div className="w-full md:w-[45%] hidden md:flex ">
+                    {
+                        loading ? (<p className='flex text-2xl font-montserrat justify-items-center justify-center items-center text-center'> Loading photo...</p>) :
+
+                            (<div className="w-full md:w-full hidden md:flex">
+                                <img
+                                    className="w-full h-auto "
+                                    src={mangaPhoto}
+                                    alt="Background"
+                                />
+                            </div>)
+                    }
+                </div>
+            </div >
+            {/* Modals */}
             {
-                loading ? (<p className='flex text-2xl font-montserrat justify-items-center justify-center items-center text-center'> Loading photo...</p>) : 
-            
-                   ( <img
-                        className="w-full max-h-screen object-cover overflow-hidden"
-                        src={mangaPhoto}
-                        alt="Background"
-                    />)
-                }
-                </div>
-        </div >
-            {/* Modals */ }
-    {
-        showSendModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                    <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
-                    <hr className="border-gray-300 my-4" />
-                    <button
-                        onClick={(e) => dispatch(setShowSendModal(false))}
-                        className="w-full text-blue-500 py-2"
-                    >
-                        <NavLink to={'/manager'}> Accept</NavLink>
-                    </button>
-                </div>
-            </div>
-        )
-    }
+                showSendModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                            <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
+                            <hr className="border-gray-300 my-4" />
+                            <button
+                                onClick={(e) => dispatch(setShowSendModal(false))}
+                                className="w-full text-blue-500 py-2"
+                            >
+                                <NavLink to={'/manager'}> Accept</NavLink>
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
         </>
     )
 
