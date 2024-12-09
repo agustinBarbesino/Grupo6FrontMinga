@@ -10,6 +10,7 @@ export default function Modal() {
     const [searchParams] = useSearchParams();
     const author_id = useSelector((state) => state.auth.user?.author_id);
     const company_id = useSelector((state) => state.auth.user?.company_id);
+    const role = useSelector((state) => state.role.role);
     const id = searchParams.get('id');
 
     const [editingComment, setEditingComment] = useState(null);
@@ -55,7 +56,7 @@ export default function Modal() {
         const isConfirm = window.confirm('Are you sure you want to delete this comment?');
         if (isConfirm) {
             setLoading(true);
-            await dispatch(deleteComment(commentId ));
+            await dispatch(deleteComment(commentId));
             alert("The comment has been deleted.");
             dispatch(getComments(id));
             setLoading(false);
@@ -86,7 +87,7 @@ export default function Modal() {
                         )}
 
                         {/* Content comments */}
-                        <div className="overflow-auto flex flex-col h-5/6 w-screen gap-4">
+                        <div className="overflow-auto flex flex-col h-5/6 w-full gap-4">
                             {comments.length === 0 ? (
                                 <div className="bg-transparent w-screen flex flex-col justify-center items-center py-6">
                                     <p className="text-[#0a0a0a] text-center text-lg md:text-3xl">
@@ -97,7 +98,7 @@ export default function Modal() {
 
 
                                 comments.map((comment) => (
-                                    <div key={comment._id} className="bg-white w-screen flex flex-col justify-evenly items-start gap-3 py-3">
+                                    <div key={comment._id} className="bg-white w-full flex flex-col justify-evenly items-start gap-3 py-3">
                                         <div className="flex justify-between w-full items-center">
                                             <div className="flex justify-items-start items-center ms-4">
                                                 <img
@@ -176,21 +177,23 @@ export default function Modal() {
                         </div>
 
                         {/* Input comments */}
-                        <div className="flex justify-evenly w-screen absolute bottom-4">
-                            <input
-                                type="text"
-                                placeholder="Say something..."
-                                className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
-                                value={commentSend}
-                                onChange={(e) => setCommentSend(e.target.value)}
-                            />
-                            <button
-                                className="absolute top-1/2 left-[80%] md:left-[87%] transform -translate-y-1/2"
-                                onClick={sendComment}
-                            >
-                                <img src="paper-airplane.png" alt="Send comment" className="w-10 h-10" />
-                            </button>
-                        </div>
+                        {role !== 0 && (
+                            <div className="flex justify-evenly w-screen absolute bottom-4">
+                                <input
+                                    type="text"
+                                    placeholder="Say something..."
+                                    className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
+                                    value={commentSend}
+                                    onChange={(e) => setCommentSend(e.target.value)}
+                                />
+                                <button
+                                    className="absolute top-1/2 left-[80%] md:left-[87%] transform -translate-y-1/2"
+                                    onClick={sendComment}
+                                >
+                                    <img src="paper-airplane.png" alt="Send comment" className="w-10 h-10" />
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

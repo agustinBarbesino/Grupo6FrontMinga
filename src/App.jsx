@@ -38,16 +38,16 @@ function App() {
         { path: "/mangas", element: <Mangas /> },
 
         // Rutas para usuarios sin registro
-        { 
-          path: "/signin", 
+        {
+          path: "/signin",
           element: (
             <ProtectedRoute noAuth={true} requiresAuth={false}>
               <Login />
             </ProtectedRoute>
           )
         },
-        { 
-          path: "/signup", 
+        {
+          path: "/signup",
           element: (
             <ProtectedRoute noAuth={true} requiresAuth={false}>
               <Register />
@@ -85,7 +85,7 @@ function App() {
         {
           path: "/favourites",
           element: (
-            <ProtectedRoute requiresAuth={true}>
+            <ProtectedRoute requiresAuth={true} allowedRoles={[1, 2, 3]}>
               <Favourites />
             </ProtectedRoute>
           )
@@ -95,7 +95,7 @@ function App() {
         {
           path: "/chapter",
           element: (
-            <ProtectedRoute allowedRoles={[1, 2, 3]}>
+            <ProtectedRoute allowedRoles={[0, 1, 2, 3]}>
               <Chapter />
             </ProtectedRoute>
           )
@@ -143,7 +143,7 @@ function App() {
         {
           path: "/manga",
           element: (
-            <ProtectedRoute allowedRoles={[1, 2, 3]}>
+            <ProtectedRoute allowedRoles={[0, 1, 2, 3]}>
               <Manga />
             </ProtectedRoute>
           )

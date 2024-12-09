@@ -21,7 +21,7 @@ export default function StandarLayout() {
       <div className="flex flex-col bg-white dark:bg-gray-900 transition-colors duration-300 min-h-screen relative">
         <Header />
         <Shimeji></Shimeji>
-        <main className=' flex-grow min-h-80 z-10 dark:text-white'>
+        <main className=' flex-grow min-h-80 z-20 dark:text-white'>
           <Outlet></Outlet>
         </main>
         <Footer />
