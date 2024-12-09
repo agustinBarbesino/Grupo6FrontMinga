@@ -8,7 +8,6 @@ const FormEditChapter = () => {
     const dispatch = useDispatch()
     const { title, id, idC } = useParams() //id y titulo del manga
     useEffect(() => {
-        console.log("ejecuta chapterbyManga")
         dispatch(chapterByManga({idC}))
     }, [dispatch])
     console.log("idc",idC)
