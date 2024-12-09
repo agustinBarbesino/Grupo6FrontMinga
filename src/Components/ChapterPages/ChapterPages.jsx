@@ -21,7 +21,6 @@ export default function ChapterPages() {
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const id = searchParams.get('id');
-    console.log("id", id);
     const [currentPage, setCurrentPage] = useState(1)
 
 

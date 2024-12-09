@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getChapter,getComments,addComment } from "../actions/chapterActions";
+import { getChapter,getComments,addComment, updateComment, deleteComment } from "../actions/chapterActions";
 
 const initialState = {
     chapters: [],
@@ -10,6 +10,7 @@ const initialState = {
 
 export const chapterReadReducer = createReducer(initialState, (builder) => {
     builder
+
     // get chapter
         .addCase(getChapter.pending, (state) => {
             state.loading = true;
@@ -42,5 +43,20 @@ export const chapterReadReducer = createReducer(initialState, (builder) => {
         .addCase(addComment.fulfilled, (state) => {
             state.loadingComments = false;
         })
-        ;
+        
+        //update comment
+        .addCase(updateComment.pending, (state) => {
+            state.loadingComments = true;
+        })
+        .addCase(updateComment.fulfilled, (state) => {
+            state.loadingComments = false;
+        })
+
+        //delete comment
+        .addCase(deleteComment.pending, (state) => {
+            state.loadingComments = true;
+        })
+        .addCase(deleteComment.fulfilled, (state) => {
+            state.loadingComments = false;
+        })
 });

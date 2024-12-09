@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formatDistanceToNow } from 'date-fns';
 import { useSearchParams } from "react-router-dom";
-import { getComments } from "../../store/actions/chapterActions";
-import { addComment } from "../../store/actions/chapterActions";
-
+import { getComments, addComment, updateComment, deleteComment } from "../../store/actions/chapterActions";
 export default function Modal() {
     const [isOpen, setIsOpen] = useState(false);
     const { comments } = useSelector((state) => state.chapterStore);
@@ -13,6 +11,9 @@ export default function Modal() {
     const author_id = useSelector((state) => state.auth.user?.author_id);
     const company_id = useSelector((state) => state.auth.user?.company_id);
     const id = searchParams.get('id');
+
+    const [editingComment, setEditingComment] = useState(null);
+    const [newCommentText, setNewCommentText] = useState('');
     const [commentSend, setCommentSend] = useState("");
     const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
@@ -23,14 +24,46 @@ export default function Modal() {
     const sendComment = async () => {
         if (commentSend.length >= 5) {
             setLoading(true);
-            dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
+            await dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
             dispatch(getComments(id));
             setCommentSend("");
             setLoading(false);
         } else {
-            alert("El comentario debe tener al menos 5 caracteres.");
+            alert("The comment must be at least 5 characters");
         }
     };
+
+    const handleEditComment = (commentId, message) => {
+        setEditingComment(commentId);
+        setNewCommentText(message);
+    }
+
+    const handleSaveComment = async (commentId,) => {
+        if (newCommentText.length >= 5) {
+            setLoading(true);
+            await dispatch(updateComment({ _id: commentId, message: newCommentText }));
+            setEditingComment(null);
+            dispatch(getComments(id));
+            setLoading(false);
+
+        } else {
+            alert("The comment must be at least 5 characters");
+        };
+    }
+
+    const handleDeleteComment = async (commentId) => {
+        const isConfirm = window.confirm('Are you sure you want to delete this comment?');
+        if (isConfirm) {
+            setLoading(true);
+            await dispatch(deleteComment(commentId ));
+            alert("The comment has been deleted.");
+            dispatch(getComments(id));
+            setLoading(false);
+
+        } else {
+            alert("The comment deletion has been canceled.");
+        }
+    }
 
     return (
         <>
@@ -61,19 +94,79 @@ export default function Modal() {
                                     </p>
                                 </div>
                             ) : (
+
+
                                 comments.map((comment) => (
                                     <div key={comment._id} className="bg-white w-screen flex flex-col justify-evenly items-start gap-3 py-3">
-                                        <div className="flex justify-items-start items-center ms-4">
-                                            <img
-                                                src={comment.authorId?.photo || comment.companyId?.photo}
-                                                alt="Profile Image"
-                                                className="w-14 h-14 rounded-full mr-2 bg-black"
-                                            />
-                                            <p>{comment.authorId?.name || comment.companyId?.name}</p>
+                                        <div className="flex justify-between w-full items-center">
+                                            <div className="flex justify-items-start items-center ms-4">
+                                                <img
+                                                    src={comment.authorId?.photo || comment.companyId?.photo}
+                                                    alt="Profile Image"
+                                                    className="w-14 h-14 rounded-full mr-2 bg-black"
+                                                />
+                                                <p>
+                                                    {comment.authorId?.name || comment.companyId?.name}
+                                                </p>
+                                            </div>
+                                            {/* Button  save and edit */}
+                                            {(comment?.companyId?._id || comment?.authorId?._id) === (company_id || author_id) && (
+                                                editingComment === comment._id ?
+                                                    (
+                                                        <div className=" flex gap-4 p-3 me-4">
+                                                            <button
+                                                                onClick={() => handleSaveComment(comment._id, newCommentText)}
+                                                                className="text-green-500 hover:text-green-300 px-2 py-1 border-2 border-gray-300 rounded-lg"
+                                                            >
+                                                                Save
+                                                            </button>
+                                                            <button
+                                                                onClick={() => { setEditingComment(null), setNewCommentText('') }}
+                                                                className="text-red-700 hover:text-red-300 px-2 py-1 border-2 border-gray-300 rounded-lg"
+                                                            >
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+
+                                                    ) :
+                                                    (
+                                                        <div className=" flex text-lg gap-4  p-3 me-4">
+                                                            <button
+                                                                onClick={() => handleEditComment(comment._id, comment.message)}
+                                                                className="text-[#0079FF] hover:bg-gray-100 flex items-center gap-5 px-2 border-2 border-gray-300  rounded-lg"
+                                                            >
+                                                                Edit
+                                                                <img src="/IconEdit.png" alt="Icon to edit comment" className="w-4 h-4" />
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => handleDeleteComment(comment._id)}
+                                                                className="bg-[#FEF1EF]  hover:bg-[#F1D0D6] p-2 w-10 h-10 flex items-center justify-center rounded-lg"
+                                                            >
+                                                                <img src="/IconDelete.png" alt="Icon to delete comment" className=" w-5 h-5" />
+                                                            </button>
+                                                        </div>
+                                                    )
+
+                                            )}
+
                                         </div>
-                                        <div className="ms-4 text-[#999999]">
-                                            <p>{comment.message}</p>
-                                        </div>
+                                        {editingComment === comment._id ? (
+                                            <div className="flex justify-evenly w-full">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Say something..."
+                                                    className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
+                                                    value={newCommentText}
+                                                    onChange={(e) => setNewCommentText(e.target.value)}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="ms-4 text-[#999999]">
+                                                <p>{comment.message}</p>
+                                            </div>
+                                        )}
+
                                         <div className="text-[#999999] self-center">
                                             <p>{formatDistanceToNow(new Date(comment.updatedAt), { addSuffix: true })}</p>
                                         </div>
