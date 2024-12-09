@@ -134,7 +134,7 @@ function NavBar() {
                     </div>
                     <div className="flex place-content-center justify-center md:w-80 z-50">
                         <NavLink to="/mangas" onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
-                            Manga
+                            Mangas
                         </NavLink >
                     </div>
                     
