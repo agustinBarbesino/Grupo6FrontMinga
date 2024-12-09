@@ -10,11 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 function ChapterInfo({ name, author, category, mangaId }) {
   const { reactions } = useSelector((state) => state.reactions);
   const autorId = JSON.parse(localStorage.getItem("user"));
+  const validAuthorCompany = autorId.company_id || autorId.author_id
 
   const [selectedValue, setSelectedValue] = useState(null);
 
-  let reactionsFiltered = reactions?.filter((m) => m?.manga_id?._id === mangaId);
-
+  let reactionsFiltered = reactions?.filter((m) => m?.manga_id?._id==mangaId && (m?.author_id||m?.company_id) == validAuthorCompany)
+ console.log(reactionsFiltered);
+ 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +32,8 @@ function ChapterInfo({ name, author, category, mangaId }) {
   const handleRadioChange = (value) => {
     setSelectedValue(selectedValue === value ? null : value); 
   };
-
+  console.log(autorId);
+  
   useEffect(() => {
     
       const dataCreate = {
@@ -39,6 +42,7 @@ function ChapterInfo({ name, author, category, mangaId }) {
         company_id: autorId.company_id,
         reaction: selectedValue,
       };
+      
       setTimeout(() => {
         
       dispatch(reactionsCreate({ dataCreate }));
