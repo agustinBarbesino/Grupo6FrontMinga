@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { editCompany, deleteCompany } from '../../store/actions/companyActions';
 import { editAuthor, deleteAuthor } from '../../store/actions/authorActions';
 import { setRole, updateUserRole } from '../../store/actions/roleActions';
-import { updateAuthUser } from '../../store/actions/authActions';
+import { updateAuthUser, signOut } from '../../store/actions/authActions';
 
 const EditProfile = () => {
     const navigate = useNavigate();
@@ -222,6 +222,7 @@ const EditProfile = () => {
         const updatedUser = { ...user, role: 0 }
         localStorage.setItem('user', JSON.stringify(updatedUser))
         dispatch(updateAuthUser(updatedUser))
+        dispatch(signOut())
         setShowDeleteModal(false)
         navigate('/')
     }
