@@ -19,7 +19,7 @@ import NewChapter from "./Pages/CreateChapter";
 import NewManga from "./Pages/CreateManga";
 import NewAuthor from "./Pages/NewAuthor";
 import NewCompany from "./Pages/NewCompany";
-import FavoritesPage from "./Pages/Favorites";
+import Favourites from "./Pages/Favourites";
 import PanelPage from "./Pages/PanelAdmin";
 import Profile from "./Pages/Profile";
 import GoogleAuthHandler from "./Components/Login/GoogleHandler";
@@ -83,10 +83,10 @@ function App() {
 
         // Rutas para usuarios autenticados (todos los roles)
         {
-          path: "/favorites",
+          path: "/favourites",
           element: (
             <ProtectedRoute requiresAuth={true}>
-              <FavoritesPage />
+              <Favourites />
             </ProtectedRoute>
           )
         },
@@ -174,6 +174,7 @@ function App() {
             </ProtectedRoute>
           )
         },
+
       ]
     },
     {

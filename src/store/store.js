@@ -18,7 +18,6 @@ import reactionsCreateReducer from './reducer/reactionsCreateReducer';
 import darkModeReducer from './reducer/darkModeReducer';
 
 
-
 const store = configureStore({
   reducer: {
     auth: authReducer,

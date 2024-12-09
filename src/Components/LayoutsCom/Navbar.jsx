@@ -21,7 +21,17 @@ function NavBar() {
     const role = useSelector((state) => state.role);
     const isDarkMode = useSelector(selectIsDarkMode);
 
-
+    const [theme, setTheme] = useState(() => {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+    
+        return "light";
+      });
+    
+     
+    
+    
     const handleLogout = async () => {
         try {
             await dispatch(signOut()).unwrap();
@@ -127,6 +137,7 @@ function NavBar() {
                          Manga
                         </NavLink >
                     </div>
+                    
                     {/* changeRole and register */}
                     {(isAuthenticated &&  role?.role === 0) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
@@ -155,6 +166,7 @@ function NavBar() {
                                 Sign In
                             </NavLink>
                         </div>
+                        
                     ) : (
                         <div className="flex place-content-center justify-center ml-0 mt-0 md:mt-2 mb-2 md:w-80 z-50">
                             <button
@@ -163,8 +175,11 @@ function NavBar() {
                             >
                                 Logout
                             </button>
+
+
                         </div>
                     )}
+
                 </nav>
             </div>
         </>
