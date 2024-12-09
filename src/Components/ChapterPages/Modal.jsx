@@ -113,16 +113,16 @@ export default function Modal() {
                                             {(comment?.companyId?._id || comment?.authorId?._id) === (company_id || author_id) && (
                                                 editingComment === comment._id ?
                                                     (
-                                                        <div className=" flex gap-4 me-4">
+                                                        <div className=" flex gap-4 p-3 me-4">
                                                             <button
                                                                 onClick={() => handleSaveComment(comment._id, newCommentText)}
-                                                                className="text-green-500 hover:text-green-300"
+                                                                className="text-green-500 hover:text-green-300 px-2 py-1 border-2 border-gray-300 rounded-lg"
                                                             >
-                                                                Guardar
+                                                                Save
                                                             </button>
                                                             <button
                                                                 onClick={() => { setEditingComment(null), setNewCommentText('') }}
-                                                                className="text-red-700 hover:text-red-300"
+                                                                className="text-red-700 hover:text-red-300 px-2 py-1 border-2 border-gray-300 rounded-lg"
                                                             >
                                                                 Cancel
                                                             </button>
@@ -130,19 +130,20 @@ export default function Modal() {
 
                                                     ) :
                                                     (
-                                                        <div className=" flex gap-4 me-4">
+                                                        <div className=" flex text-lg gap-4  p-3 me-4">
                                                             <button
                                                                 onClick={() => handleEditComment(comment._id, comment.message)}
-                                                                className="text-blue-500 hover:text-blue-700"
+                                                                className="text-[#0079FF] hover:bg-gray-100 flex items-center gap-5 px-2 border-2 border-gray-300  rounded-lg"
                                                             >
-                                                                Editar
+                                                                Edit
+                                                                <img src="/IconEdit.png" alt="Icon to edit comment" className="w-4 h-4" />
                                                             </button>
 
                                                             <button
                                                                 onClick={() => handleDeleteComment(comment._id)}
-                                                                className="text-blue-500 hover:text-blue-700"
+                                                                className="bg-[#FEF1EF]  hover:bg-[#F1D0D6] p-2 w-10 h-10 flex items-center justify-center rounded-lg"
                                                             >
-                                                                Eliminar
+                                                                <img src="/IconDelete.png" alt="Icon to delete comment" className=" w-5 h-5" />
                                                             </button>
                                                         </div>
                                                     )
