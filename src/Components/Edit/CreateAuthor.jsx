@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { registerAuthor } from '../../store/actions/authorActions'
 import { useNavigate } from 'react-router-dom'
 import { setRole, updateUserRole } from '../../store/actions/roleActions'
-import { updateAuthUser } from '../../store/actions/authActions'
+import { updateAuthUser, signOut } from '../../store/actions/authActions'
 
 const CreateAuthor = () => {
     const dispatch = useDispatch()
@@ -148,8 +148,8 @@ const CreateAuthor = () => {
         const updatedUser = { ...user, role: 1 }
         localStorage.setItem('user', JSON.stringify(updatedUser))
         dispatch(updateAuthUser(updatedUser))
-        dispatch()
         setShowSendModal(true)
+        dispatch(signOut())
         navigate('/home')
       }
     
