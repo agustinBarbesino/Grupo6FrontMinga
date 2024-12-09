@@ -109,7 +109,7 @@ function App() {
           )
         },
         {
-          path: "/editChapter/:title/:id",
+          path: "/editChapter/:title/:id/:idC",
           element: (
             <ProtectedRoute allowedRoles={[1, 2, 3]}>
               <EditChapter />

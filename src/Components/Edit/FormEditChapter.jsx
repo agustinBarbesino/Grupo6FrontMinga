@@ -2,11 +2,16 @@ import { React, useState, useEffect } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { fetchCategories } from '../../store/actions/categoryActions.js'
-import { editChapter, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal, getChapterPhoto } from '../../store/actions/editActions.js'
+import { editChapter, setShowSaveModal, setShowDeleteModal, setShowDeletedModal, deleteChapter, setShowNoChaptersModal, getChapterPhoto, chapterByManga } from '../../store/actions/editActions.js'
 
 const FormEditChapter = () => {
     const dispatch = useDispatch()
-    const { title, id } = useParams() //id y titulo del manga
+    const { title, id, idC } = useParams() //id y titulo del manga
+    useEffect(() => {
+        console.log("ejecuta chapterbyManga")
+        dispatch(chapterByManga({idC}))
+    }, [dispatch])
+    console.log("idc",idC)
     const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter, loadingPhoto, mangaPhoto  } = useSelector((state) => state.editChapters)
     const chaptersData = useSelector((state) => state?.editChapters?.chaptersData || [])
     const [formData, setFormData] = useState(initialFormDataChapter)
@@ -24,9 +29,11 @@ const FormEditChapter = () => {
     useEffect(() => {
         dispatch(fetchCategories())
         dispatch(getChapterPhoto({ id }))
+        dispatch(chapterByManga({idC}))
         setFormData({ ...formData, name: title })
     }, [dispatch])
     const chapters = chaptersData.map((chapter) => chapter.order)
+    console.log("chapters", chapters)
     useEffect(() => {
         if (chaptersData.length === 0) {
             dispatch(setShowNoChaptersModal(true))
@@ -253,7 +260,7 @@ const FormEditChapter = () => {
                                 <hr className="border-gray-300 my-4" />
                                 <div className="flex items-center">
                                     <button
-                                        onClick={() => dispatch(deleteChapter({ filteredChapters }))} //debe mandar al endpoint de delete chapter
+                                        onClick={() => dispatch(deleteChapter({ id }))} //debe mandar al endpoint de delete chapter
                                         className="flex-1 text-red-500 py-2"
                                     >
 
@@ -311,7 +318,7 @@ const FormEditChapter = () => {
                             onClick={() => dispatch(setShowNoChaptersModal(true))}
                             className="w-full text-blue-500 py-2"
                         >
-                            <NavLink to={'/manager'}> Accept</NavLink>
+                            <NavLink to={'/mangas'}> Accept</NavLink>
                         </button>
                     </div>
                 </div>
