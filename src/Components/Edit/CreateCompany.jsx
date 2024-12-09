@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { registerCompany } from '../../store/actions/companyActions'
 import { setRole, updateUserRole } from '../../store/actions/roleActions' 
-import { updateAuthUser } from '../../store/actions/authActions'
+import { updateAuthUser, signOut } from '../../store/actions/authActions'
 
 const CreateCompany = () => {
     const dispatch = useDispatch()
@@ -118,6 +118,7 @@ const CreateCompany = () => {
         localStorage.setItem('user', JSON.stringify(updatedUser))
         dispatch(updateAuthUser(updatedUser))
         setShowSendModal(true)
+        dispatch(signOut())
         navigate('/home')
       }
 
