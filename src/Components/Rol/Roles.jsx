@@ -1,20 +1,8 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setRole } from '../../store/actions/roleActions'
  
 export default function Roles() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleRoleSelection = (role) => {
-        dispatch(setRole(role))
-        if (role === 1) {
-          navigate('/newAuthor')
-        } else if (role === 2){
-          navigate('/newCompany')
-        }
-    }
 
   return (
     <div className='w-full min-h-screen flex flex-col justify-center items-center md:flex-row'>
@@ -22,7 +10,7 @@ export default function Roles() {
         <h1 className='text-pink-400'>Change Rol To</h1>
         <img className='w-20 my-4' src="src/assets/logoMinga.png" alt="logo" />
         <div className='w-10/12 my-4 p-1 py-2 flex justify-start items-center rounded-lg outline outline-1 outline-slate-200 hover:outline-2 hover:outline-pink-400 transition hover:cursor-pointer'
-          onClick={() => handleRoleSelection(1)}>
+          onClick={() => navigate('/newAuthor')}>
           <img className='mx-2' src="src/assets/peopleAuthorRole.png" alt="" />
           <div className='flex flex-col items-start'>
             <h1 className='font-bold text-pink-400'>Join as an Author!</h1>
@@ -30,7 +18,7 @@ export default function Roles() {
           </div>
         </div>
         <div className='w-10/12 my-4 p-1 py-2 flex justify-start items-center rounded-lg outline outline-1 outline-slate-200 hover:outline-2 hover:outline-pink-400 transition hover:cursor-pointer'
-          onClick={() => handleRoleSelection(2)}>
+          onClick={() => navigate('/newCompany')}>
           <img className='mx-2' src="src/assets/peopleCompanyRole.png" alt="" />
           <div className='flex flex-col items-start'>
             <h1 className='font-bold text-pink-400'>Join as an Company!</h1>

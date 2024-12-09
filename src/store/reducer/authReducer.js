@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {clearError, clearSuccess, logout, processGoogleResponse, signIn, signInWithGoogle, signUp, signOut} from '../actions/authActions';
+import {clearError, clearSuccess, logout, processGoogleResponse, signIn, signInWithGoogle, signUp, signOut, updateAuthUser} from '../actions/authActions';
 
 const initialState = {
   user: (() => {
@@ -193,7 +193,10 @@ const authReducer = createReducer(initialState, (builder) => {
     .addCase(signOut.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
-    });
+    })
+    .addCase(updateAuthUser, (state, action) => {
+      state.user = action.payload;
+  });
 });
 
 export default authReducer;
