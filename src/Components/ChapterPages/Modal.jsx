@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formatDistanceToNow } from 'date-fns';
 import { useSearchParams } from "react-router-dom";
-import { getComments, addComment, updateComment } from "../../store/actions/chapterActions";
+import { getComments, addComment, updateComment, deleteComment } from "../../store/actions/chapterActions";
 export default function Modal() {
     const [isOpen, setIsOpen] = useState(false);
     const { comments } = useSelector((state) => state.chapterStore);
@@ -29,7 +29,7 @@ export default function Modal() {
             setCommentSend("");
             setLoading(false);
         } else {
-            alert("El comentario debe tener al menos 5 caracteres.");
+            alert("The comment must be at least 5 characters");
         }
     };
 
@@ -40,15 +40,29 @@ export default function Modal() {
 
     const handleSaveComment = async (commentId,) => {
         if (newCommentText.length >= 5) {
-            setLoading(true);            
+            setLoading(true);
             await dispatch(updateComment({ _id: commentId, message: newCommentText }));
             setEditingComment(null);
             dispatch(getComments(id));
             setLoading(false);
-            
-        }else{
-            alert("El comentario debe tener al menos 5 caracteres.");
+
+        } else {
+            alert("The comment must be at least 5 characters");
         };
+    }
+
+    const handleDeleteComment = async (commentId) => {
+        const isConfirm = window.confirm('Are you sure you want to delete this comment?');
+        if (isConfirm) {
+            setLoading(true);
+            await dispatch(deleteComment(commentId ));
+            alert("The comment has been deleted.");
+            dispatch(getComments(id));
+            setLoading(false);
+
+        } else {
+            alert("The comment deletion has been canceled.");
+        }
     }
 
     return (
@@ -107,7 +121,7 @@ export default function Modal() {
                                                                 Guardar
                                                             </button>
                                                             <button
-                                                                onClick={() => setEditingComment(null)}
+                                                                onClick={() => { setEditingComment(null), setNewCommentText('') }}
                                                                 className="text-red-700 hover:text-red-300"
                                                             >
                                                                 Cancel
@@ -116,12 +130,19 @@ export default function Modal() {
 
                                                     ) :
                                                     (
-                                                        <div className=" me-4">
+                                                        <div className=" flex gap-4 me-4">
                                                             <button
                                                                 onClick={() => handleEditComment(comment._id, comment.message)}
                                                                 className="text-blue-500 hover:text-blue-700"
                                                             >
                                                                 Editar
+                                                            </button>
+
+                                                            <button
+                                                                onClick={() => handleDeleteComment(comment._id)}
+                                                                className="text-blue-500 hover:text-blue-700"
+                                                            >
+                                                                Eliminar
                                                             </button>
                                                         </div>
                                                     )
@@ -141,8 +162,6 @@ export default function Modal() {
                                             </div>
                                         ) : (
                                             <div className="ms-4 text-[#999999]">
-                                                {console.log("comment.message: ",comment.message)}
-                                                
                                                 <p>{comment.message}</p>
                                             </div>
                                         )}

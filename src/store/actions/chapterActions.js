@@ -52,15 +52,25 @@ export const updateComment = createAsyncThunk("UPDATE_COMMENT", async ({ _id, me
     _id,
     message
   }
-  console.log("commentData: ",commentData);
+  console.log("commentData: ", commentData);
   try {
-    const response = await axios.put(`http://localhost:8080/api/comments/update/`,  commentData );
-    
-    
-    console.log("Response: ",response.data);
+    const response = await axios.put(`http://localhost:8080/api/comments/update/`, commentData);
+
+
+    console.log("Response: ", response.data);
 
     return response.data;
   } catch (error) {
     throw new Error("Error updating comment: " + error.message);
+  }
+});
+
+export const deleteComment = createAsyncThunk("DELETE_COMMENT", async (id) => {
+  try {
+
+    const response = await axios.delete(`http://localhost:8080/api/comments/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error deleting comment: " + error.message);
   }
 });
