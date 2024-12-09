@@ -15,6 +15,7 @@ function Favourites(){
     const {reactions} = useSelector(state => state.reactions);
     const {searchM} = useSelector(state => state.mangasFilterStore);
     const [mangasReact, setMangasReact] = useState([]);
+    const authorSign = JSON.parse(localStorage.getItem("user"))
     const profile = JSON.parse(localStorage.getItem('profile'))
 
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Favourites(){
             .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id ?profile._id:profile.id)
             .map((r) => ({
                 ...r.manga_id,
-                reactId: r._id, 
+                reactId: r.author_id, 
             }));
         setMangasReact(updatedMangasReact); 
     }, [reactions]);
@@ -44,8 +45,12 @@ function Favourites(){
     function PlaceCards({ mangas, text }) {
         let data = mangas?.filter((c) => {
             let value1 = text.toLowerCase();
+            let value2 = c.reactId
             let filt1 = c.title?.toLowerCase();
-            return filt1?.startsWith(value1);
+            let filt2=authorSign.author_id||authorSign.company_id
+            console.log(filt2,value2,mangas,mangasReact);
+            
+            return filt1?.startsWith(value1) && filt2.startsWith(value2)
         });
 
         if (data?.length !== 0) {
