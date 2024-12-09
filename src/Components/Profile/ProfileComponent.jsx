@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Cake, Globe } from 'lucide-react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editCompany, deleteCompany } from '../../store/actions/companyActions';
 import { editAuthor, deleteAuthor } from '../../store/actions/authorActions';
+import { setRole, updateUserRole } from '../../store/actions/roleActions';
+import { updateAuthUser, signOut } from '../../store/actions/authActions';
 
 const EditProfile = () => {
     const navigate = useNavigate();
@@ -12,7 +14,6 @@ const EditProfile = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user._id
     const profile = JSON.parse(localStorage.getItem('profile'))
-    console.log(profile)
 
     const isCompany = user.company_id? true : false
     console.log(isCompany)
@@ -216,6 +217,12 @@ const EditProfile = () => {
         e.preventDefault() 
         dispatch(isCompany ? deleteCompany(user.company_id):
                             deleteAuthor(user.author_id));
+        dispatch(updateUserRole({id: userId, role: 0}))
+        dispatch(setRole(0))
+        const updatedUser = { ...user, role: 0 }
+        localStorage.setItem('user', JSON.stringify(updatedUser))
+        dispatch(updateAuthUser(updatedUser))
+        dispatch(signOut())
         setShowDeleteModal(false)
         navigate('/')
     }

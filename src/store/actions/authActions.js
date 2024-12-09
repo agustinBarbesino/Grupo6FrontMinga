@@ -88,6 +88,8 @@ export const signOut = createAsyncThunk(
   }
 );
 
+export const updateAuthUser = createAction('auth/updateAuthUser')
+
 // Selectors
 export const selectIsAuthenticated = state => state.auth.isAuthenticated;
 export const selectUser = state => state.auth.user;

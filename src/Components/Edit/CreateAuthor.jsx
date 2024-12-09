@@ -2,6 +2,8 @@ import { React, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerAuthor } from '../../store/actions/authorActions'
 import { useNavigate } from 'react-router-dom'
+import { setRole, updateUserRole } from '../../store/actions/roleActions'
+import { updateAuthUser } from '../../store/actions/authActions'
 
 const CreateAuthor = () => {
     const dispatch = useDispatch()
@@ -9,13 +11,8 @@ const CreateAuthor = () => {
     
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user._id
+    const authUser = useSelector(state => state.auth.user)
     console.log(userId)
-
-    const role = useSelector(state => state.role.selectedRole)
-
-    const rolChange = () => {
-        user.role = role
-    }
     
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
@@ -146,7 +143,12 @@ const CreateAuthor = () => {
         }
         console.log(formData)
         dispatch(registerAuthor({...formData, user_id: userId}));
-        rolChange()
+        dispatch(updateUserRole({id: userId, role: 1}))
+        dispatch(setRole(1))
+        const updatedUser = { ...user, role: 1 }
+        localStorage.setItem('user', JSON.stringify(updatedUser))
+        dispatch(updateAuthUser(updatedUser))
+        dispatch()
         setShowSendModal(true)
         navigate('/home')
       }
