@@ -2,20 +2,17 @@ import { React, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { registerCompany } from '../../store/actions/companyActions'
+import { setRole, updateUserRole } from '../../store/actions/roleActions' 
+import { updateAuthUser } from '../../store/actions/authActions'
 
 const CreateCompany = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const user = JSON.parse(localStorage.getItem('user'))
+    const authUser = useSelector(state => state.auth.user)
     const userId = user._id
     console.log(userId)
-
-    const role = useSelector(state => state.role.selectedRole)
-
-    const rolChange = () => {
-        user.role = role
-    }
 
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
@@ -115,7 +112,11 @@ const CreateCompany = () => {
         }
         console.log(formData)
         dispatch(registerCompany({...formData, user_id: userId}));
-        rolChange()
+        dispatch(updateUserRole({id: userId, role: 2}))
+        dispatch(setRole(2))
+        const updatedUser = { ...user, role: 2 }
+        localStorage.setItem('user', JSON.stringify(updatedUser))
+        dispatch(updateAuthUser(updatedUser))
         setShowSendModal(true)
         navigate('/home')
       }
