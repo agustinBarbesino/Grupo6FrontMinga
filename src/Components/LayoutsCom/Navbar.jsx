@@ -20,6 +20,8 @@ function NavBar() {
     const user = useSelector(selectUser);
     const role = useSelector((state) => state.role);
     const isDarkMode = useSelector(selectIsDarkMode);
+    const author_id = useSelector((state) => state.auth.user?.author_id);
+    const company_id = useSelector((state) => state.auth.user?.company_id)
 
     const [theme, setTheme] = useState(() => {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -145,13 +147,24 @@ function NavBar() {
                                 Change to role
                             </NavLink>
                         </div>)}
-                    {/* My mangas */}
+                    {/* My Mangas */}
                     {(role?.role === 1 || role?.role === 2) && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
                             <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/manager'}>
                                 My Mangas
                             </NavLink>
-                        </div>)}
+                        </div>
+                        )
+                        }
+                     {/* My mangas */}
+                     {(role?.role === 1 || role?.role === 2) && (
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/favourites'}>
+                                Favourites
+                            </NavLink>
+                        </div>
+                        )
+                        }
                     {/* My mangas */}
                     {role?.role === 3 && (
                         <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
