@@ -8,9 +8,11 @@ const FormEditManga = () => {
     const dispatch = useDispatch()
     const { title } = useParams()
     const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loadingEdit, loadingDelete, deleteSuccess, initialFormDataManga, mangaPhoto, loadingPhoto } = useSelector((state) => state.editMangas)
-    const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
+    const categories = useSelector((state) => state?.categories?.categories || []) // Traemos categorías
     const categorias = categories.map((category) => category.name)
     const [formData, setFormData] = useState(initialFormDataManga)
+    const [error, setError] = useState('')
+
     useEffect(() => {
         dispatch(fetchCategories())
         setFormData({ ...formData, title: title })
@@ -19,9 +21,27 @@ const FormEditManga = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if (formData.data === 'title' && !formData.edit.trim()) {
+            setError('Title cannot be empty')
+            return
+        }
+    
+        if (formData.data === 'title' && /[^a-zA-Z0-9\s]/.test(formData.edit)) {
+            setError('Title cannot contain special characters')
+            return
+        }
+
+        if (formData.data === 'description' && formData.edit.length <= 20) {
+            setError('The description must be more than 20 characters')
+            return
+        }
+
+        setError('')
         dispatch(editManga({ formData }))
         setFormData(initialFormDataManga)
     }
+
     useEffect(() => {
         if (mangaData) {
             dispatch(setShowSaveModal(true))
@@ -67,7 +87,6 @@ const FormEditManga = () => {
                                 {/* data to edit */}
                                 <div className="flex justify-center md:justify-start">
                                     {formData.data === "category" ?
-                                        /* si es categoria se despliega las categorias que tenemos */
                                         (
                                             <div className="flex justify-center md:justify-start">
                                                 <select
@@ -103,8 +122,12 @@ const FormEditManga = () => {
                                         />)}
                                 </div>
 
-                                {/* buttons */}
+                                {/* Error message */}
+                                {error && (
+                                    <p className="text-red-500 text-sm mt-2">{error}</p>
+                                )}
 
+                                {/* buttons */}
                                 <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                                     <button
                                         type="submit"
@@ -125,8 +148,6 @@ const FormEditManga = () => {
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                 </div>
                 <div className="w-full md:w-[45%] hidden md:flex ">
@@ -206,7 +227,6 @@ const FormEditManga = () => {
             )}
         </>
     )
-
 }
 
 export default FormEditManga
