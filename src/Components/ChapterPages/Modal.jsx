@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formatDistanceToNow } from 'date-fns';
 import { useSearchParams } from "react-router-dom";
-import { getComments } from "../../store/actions/chapterActions";
-import { addComment } from "../../store/actions/chapterActions";
-import { use } from "react";
-
+import { getComments, addComment, updateComment } from "../../store/actions/chapterActions";
 export default function Modal() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const { comments } = useSelector((state) => state.chapterStore);
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
@@ -27,7 +24,7 @@ export default function Modal() {
     const sendComment = async () => {
         if (commentSend.length >= 5) {
             setLoading(true);
-            dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
+            await dispatch(addComment({ chapterId: id, authorId: author_id, companyId: company_id, message: commentSend }));
             dispatch(getComments(id));
             setCommentSend("");
             setLoading(false);
@@ -38,6 +35,20 @@ export default function Modal() {
 
     const handleEditComment = (commentId, message) => {
         setEditingComment(commentId);
+        setNewCommentText(message);
+    }
+
+    const handleSaveComment = async (commentId,) => {
+        if (newCommentText.length >= 5) {
+            setLoading(true);            
+            await dispatch(updateComment({ _id: commentId, message: newCommentText }));
+            setEditingComment(null);
+            dispatch(getComments(id));
+            setLoading(false);
+            
+        }else{
+            alert("El comentario debe tener al menos 5 caracteres.");
+        };
     }
 
     return (
@@ -84,21 +95,42 @@ export default function Modal() {
                                                     {comment.authorId?.name || comment.companyId?.name}
                                                 </p>
                                             </div>
+                                            {/* Button  save and edit */}
                                             {(comment?.companyId?._id || comment?.authorId?._id) === (company_id || author_id) && (
-                                                
-                                                <div className=" me-4">
-                                                    <button
-                                                        onClick={() => handleEditComment(comment._id, comment.message)}
-                                                        className="text-blue-500 hover:text-blue-700"
-                                                    >
-                                                        Editar
-                                                    </button>
-                                                </div>
+                                                editingComment === comment._id ?
+                                                    (
+                                                        <div className=" flex gap-4 me-4">
+                                                            <button
+                                                                onClick={() => handleSaveComment(comment._id, newCommentText)}
+                                                                className="text-green-500 hover:text-green-300"
+                                                            >
+                                                                Guardar
+                                                            </button>
+                                                            <button
+                                                                onClick={() => setEditingComment(null)}
+                                                                className="text-red-700 hover:text-red-300"
+                                                            >
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+
+                                                    ) :
+                                                    (
+                                                        <div className=" me-4">
+                                                            <button
+                                                                onClick={() => handleEditComment(comment._id, comment.message)}
+                                                                className="text-blue-500 hover:text-blue-700"
+                                                            >
+                                                                Editar
+                                                            </button>
+                                                        </div>
+                                                    )
+
                                             )}
 
                                         </div>
                                         {editingComment === comment._id ? (
-                                            <div className="flex justify-evenly w-screen">
+                                            <div className="flex justify-evenly w-full">
                                                 <input
                                                     type="text"
                                                     placeholder="Say something..."
@@ -109,12 +141,11 @@ export default function Modal() {
                                             </div>
                                         ) : (
                                             <div className="ms-4 text-[#999999]">
+                                                {console.log("comment.message: ",comment.message)}
+                                                
                                                 <p>{comment.message}</p>
                                             </div>
                                         )}
-                                        {/* <div className="ms-4 text-[#999999]">
-                                            <p>{comment.message}</p>
-                                        </div> */}
 
                                         <div className="text-[#999999] self-center">
                                             <p>{formatDistanceToNow(new Date(comment.updatedAt), { addSuffix: true })}</p>
