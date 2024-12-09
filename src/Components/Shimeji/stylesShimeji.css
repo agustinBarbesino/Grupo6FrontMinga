@@ -1,0 +1,39 @@
+
+#lienzo {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+   
+  }
+  #imagen{
+   
+    position: absolute;
+    width: 100px;
+    transform: scaleX(-1);
+    z-index:1000;
+  }
+  @media only screen and (max-width: 600px) {
+    #imagen{
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    #imagen{
+      display: none;
+    }
+  }
+  
+  #gira {
+    animation: rotar 700ms infinite linear;
+  }
+  
+  @keyframes rotar {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
