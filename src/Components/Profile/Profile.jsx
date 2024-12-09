@@ -5,26 +5,6 @@ const Profile = () => {
   const [isNew, setIsNew] = useState(true);
   
   const isCompany = window.location.pathname.includes('company');
-  const profileData = isCompany ? {
-    name: "Toei Animation",
-    location: "Toei Animation Co., Ltd is a Japanese animation studio owned by the Toei Company, Limited...",
-    mangas: [
-      { id: 1, title: "Komi san Cant Communicate" },
-      { id: 2, title: "Boruto" },
-      { id: 3, title: "Evangelion" },
-      { id: 4, title: "Kaguya-sama: Love is war" }
-    ]
-  } : {
-    name: "Lucas Ezequiel Silva",
-    location: "Caseros, Buenos Aires",
-    birthDate: "16/02/2000",
-    mangas: [
-      { id: 1, title: "Komi san Cant Communicate" },
-      { id: 2, title: "Boruto" },
-      { id: 3, title: "Evangelion" },
-      { id: 4, title: "Kaguya-sama: Love is war" }
-    ]
-  };
 
   const handleToggleChange = () => {
     setIsNew(!isNew);

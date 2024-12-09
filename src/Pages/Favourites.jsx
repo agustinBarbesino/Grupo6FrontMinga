@@ -7,6 +7,7 @@ import { category, search } from "../store/mangaSlice";
 import { LoadingMangas } from "../Components/Mangas/LoadingMangas";
 
 import '../Components/Mangas/mangaPages.css';
+import Profile from "./Profile";
 
 function Favourites(){
     const {categories} = useSelector(state => state.categories);
@@ -15,12 +16,12 @@ function Favourites(){
     const {searchM} = useSelector(state => state.mangasFilterStore);
     const [mangasReact, setMangasReact] = useState([]);
     const authorSign = JSON.parse(localStorage.getItem("user"))
+    const profile = JSON.parse(localStorage.getItem('profile'))
 
     const dispatch = useDispatch();
-
     useEffect(() => {
         const updatedMangasReact = reactions
-            .filter((r) => r.reaction !== "dislike" && r.reaction !== null)
+            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id ?profile._id:profile.id)
             .map((r) => ({
                 ...r.manga_id,
                 reactId: r.author_id, 

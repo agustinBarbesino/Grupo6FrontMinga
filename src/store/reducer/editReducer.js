@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { deleteManga, changeChapter, editManga, getMangaPhoto, getChapterPhoto, setShowDeleteModal, setShowDeletedModal,setShowNoChaptersModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter } from '../actions/editActions'
+import { deleteManga, changeChapter, editManga, getMangaPhoto, getChapterPhoto, setShowDeleteModal, setShowDeletedModal,setShowNoChaptersModal, setShowSaveModal, chapterByManga, editChapter, deleteChapter, setTitle } from '../actions/editActions'
 
 const initialState = {
   categories: [],
@@ -77,6 +77,10 @@ export const editMangas = createReducer(initialState, (builder) => {
       state.loadingPhoto = false
       state.error = action.error.message
     })
+    .addCase(setTitle, (state,action)=>{
+      state.title = action.payload
+
+    } )
 })
 export const editChapters = createReducer(initialState, (builder) => {
   builder.addCase(setShowSaveModal, (state, action) => {

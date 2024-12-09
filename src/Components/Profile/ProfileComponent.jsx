@@ -233,10 +233,7 @@ const EditProfile = () => {
             <div className="absolute inset-0 hidden md:block" style={{ zIndex: -1 }}>
                 <div className="relative w-full h-[60%]">
                     <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{
-                            backgroundImage: `url('https://s3-alpha-sig.figma.com/img/10b2/d5ee/20210b0eea83b4ff7cf04e7d9e72c1a2?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ApbIxzrVIYI3IICLpggmt~3Q8IDT9Nzu-TRDdbNtHZdCMmCDi8egz9-yKlv1DueuS6-L9PnuOEvua~mshZJbwMcLr7O7wIeFMhzIWUPCdpqaTGakjtg5ykE4KkQGmiKmUw-iuYNDcBnbnStigwAruYCVpSoSp65pruXf8FpRG~NrEG9Z63TV1s7BfcqLzThJswDc8lFBkmOE57V7RMJLQZfmPOcUt23bMXtwl-wCMZ8IrbQyu~G2Dm8u3axeBKcncCptqsGhkKZqOr2srFyNT7GBuJP4JcRon5gBz9dwE1VAL-YXsEjbnubJuZw6BIGL0t-Efxli1y35KAw2PTW2Tw__')`
-                        }}
+                        className="absolute inset-0 bg-footer bg-cover bg-center"
                     ></div>
                     <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 </div>

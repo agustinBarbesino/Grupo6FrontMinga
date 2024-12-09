@@ -32,7 +32,7 @@ const FormEditManga = () => {
             return
         }
 
-        if (formData.data === 'description' && formData.edit.length <= 20) {
+        if (formData.data === 'description' && formData.edit.length <= 10) {
             setError('The description must be more than 20 characters')
             return
         }

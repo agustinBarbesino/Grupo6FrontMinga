@@ -13,8 +13,10 @@ export const editManga = createAsyncThunk('editManga', async ({ formData }) => {
 )
 
 export const setShowSaveModal = createAction("setShowSaveModal")
+export const setTitle = createAction("setTitle")
 
 export const deleteManga = createAsyncThunk('deleteManga', async ({ title }) => {
+    console.log("title que ira a back", title)
     const response = await axios.delete(`${BASE_URL}/mangas/deleteOne`, { data: { title } })
     return response.data
 })
@@ -24,14 +26,13 @@ export const setShowDeletedModal = createAction("setShowDeletedModal")
 export const setShowNoChaptersModal = createAction("setShowNoChaptersModal")
 export const changeChapter = createAction("changeChapter")
 
-export const chapterByManga = createAsyncThunk('chapterByManga', async ({ id }) => {
-    const response = await axios.get(`${BASE_URL}/chapter/all?manga_id=${id}`)
+export const chapterByManga = createAsyncThunk('chapterByManga', async ({ idC }) => {
+    const response = await axios.get(`${BASE_URL}/chapter/all?manga_id=${idC}`)
     return response.data.response
 })
 
-export const deleteChapter = createAsyncThunk('deleteChapter', async ({ filteredChapters }) => {
-    const { title } = filteredChapters[0]
-    const response = await axios.delete(`${BASE_URL}/chapter/deleteOne`, { data: { title } })
+export const deleteChapter = createAsyncThunk('deleteChapter', async ({ id }) => {
+    const response = await axios.delete(`${BASE_URL}/chapter/deleteByID/${id}`)
     return response.data
 })
 
