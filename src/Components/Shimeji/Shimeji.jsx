@@ -95,7 +95,7 @@ const Shimeji = () => {
 
   return (
  
-      <div id="lienzo" ref={lienzoRef} onMouseMove={handleMouseMove} >
+      <div  ref={lienzoRef} onMouseMove={handleMouseMove} id="lienzo">
         <img
           src={imagenActual}
           id="imagen"
