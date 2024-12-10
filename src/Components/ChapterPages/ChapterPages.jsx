@@ -87,7 +87,6 @@ export default function ChapterPages() {
                 </div>
             )}
 
-            {/* Estilos adicionales para el Swiper en modo oscuro */}
             {isDarkMode && (
                 <style>
                     {`
