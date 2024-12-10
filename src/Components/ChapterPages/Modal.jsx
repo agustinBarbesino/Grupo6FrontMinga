@@ -56,7 +56,7 @@ export default function Modal() {
         const isConfirm = window.confirm('Are you sure you want to delete this comment?');
         if (isConfirm) {
             setLoading(true);
-            await dispatch(deleteComment(commentId));
+            await dispatch(deleteComment(commentId ));
             alert("The comment has been deleted.");
             dispatch(getComments(id));
             setLoading(false);
@@ -89,7 +89,7 @@ export default function Modal() {
                         {/* Content comments */}
                         <div className="overflow-auto flex flex-col h-5/6 w-full gap-4">
                             {comments.length === 0 ? (
-                                <div className="bg-transparent w-screen flex flex-col justify-center items-center py-6">
+                                <div className="bg-transparent w-full flex flex-col justify-center items-center py-6">
                                     <p className="text-[#0a0a0a] text-center text-lg md:text-3xl">
                                         There are no comments on this chapter, be the first to leave yours.
                                     </p>
@@ -178,22 +178,22 @@ export default function Modal() {
 
                         {/* Input comments */}
                         {role !== 0 && (
-                            <div className="flex justify-evenly w-screen absolute bottom-4">
-                                <input
-                                    type="text"
-                                    placeholder="Say something..."
-                                    className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
-                                    value={commentSend}
-                                    onChange={(e) => setCommentSend(e.target.value)}
-                                />
-                                <button
-                                    className="absolute top-1/2 left-[80%] md:left-[87%] transform -translate-y-1/2"
-                                    onClick={sendComment}
-                                >
-                                    <img src="paper-airplane.png" alt="Send comment" className="w-10 h-10" />
-                                </button>
-                            </div>
-                        )}
+  <div className="flex justify-evenly w-screen absolute bottom-4">
+      <input
+          type="text"
+          placeholder="Say something..."
+          className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
+          value={commentSend}
+          onChange={(e) => setCommentSend(e.target.value)}
+      />
+      <button
+          className="absolute top-1/2 left-[80%] md:left-[87%] transform -translate-y-1/2"
+          onClick={sendComment}
+      >
+          <img src="paper-airplane.png" alt="Send comment" className="w-10 h-10" />
+      </button>
+  </div>
+)}
                     </div>
                 </div>
             )}
