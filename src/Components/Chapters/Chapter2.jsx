@@ -28,7 +28,7 @@ function Chapter2({mangaId, image, title, pages, idC}){
           </svg>
         </button>
         <img 
-          className="w-[63px] h-[57px] object-cover rounded-[8px] transition-transform duration-300 hover:scale-105" 
+          className="w-[63px] h-[57px] object-cover rounded-[8px] " 
           src={image}
           alt="Portada del manga"
         />
