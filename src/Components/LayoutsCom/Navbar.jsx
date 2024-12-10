@@ -14,14 +14,35 @@ function NavBar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isActive = location.pathname === '/chapter';
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
+    const [fav, setFav] = useState(false)
 
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const user = useSelector(selectUser);
     const role = useSelector((state) => state.role);
     const isDarkMode = useSelector(selectIsDarkMode);
-    const author_id = useSelector((state) => state.auth.user?.author_id);
-    const company_id = useSelector((state) => state.auth.user?.company_id)
+    const {reactions} = useSelector(state => state.reactions)
+    const [mangasReact, setMangasReact] = useState([]);
+    const profile = JSON.parse(localStorage.getItem('profile'))
+    useEffect(() => {
+        const updatedMangasReact = reactions
+            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id ?profile._id:profile.id)
+            .map((r) => ({
+                ...r.manga_id,
+                reactId: r.author_id, 
+            }));
+        setMangasReact(updatedMangasReact) 
+    }, [reactions])
+
+    useEffect(() => {
+        if(mangasReact.length>0){
+            setFav(true)
+
+        } else if (mangasReact.length==0){
+            setFav(false)
+        }
+        
+    },[mangasReact, reactions,isOpen, dispatch])
 
     const [theme, setTheme] = useState(() => {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -156,10 +177,10 @@ function NavBar() {
                         </div>
                         )
                         }
-                     {/* My mangas */}
-                     {(role?.role === 1 || role?.role === 2) && (
-                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
-                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/favourites'}>
+                     {/* Favourites */}
+                     {(mangasReact.length>0) && (
+                        <div className={` ${fav ? 'block' : 'hidden'}flex place-content-center justify-center ml-0 md:pr-2 md:mt-2 mb-2 md:w-80 z-50`}>
+                            <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-1 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/favourites'}>
                                 Favourites
                             </NavLink>
                         </div>
