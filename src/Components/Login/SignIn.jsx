@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 import { signIn, clearError, clearSuccess, selectAuthError, selectAuthLoading, selectAuthSuccess, selectIsAuthenticated } from '../../store/actions/authActions';
+import { selectIsDarkMode } from '../../store/actions/darkModeActions';
 
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isDarkMode = useSelector(selectIsDarkMode);
   
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectAuthLoading);
@@ -99,7 +101,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col md:flex-row">
+    <div className={`w-full min-h-screen flex flex-col md:flex-row ${isDarkMode ? 'bg-dark-bg-primary' : 'bg-white'}`}>
       <div className="w-full md:w-1/2 hidden md:flex">
         <img
           className="w-full h-full object-cover"
@@ -107,11 +109,13 @@ export default function SignIn() {
           alt="Background"
         />
       </div>
-      <div className="w-full min-h-screen md:w-1/2 flex flex-col justify-center items-center md:items-center p-6">
+      <div className={`w-full min-h-screen md:w-1/2 flex flex-col justify-center items-center md:items-center p-6 ${
+        isDarkMode ? 'bg-dark-bg-primary text-dark-text-primary' : 'bg-white'
+      }`}>
         <h1 className="text-2xl font-bold mb-4">
-          Welcome <span className="text-pink-400">back</span>!
+          Welcome <span className={isDarkMode ? 'text-dark-rose-light' : 'text-pink-400'}>back</span>!
         </h1>
-        <p className='w-7/12 mb-6 text-gray-600 text-center'>
+        <p className={`w-7/12 mb-6 ${isDarkMode ? 'text-dark-text-secondary' : 'text-gray-600'} text-center`}>
           Discover manga and comics, track your progress, have fun, read manga.
         </p>
 
@@ -131,7 +135,7 @@ export default function SignIn() {
           <div className="relative w-full">
             <label
               htmlFor="email"
-              className="absolute -top-3 left-4 px-1 bg-white text-sm text-pink-400"
+              className={`absolute -top-3 left-4 px-1 ${isDarkMode ? 'bg-dark-bg-primary text-dark-rose-light' : 'bg-white text-pink-400'} text-sm`}
             >
               Email
             </label>
@@ -141,25 +145,31 @@ export default function SignIn() {
               value={formData.email}
               onChange={handleInputChange}
               className={`w-full border-2 ${
-                validationErrors.email ? 'border-red-400' : 'border-gray-300'
-              } rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-pink-400`}
+                validationErrors.email ? 'border-red-400' : isDarkMode ? 'border-gray-600' : 'border-gray-300'
+              } rounded-lg px-4 py-2 ${
+                isDarkMode ? 'bg-dark-bg-secondary text-dark-text-primary' : 'text-gray-900'
+              } focus:outline-none ${
+                isDarkMode ? 'focus:border-dark-rose-light' : 'focus:border-pink-400'
+              }`}
               placeholder="your@email.com"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-pink-400">
+            <span className={`absolute right-4 top-1/2 -translate-y-1/2 ${
+              isDarkMode ? 'text-dark-rose-light' : 'text-pink-400'
+            }`}>
               @
             </span>
           </div>
-          <p
-            className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
+          <p className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
             validationErrors.email ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-            }`}
-          >
+          }`}>
             {validationErrors.email || ''}
           </p>
           <div className="relative w-full">
             <label
               htmlFor="password"
-              className="absolute -top-3 left-4 px-1 -py-0 bg-white text-sm text-pink-400"
+              className={`absolute -top-3 left-4 px-1 -py-0 ${
+                isDarkMode ? 'bg-dark-bg-primary text-dark-rose-light' : 'bg-white text-pink-400'
+              } text-sm`}
             >
               Password
             </label>
@@ -169,23 +179,29 @@ export default function SignIn() {
               value={formData.password}
               onChange={handleInputChange}
               className={`w-full border-2 ${
-                validationErrors.password ? 'border-red-400' : 'border-gray-300'
-              } rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-pink-400`}
+                validationErrors.password ? 'border-red-400' : isDarkMode ? 'border-gray-600' : 'border-gray-300'
+              } rounded-lg px-4 py-2 ${
+                isDarkMode ? 'bg-dark-bg-secondary text-dark-text-primary' : 'text-gray-900'
+              } focus:outline-none ${
+                isDarkMode ? 'focus:border-dark-rose-light' : 'focus:border-pink-400'
+              }`}
               placeholder="Enter your password"
             />
-            <Lock className="absolute w-4 h-4 right-4 top-1/2 -translate-y-1/2 text-pink-400"/>
+            <Lock className={`absolute w-4 h-4 right-4 top-1/2 -translate-y-1/2 ${
+              isDarkMode ? 'text-dark-rose-light' : 'text-pink-400'
+            }`}/>
           </div>
-          <p
-            className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
+          <p className={`mb-6 text-xs text-red-500 transition-all duration-300 ${
             validationErrors.password ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-            }`}
-          >
+          }`}>
             {validationErrors.password || ''}
           </p>
           <button
             type="submit"
             disabled={isLoading || Object.values(validationErrors).some(error => error !== '')}
-            className="w-full bg-pink-400 text-white mb-4 py-2 rounded-lg hover:shadow-[4px_4px_0_0_#FFA500] transition disabled:opacity-50"
+            className={`w-full ${
+              isDarkMode ? 'bg-dark-rose-light hover:shadow-dark-lg' : 'bg-pink-400 hover:shadow-[4px_4px_0_0_#FFA500]'
+            } text-white mb-4 py-2 rounded-lg transition disabled:opacity-50`}
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -193,24 +209,26 @@ export default function SignIn() {
           <button
             type="button"
             onClick={handleGoogleLogin}
-            className="w-full flex justify-center items-center border border-gray-300 text-gray-700 py-2 rounded-lg hover:border-pink-400 hover:text-pink-400 transition mb-6"
+            className={`w-full flex justify-center items-center border ${
+              isDarkMode ? 'border-gray-600 text-dark-text-primary hover:border-dark-rose-light hover:text-dark-rose-light' : 'border-gray-300 text-gray-700 hover:border-pink-400 hover:text-pink-400'
+            } py-2 rounded-lg transition mb-6`}
           >
             <FcGoogle className="w-5 h-5 mr-2" />
             Sign In with Google
           </button>
         </form>
 
-        <p className="text-gray-600 text-sm mb-4">
+        <p className={`${isDarkMode ? 'text-dark-text-secondary' : 'text-gray-600'} text-sm mb-4`}>
           You don't have an account yet?{' '}
-          <a className="text-pink-400 font-bold hover:underline">
-          <NavLink to={'/signup'}>Sign Up</NavLink>
-          </a>
+          <NavLink to={'/signup'} className={`${isDarkMode ? 'text-dark-rose-light' : 'text-pink-400'} font-bold hover:underline`}>
+            Sign Up
+          </NavLink>
         </p>
-        <p className="text-gray-600 text-sm">
+        <p className={`${isDarkMode ? 'text-dark-text-secondary' : 'text-gray-600'} text-sm`}>
           Go back to{' '}
-          <a  className="text-pink-400 font-bold hover:underline">
-            <NavLink to={'/home'}> Home Page</NavLink>
-          </a>
+          <NavLink to={'/home'} className={`${isDarkMode ? 'text-dark-rose-light' : 'text-pink-400'} font-bold hover:underline`}>
+            Home Page
+          </NavLink>
         </p>
       </div>
     </div>
