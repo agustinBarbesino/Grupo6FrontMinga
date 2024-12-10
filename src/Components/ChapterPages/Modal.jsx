@@ -87,7 +87,7 @@ export default function Modal() {
                         )}
 
                         {/* Content comments */}
-                        <div className="overflow-auto flex flex-col h-5/6 w-full gap-4">
+                        <div className="overflow-auto flex flex-col h-5/6 gap-4">
                             {comments.length === 0 ? (
                                 <div className="bg-transparent w-screen flex flex-col justify-center items-center py-6">
                                     <p className="text-[#0a0a0a] text-center text-lg md:text-3xl">

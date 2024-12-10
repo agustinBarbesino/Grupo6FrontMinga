@@ -195,7 +195,7 @@ const FormEditChapter = () => {
 
                         {/* buttons */}
 
-                        <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex pt-8 justify-center items-center md:justify-start font-semibold">
                             <button
                                 type="submit"
                                 className="w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg transition-colors"
@@ -204,7 +204,7 @@ const FormEditChapter = () => {
                             </button>
                         </div>
 
-                        <div className="flex pb-8 justify-center w-[90%] pt-4 md:justify-start font-semibold">
+                        <div className="flex pb-8 justify-center pt-4 md:justify-start font-semibold">
                             <button
                                 type="button"
                                 onClick={() => dispatch(setShowDeleteModal(true))}
