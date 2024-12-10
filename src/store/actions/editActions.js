@@ -5,8 +5,9 @@ const BASE_URL = 'http://localhost:8080/api'
 
 export const editManga = createAsyncThunk('editManga', async ({ formData }) => {
     const { data, edit, title } = formData
-    let variable = data === 'cover Photo' ? 'cover_photo' : data
+    let variable = data === 'cover Photo' ? 'cover_photo' : data === 'category' ? 'category_id':data
     const modify = { [variable]: edit }
+    console.log("modify", modify)
     const response = await axios.put(`${BASE_URL}/mangas/updateOne/${title}`, modify)
     return response.data
 }
@@ -47,8 +48,10 @@ export const editChapter = createAsyncThunk('editChapters', async ({ filteredCha
 )
 
 export const getMangaPhoto = createAsyncThunk("getMangaPhoto", async ({title}) => {
+    console.log("llega title", title)
     const response = await axios.get(`${BASE_URL}/mangas/all?title=${title}`)
     const photo = response.data.response[0].cover_photo
+    console.log(response.data.response,"photo")
     return photo
 })
 
