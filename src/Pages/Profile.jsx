@@ -95,7 +95,7 @@ const Profile = () => {
               </p>
             )}
             {profileType === 'company' && (
-              <a href={profile.website} className="text-blue-500 text-sm lg:text-base hover:underline">
+              <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm lg:text-base hover:underline">
                 {profile.website}
               </a>
             )}

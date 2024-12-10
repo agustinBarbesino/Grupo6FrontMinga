@@ -117,10 +117,10 @@ const CreateManga = () => {
 
                         {/* buttons */}
 
-                        <div className="flex py-8 w-[90%] justify-center items-center md:justify-start font-semibold">
+                        <div className="flex justify-center py-8 w-full font-semibold">
                             <button
                                 type="submit"
-                                className="w-full text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg transition-colors"
+                                className="w-64 text-lg bg-pink-gradient text-white py-2 rounded-full hover:bg hover:transition-colors"
                             >
                                 {loading ? "Sending..." : "Send"} {/* Mostrar "Sending..." mientras está cargando */}
                             </button>
