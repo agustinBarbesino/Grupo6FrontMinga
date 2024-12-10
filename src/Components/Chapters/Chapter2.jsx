@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
 
 function Chapter2({mangaId,image, title, pages, idC}){
-  console.log("ic",idC)
   const navigate = useNavigate()
   function editChapter(){
-    window.location.href=`/editChapter/${title}/${mangaId}/${idC}`
+    navigate(`/editChapter/${title}/${mangaId}/${idC}`)
 }
     return(<>
     <div className="flex flex-wrap py-2 items-center justify-center">

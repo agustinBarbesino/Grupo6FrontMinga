@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { setShowDeleteModal, setShowDeletedModal, deleteManga, setTitle } from '../../store/actions/editActions'
 import '../Mangas/mangaPages.css'
@@ -22,13 +22,14 @@ function Card({ category, name, image, id, autor }) {
     }
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { showDeleteModal, showDeletedModal, loadingDelete, deleteSuccess, title } = useSelector((state) => state.editMangas)
 
     function manga() {
-        window.location.href = `/editManga/${name}`
+        navigate(`/editManga/${name}`)
     }
     function newChapter() {
-        window.location.href = `/newChapter/${id}`
+        navigate(`/newChapter/${id}`)
     }
 
     function titleSet() {

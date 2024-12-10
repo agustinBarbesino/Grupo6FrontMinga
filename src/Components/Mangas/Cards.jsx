@@ -1,5 +1,7 @@
 
 import './mangaPages.css'
+import { useNavigate } from "react-router-dom"
+
 function Card({category,name,image,id,autor,description,autorId}){
     let hexColor
                    switch(category){
@@ -16,12 +18,12 @@ function Card({category,name,image,id,autor,description,autorId}){
                            hexColor="#8883F0"
                            break   
                    }
+
+    const navigate = useNavigate()
                
                    
     function manga(id){
-        window.location.href=`/manga?category=${category}&name=${name}&image=${image}&autor=${autor}&mangaId=${id}&descp=${description}&autorId=${autorId}`
-        
-        
+        navigate(`/manga?category=${category}&name=${name}&image=${image}&autor=${autor}&mangaId=${id}&descp=${description}&autorId=${autorId}`)        
     }
     
     return(<>
