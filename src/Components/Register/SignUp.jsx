@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { Camera, Lock } from 'lucide-react';
 import { signUp, clearError, clearSuccess, selectAuthError, selectAuthLoading, selectAuthSuccess, selectIsAuthenticated } from '../../store/actions/authActions';
@@ -265,14 +265,14 @@ export default function SignUp() {
 
         <p className="text-gray-600 text-sm mb-4">
           Already have an account?{' '}
-          <a href="/signin" className="text-pink-400 font-bold hover:underline">
-            Log In
+          <a className="text-pink-400 font-bold hover:underline">
+            <NavLink to={'/signin'}>Log In</NavLink>
           </a>
         </p>
         <p className="text-gray-600 text-sm">
           Go back to{' '}
-          <a href="/" className="text-pink-400 font-bold hover:underline">
-            Home Page
+          <a className="text-pink-400 font-bold hover:underline">
+          <NavLink to={'/home'}> Home Page</NavLink>
           </a>
         </p>
       </div>

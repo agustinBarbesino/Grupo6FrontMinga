@@ -98,8 +98,8 @@ function NavBar() {
                     </svg>
                 </button>
 
-                <nav className={`fixed flex md:justify-center md:items-center flex-col ${isDarkMode ? 'bg-gray-800' : 'bg-pink-gradient'} z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
-                block z-50 top-0 left-0 min-h-screen md:min-h-40 pt-0 min-w-full md:min-w-80`} >
+                <nav className={`fixed flex  flex-col ${isDarkMode ? 'bg-gray-800' : 'bg-pink-gradient'} z-50 text-white rounded shadow-lg ${isOpen ? 'menu-slide-in' : 'menu-slide-out'} 
+                block z-50 top-0 left-0 min-h-screen pt-0 min-w-full md:min-w-80`} >
                     {/* despliega los datos del usuario si existe token o no */}
                     {isAuthenticated && user ? (
                         <div className="flex justify-center items-center w-full p-4 dark:bg-gray-800/50">
