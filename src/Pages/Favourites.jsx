@@ -96,7 +96,7 @@ function Favourites(){
                 
             <div className="containerSearch flex flex-row flex-wrap justify-center content-center items-end">
                 <h1 className="titleMangas font-montserrat font-bold text-center pb-16 w-full dark:text-gray-200 transition-colors duration-300">
-                    Favorites
+                    Favourites
                 </h1>
                 <div className="searchBar w-full flex">
                     <button>
