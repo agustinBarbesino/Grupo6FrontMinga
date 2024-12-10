@@ -83,4 +83,4 @@ function Manga() {
   );
 }
 
-export default Manga;
+export default Manga
