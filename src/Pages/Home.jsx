@@ -160,7 +160,7 @@ export default function Home() {
             {/* Background image */}
             <div className={`${isMobile ? 'fixed top-0 left-0 right-0 h-screen' : 'absolute inset-0 h-full'}`}>
               <img
-                src="https://s3-alpha-sig.figma.com/img/c3ca/6946/5e5e0084c33976fd998b27efb07aded4?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hTtGgNfuPtvJDmq4aJpdOJKQ4f3iPd553pcQb~fJZVljyj0x0aCTINMUNeJQjITpgHPcNWm8FXyPrckj3j54FZyTrjAOtVIwablfx5fzBCSLvVFOrK7b5P66-xeABnqXVZJFKme~CNup0V084RvDhTf06HQ~HCNacnuUxqlzhpfChWMQGg1wxCtW3xf2uTuCRTkHKsUQWTP9LL5OXbQ-IWaknXytpNFrm-wfn1Z-ZqLS-tDfE6nwDEaumQFELLPZcknwe2MdmnPqFS4BuDEzvQX3qxxI4zLfkZcWmx8I3uw~nJZgYKExV3~tRjXXl4zaLBEFXcBxjv-em30sypT6Og__"
+                src="https://s3-alpha-sig.figma.com/img/c3ca/6946/5e5e0084c33976fd998b27efb07aded4?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Oh7ZIR3f18gAwOg3v7F3XctEwUCh3gYtC9pTq2k0PKG1Up9DBPBVt2gySD22wsGa8ttzStu-Hbv1Lb-ALwTpH-UIAdErvy5pBgxqLPXKyJNIOG2AC-MGdz4eBRjaYkaw7lVEO~38O0gSOcu1SQ8pLc-soOqPnhS42N6CDqURF9fVFD1pFzqKBMA6BXJb7dw5SlYNS3qbRWEMTxINvuoHaDcTRPmzb4C69U4h854Vps8t2vKJTjQJA-jLsc1BWJSK3sFrsDFoWIRAfyBH-f92J4e-g29JRH3o2ovH6FS1SvhDcGpEHQ3NpEyPIAiGIKBzdFewLaUObtASN~XVuMWhZQ__"
                 alt="Background"
                 className="w-full h-full object-cover lg:object-[center_-200px]"
               />

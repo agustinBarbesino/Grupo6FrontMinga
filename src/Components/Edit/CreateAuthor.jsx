@@ -2,8 +2,8 @@ import { React, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerAuthor } from '../../store/actions/authorActions'
 import { useNavigate } from 'react-router-dom'
-import { setRole, updateUserRole } from '../../store/actions/roleActions'
-import { updateAuthUser, signOut } from '../../store/actions/authActions'
+import { setRole } from '../../store/actions/roleActions'
+import { updateAuthUser } from '../../store/actions/authActions'
 
 const CreateAuthor = () => {
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const CreateAuthor = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user._id
     const authUser = useSelector(state => state.auth.user)
-    console.log(userId)
+    console.log(user)
     
     const [showSendModal, setShowSendModal] = useState(false)
     const [formData, setFormData] = useState({
@@ -124,7 +124,7 @@ const CreateAuthor = () => {
         }));
       };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const errors = {
@@ -141,16 +141,23 @@ const CreateAuthor = () => {
         if (Object.values(errors).some(error => error !== '')) {
             return;
         }
-        console.log(formData)
-        dispatch(registerAuthor({...formData, user_id: userId}));
-        dispatch(updateUserRole({id: userId, role: 1}))
+        const newAuthor = await dispatch(registerAuthor({...formData, user_id: userId})) 
+        
         dispatch(setRole(1))
-        const updatedUser = { ...user, role: 1 }
-        localStorage.setItem('user', JSON.stringify(updatedUser))
+      
+        const updatedUser = { ...user, 
+          role: 1, 
+          author_id: newAuthor.payload._id, 
+          active: true,
+          photo_author: newAuthor.payload.photo }
+        
+        
+        localStorage.removeItem('user')
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        
         dispatch(updateAuthUser(updatedUser))
         setShowSendModal(true)
-        dispatch(signOut())
-        navigate('/home')
+        navigate('/')
       }
     
     return (

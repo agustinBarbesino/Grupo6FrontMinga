@@ -74,6 +74,10 @@ export default function ChapterPages() {
                                     src={page} 
                                     alt={`Page ${i + 1}`} 
                                     className={isDarkMode ? 'border border-gray-700' : ''}
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = '/public/Error 404.png';
+                                    }}
                                 />
                             </SwiperSlide>
                         ))}
