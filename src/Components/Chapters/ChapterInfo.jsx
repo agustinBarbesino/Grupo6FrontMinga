@@ -50,7 +50,7 @@ function ChapterInfo({ name, author, category, mangaId }) {
 
 
     
-  }, [selectedValue, mangaId, autorId, dispatch]);
+  }, [selectedValue, mangaId,autorId, dispatch]);
   return (
     <>
     <div className="titleCatBox">
