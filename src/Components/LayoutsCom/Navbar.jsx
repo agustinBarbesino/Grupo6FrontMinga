@@ -26,7 +26,7 @@ function NavBar() {
     const profile = JSON.parse(localStorage.getItem('profile'))
     useEffect(() => {
         const updatedMangasReact = reactions
-            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id ?profile._id:profile.id)
+            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id)
             .map((r) => ({
                 ...r.manga_id,
                 reactId: r.author_id, 
