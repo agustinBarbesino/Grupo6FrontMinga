@@ -16,7 +16,7 @@ export const registerAuthor = createAsyncThunk(
       }
 
       const response = await axios.post(`${BASE_URL}/authors/register`, authorData, config);
-      return response.data;
+      return response.data.response;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
