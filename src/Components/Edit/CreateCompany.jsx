@@ -95,7 +95,7 @@ const CreateCompany = () => {
         }));
       };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const errors = {
@@ -110,16 +110,23 @@ const CreateCompany = () => {
         if (Object.values(errors).some(error => error !== '')) {
             return;
         }
-        console.log(formData)
-        dispatch(registerCompany({...formData, user_id: userId}));
-        dispatch(updateUserRole({id: userId, role: 2}))
+      
+        const newCompany = await dispatch(registerCompany({...formData, user_id: userId}));
+
         dispatch(setRole(2))
-        const updatedUser = { ...user, role: 2 }
+
+        const updatedUser = { ...user, 
+          role: 2, 
+          company_id: newCompany.payload._id,
+          active: true, 
+          company_photo: newCompany.payload.photo }
+        
+        localStorage.removeItem('user')  
         localStorage.setItem('user', JSON.stringify(updatedUser))
+
         dispatch(updateAuthUser(updatedUser))
         setShowSendModal(true)
-        dispatch(signOut())
-        navigate('/home')
+        navigate('/')
       }
 
     return (

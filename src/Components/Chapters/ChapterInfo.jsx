@@ -44,9 +44,11 @@ function ChapterInfo({ name, author, category, mangaId }) {
     
     setTimeout(() => {
       dispatch(reactionsCreate({ dataCreate }));
-    }, 500);
-  }, [selectedValue, mangaId, autorId, dispatch]);
+      },500)
 
+
+    
+    }, [selectedValue, mangaId,autorId, dispatch]);
   return (
     <>
       <div className="titleCatBox">

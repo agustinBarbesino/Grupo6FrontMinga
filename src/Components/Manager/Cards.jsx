@@ -96,7 +96,7 @@ function Card({ category, name, image, id, autor }) {
                         style={{color: hexColor, fontSize: 15}} 
                         className="type transition-colors duration-300"
                     >
-                        Type
+                        {category}
                     </p>
                 </div>
 
