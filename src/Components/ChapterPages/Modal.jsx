@@ -228,7 +228,7 @@ export default function Modal() {
                                 <input
                                     type="text"
                                     placeholder="Say something..."
-                                    className="relative w-10/12 p-4 bg-[#F1F1F3] border border-gray-300 rounded-lg"
+                                    className={`relative ${isDarkMode ? 'text-dark-text-primary bg-dark-bg-primary' : ' bg-[#F1F1F3] text-black'} w-10/12 p-4  border border-gray-300 rounded-lg `}
                                     value={commentSend}
                                     onChange={(e) => setCommentSend(e.target.value)}
                                 />
