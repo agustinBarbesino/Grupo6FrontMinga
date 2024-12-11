@@ -86,11 +86,11 @@ const Profile = () => {
             <h1 className="text-xl lg:text-3xl font-bold mb-2">
               {profileType === 'author' ? `${profile.name} ${profile.last_name}` : profile.name}
             </h1>
-            <p className="text-gray-600 text-sm lg:text-base">
+            <p className=" text-sm lg:text-base">
               {profileType === 'author' ? `${profile.city}, ${profile.country}` : profile.description}
             </p>
             {profileType === 'author' && (
-              <p className="text-gray-600 text-sm lg:text-base">
+              <p className=" text-sm lg:text-base">
                 {new Date(profile.date).toLocaleDateString()}
               </p>
             )}
@@ -100,7 +100,7 @@ const Profile = () => {
               </a>
             )}
             <button
-              className='mt-2 text-gray-600 hover:text-gray-800'
+              className='mt-2  hover:text-gray-800'
               onClick={() => navigate('/editprofile')}>
               <UserRoundPen className='w-8 h-8' />
             </button>
@@ -108,7 +108,7 @@ const Profile = () => {
 
           {/* Toggle Switch */}
           <div className="flex items-center justify-between w-1/2 max-w-xs mt-2 lg:mt-4">
-            <span className="text-gray-700 font-medium text-center">New</span>
+            <span className=" font-medium text-center">New</span>
             <button 
               onClick={handleToggleChange}
               className="w-12 h-6 bg-emerald-500 rounded-full relative transition-all duration-300 cursor-pointer"
@@ -118,7 +118,7 @@ const Profile = () => {
                   ${isNew ? 'right-1' : 'left-1'}`}
               />
             </button>
-            <span className="text-gray-700 font-medium text-center mr-2.5">Old</span>
+            <span className=" font-medium text-center mr-2.5">Old</span>
           </div>
         </div>
 

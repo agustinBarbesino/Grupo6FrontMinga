@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Cake, Globe } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editCompany, deleteCompany } from '../../store/actions/companyActions';
 import { editAuthor, deleteAuthor } from '../../store/actions/authorActions';
 import { setRole, updateUserRole } from '../../store/actions/roleActions';
 import { updateAuthUser, signOut } from '../../store/actions/authActions';
+import { selectIsDarkMode } from '../../store/actions/darkModeActions';
 
 const EditProfile = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isDarkMode = useSelector(selectIsDarkMode);
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [isDarkMode]);
 
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user._id
     const profile = JSON.parse(localStorage.getItem('profile'))
 
-    const isCompany = user.company_id? true : false
-    console.log(isCompany)
+    const isCompany = user.company_id ? true : false
     const profileData = isCompany ? {
         name: profile.name,
         website: profile.website,
         photo: profile.photo,
         description: profile.description,
-    }:{
+    } : {
         name: profile.name,
         last_name: profile.last_name,
         city: profile.city,
@@ -30,7 +39,6 @@ const EditProfile = () => {
         date: new Date(profile.date).toISOString().split('T')[0],
         photo: profile.photo,
     }
-    console.log(profileData)
     
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showSaveModal, setShowSaveModal] = useState(false);
@@ -38,9 +46,7 @@ const EditProfile = () => {
         ...profileData, user_id: ''
     });
 
-    const [validationErrors, setValidationErrors] = useState({
-        
-    })
+    const [validationErrors, setValidationErrors] = useState({});
 
     const validateCompanyField = (name, value) => {
         let error = '';
@@ -187,11 +193,11 @@ const EditProfile = () => {
         e.preventDefault();
 
         const errors = isCompany? {
-            
             name: validateCompanyField('name', formData.name),
             website: validateCompanyField('website', formData.website),
             photo: validateCompanyField('photo', formData.photo),
-            description: validateCompanyField('description', formData.description)} : {
+            description: validateCompanyField('description', formData.description)
+        } : {
             name: validateAuthorField('name', formData.name),
             last_name: validateAuthorField('last_name', formData.last_name),
             city: validateAuthorField('city', formData.city),
@@ -200,15 +206,16 @@ const EditProfile = () => {
             photo: validateAuthorField('photo', formData.photo)
         }
     
-          
         setValidationErrors(errors);
           
         if (Object.values(errors).some(error => error !== '')) {
             return;
         }
-        console.log(formData)
-        dispatch(isCompany ? editCompany({id: user.company_id, ...formData, user_id: userId}) : 
-                            editAuthor({id: user.author_id, ...formData, user_id: userId}));
+
+        dispatch(isCompany ? 
+            editCompany({id: user.company_id, ...formData, user_id: userId}) : 
+            editAuthor({id: user.author_id, ...formData, user_id: userId})
+        );
         setShowSaveModal(true)
         navigate('/profile')
     }
@@ -228,16 +235,14 @@ const EditProfile = () => {
     }
 
     return (
-        <div className="min-h-screen relative pt-32">
+        <div className="min-h-screen relative pt-32 bg-white dark:bg-dark-bg-primary">
             {/* Background - hidden on mobile */}
-            <div className="absolute inset-0 hidden md:block" style={{ zIndex: -1 }}>
+            <div className="absolute inset-0 hidden md:block" style={{ zIndex: 1 }}>
                 <div className="relative w-full h-[60%]">
-                    <div
-                        className="absolute inset-0 bg-footer bg-cover bg-center"
-                    ></div>
+                    <div className="absolute inset-0 bg-footer bg-cover bg-center"></div>
                     <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 </div>
-                <div className="w-full h-1/2 bg-white"></div>
+                <div className="w-full h-1/2 bg-white dark:bg-dark-bg-primary"></div>
             </div>
 
             {/* Main content */}
@@ -246,7 +251,7 @@ const EditProfile = () => {
                 <h1 className="hidden md:block text-6xl font-bold text-center text-white pt-8">Profile</h1>
 
                 {/* Content container */}
-                <div className="md:mt-[30vh] bg-white rounded-lg shadow-lg p-8 max-w-8xl mx-auto">
+                <div className="md:mt-[30vh] rounded-lg shadow-lg p-8 max-w-8xl mx-auto bg-white dark:bg-dark-bg-secondary dark:text-dark-text-primary">
                     {/* Mobile profile image */}
                     <div className="md:hidden flex justify-center mb-8">
                         <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
@@ -261,26 +266,22 @@ const EditProfile = () => {
                     <div className="flex flex-col md:flex-row gap-8 items-start justify-center">
                         {/* Form Section */}
                         <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
-                            <form className="space-y-6"
-                                onSubmit={handleSubmit}>
-                                {
-                                    isCompany?
-                                    (<>
+                            <form className="space-y-6" onSubmit={handleSubmit}>
+                                {isCompany ? (
+                                    <>
                                         <div className="flex flex-col justify-center md:justify-start">
                                             <input
                                                 type="text"
                                                 id="name"
                                                 value={formData.name}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Name"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.name || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.name || ''}
                                             </p>
                                         </div>
 
@@ -290,15 +291,13 @@ const EditProfile = () => {
                                                 id="website"
                                                 value={formData.website}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Website"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.website ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.website || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.website ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.website || ''}
                                             </p>
                                         </div>
 
@@ -308,15 +307,13 @@ const EditProfile = () => {
                                                 id="photo"
                                                 value={formData.photo}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Photo URL"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.photo || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.photo || ''}
                                             </p>
                                         </div>
 
@@ -326,19 +323,17 @@ const EditProfile = () => {
                                                 id="description"
                                                 value={formData.description}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Description"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.description ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.description || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.description ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.description || ''}
                                             </p>
                                         </div>
                                     </>
-                                ):(
+                                ) : (
                                     <>
                                         <div className="flex flex-col justify-center md:justify-start">
                                             <input
@@ -346,15 +341,13 @@ const EditProfile = () => {
                                                 id="name"
                                                 value={formData.name}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Name"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.name || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.name || ''}
                                             </p>
                                         </div>
 
@@ -364,15 +357,13 @@ const EditProfile = () => {
                                                 id="last_name"
                                                 value={formData.last_name}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Last Name"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.last_name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.last_name || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.last_name ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.last_name || ''}
                                             </p>
                                         </div>
 
@@ -382,15 +373,13 @@ const EditProfile = () => {
                                                 id="city"
                                                 value={formData.city}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="City"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.city ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.city || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.city ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.city || ''}
                                             </p>
                                         </div>
 
@@ -400,15 +389,13 @@ const EditProfile = () => {
                                                 id="country"
                                                 value={formData.country}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Country"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.country ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.country || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.country ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.country || ''}
                                             </p>
                                         </div>
 
@@ -418,15 +405,12 @@ const EditProfile = () => {
                                                 id="date"
                                                 value={formData.date}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
-                                                placeholder="Date"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.date ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.date || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.date ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.date || ''}
                                             </p>
                                         </div>
 
@@ -436,26 +420,23 @@ const EditProfile = () => {
                                                 id="photo"
                                                 value={formData.photo}
                                                 onChange={handleInputChange}
-                                                className="w-64 border-b border-gray-300 p-2 focus:outline-none focus:border-gray-500"
+                                                className="w-64 border-b p-2 focus:outline-none border-gray-300 dark:bg-dark-bg-secondary dark:text-dark-text-primary dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-400"
                                                 placeholder="Photo URL"
                                             />
-                                            <p
-                                               className={`text-xs text-red-500 transition-all duration-300 ${
-                                               validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
-                                               }`}
-                                            >
-                                               {validationErrors.photo || ''}
+                                            <p className={`text-xs text-red-500 transition-all duration-300 ${
+                                                validationErrors.photo ? 'opacity-100 mt-1' : 'opacity-0 h-0'
+                                            }`}>
+                                                {validationErrors.photo || ''}
                                             </p>
                                         </div>
-
                                     </>
                                 )}
 
+                                {/* Buttons */}
                                 <div className="flex justify-center md:justify-start">
                                     <button
                                         type="submit"
-                                        onClick={() => setShowSaveModal(true)}
-                                        className="w-64 md:w-[100%] text-lg bg-emerald-500 text-white py-2 rounded-full hover:bg-emerald-600 transition-colors"
+                                        className="w-64 md:w-[100%] text-lg py-2 rounded-full transition-colors bg-emerald-500 hover:bg-emerald-600 text-white dark:bg-dark-rose-light dark:hover:bg-dark-rose-dark dark:text-dark-text-primary"
                                     >
                                         Save
                                     </button>
@@ -465,7 +446,7 @@ const EditProfile = () => {
                                     <button
                                         type="button"
                                         onClick={() => setShowDeleteModal(true)}
-                                        className="w-64 md:w-[100%] text-lg bg-red-100 text-red-500 py-2 rounded-full hover:bg-red-200 transition-colors"
+                                        className="w-64 md:w-[100%] text-lg py-2 rounded-full transition-colors bg-red-100 text-red-500 hover:bg-red-200 dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800"
                                     >
                                         Delete Account
                                     </button>
@@ -483,29 +464,31 @@ const EditProfile = () => {
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-                                {
-                                    isCompany ? (
-                                        <>
-                                            <h2 className="text-2xl font-semibold mb-2">{formData.name}</h2>
-                                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                                <Globe size={18} />
-                                                <p>{formData.website}</p>
-                                            </div>
-                                        </>
-                                    ):(
-                                        <>
-                                            <h2 className="text-2xl font-semibold mb-2">{`${formData.name} ${formData.last_name}`}</h2>
-                                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                                <MapPin size={18} />
-                                                <p>{`${formData.city} ${formData.country}`}</p>
-                                            </div>
-                                            <div className="flex items-center gap-2 text-gray-500">
-                                                <Cake size={18} />
-                                                <p>{formData.date}</p>
-                                            </div>
-                                        </>
-                                    )
-                                }
+                                {isCompany ? (
+                                    <>
+                                        <h2 className="text-2xl font-semibold mb-2 dark:text-dark-text-primary">
+                                            {formData.name}
+                                        </h2>
+                                        <div className="flex items-center gap-2 text-gray-600 dark:text-dark-text-secondary mb-2">
+                                            <Globe size={18} />
+                                            <p>{formData.website}</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h2 className="text-2xl font-semibold mb-2 dark:text-dark-text-primary">
+                                            {`${formData.name} ${formData.last_name}`}
+                                        </h2>
+                                        <div className="flex items-center gap-2 text-gray-600 dark:text-dark-text-secondary mb-2">
+                                            <MapPin size={18} />
+                                            <p>{`${formData.city} ${formData.country}`}</p>
+                                        </div>
+                                        <div className="flex items-center gap-2 text-gray-500 dark:text-dark-text-secondary">
+                                            <Cake size={18} />
+                                            <p>{formData.date}</p>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -515,42 +498,36 @@ const EditProfile = () => {
             {/* Modals */}
             {showDeleteModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                    <div className="rounded-lg p-6 max-w-sm w-full bg-white dark:bg-dark-bg-secondary dark:text-dark-text-primary">
                         <h3 className="text-lg font-medium mb-4">Are you sure you want to delete?</h3>
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                            <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-                                <h3 className="text-lg font-medium mb-4">Are you sure you want to delete this?</h3>
-                                <hr className="border-gray-300 my-4" /> 
-                                <div className="flex items-center">
-                                    <button
-                                        onClick={handleDeleteAccount}
-                                        className="flex-1 text-red-500 py-2"
-                                    >
-                                        Yes, I'm sure
-                                    </button>
-                                    <div className="w-px bg-gray-400 h-8 mx-4" />
-                                    <button
-                                        onClick={() => setShowDeleteModal(false)}
-                                        className="flex-1 text-blue-500 py-2"
-                                    >
-                                        No
-                                    </button>
-                                </div>
-                            </div>
+                        <hr className="my-4 border-gray-300 dark:border-gray-600" />
+                        <div className="flex items-center">
+                            <button
+                                onClick={handleDeleteAccount}
+                                className="flex-1 py-2 text-red-500 dark:text-red-400"
+                            >
+                                Yes, I'm sure
+                            </button>
+                            <div className="w-px h-8 mx-4 bg-gray-400 dark:bg-gray-600" />
+                            <button
+                                onClick={() => setShowDeleteModal(false)}
+                                className="flex-1 py-2 text-blue-500 dark:text-blue-400"
+                            >
+                                No
+                            </button>
                         </div>
-
                     </div>
                 </div>
             )}
 
             {showSaveModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+                    <div className="rounded-lg p-6 max-w-sm w-full bg-white dark:bg-dark-bg-secondary dark:text-dark-text-primary">
                         <h3 className="text-lg font-medium mb-4">Your changes are saved correctly!</h3>
-                        <hr className="border-gray-300 my-4" />
+                        <hr className="my-4 border-gray-300 dark:border-gray-600" />
                         <button
                             onClick={() => setShowSaveModal(false)}
-                            className="w-full text-blue-500 py-2"
+                            className="w-full py-2 text-blue-500 dark:text-blue-400"
                         >
                             Accept
                         </button>
