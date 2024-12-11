@@ -7,7 +7,7 @@ import { DarkMode } from "../DarkMode/DarkMode"
 import { selectIsDarkMode } from '../../store/actions/darkModeActions';
 
 //css
-import './Navbar.css'
+import './NavBar.css'
 
 function NavBar() {
     const location = useLocation();
