@@ -8,40 +8,31 @@ const FormEditManga = () => {
     const dispatch = useDispatch()
     const { title } = useParams()
     const { showSaveModal, showDeleteModal, showDeletedModal, mangaData, loadingEdit, loadingDelete, deleteSuccess, initialFormDataManga, mangaPhoto, loadingPhoto } = useSelector((state) => state.editMangas)
-    const categories = useSelector((state) => state?.categories?.categories || []) // Traemos categorías
+    const categories = useSelector((state) => state?.categories?.categories || []) //traemos categorias
     const categorias = categories.map((category) => category.name)
+    console.log("title", title)
     const [formData, setFormData] = useState(initialFormDataManga)
-    const [error, setError] = useState('')
-
+    console.log('formData',formData)
     useEffect(() => {
         dispatch(fetchCategories())
         setFormData({ ...formData, title: title })
         dispatch(getMangaPhoto({ title }))
     }, [])
+    const [category, setCategory] = useState('')
+    useEffect(() => {
+        if (category) {
+            let cat = categories.find(c => c.name == category)
+            setFormData({ ...formData, edit: cat._id })
+           
+        }
+       
+    }, [category])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        if (formData.data === 'title' && !formData.edit.trim()) {
-            setError('Title cannot be empty')
-            return
-        }
-    
-        if (formData.data === 'title' && /[^a-zA-Z0-9\s]/.test(formData.edit)) {
-            setError('Title cannot contain special characters')
-            return
-        }
-
-        if (formData.data === 'description' && formData.edit.length <= 10) {
-            setError('The description must be more than 20 characters')
-            return
-        }
-
-        setError('')
         dispatch(editManga({ formData }))
         setFormData(initialFormDataManga)
     }
-
     useEffect(() => {
         if (mangaData) {
             dispatch(setShowSaveModal(true))
@@ -87,23 +78,25 @@ const FormEditManga = () => {
                                 {/* data to edit */}
                                 <div className="flex justify-center md:justify-start">
                                     {formData.data === "category" ?
+                                        /* si es categoria se despliega las categorias que tenemos */
                                         (
                                             <div className="flex justify-center md:justify-start">
-                                                <select
-                                                    name="category"
-                                                    value={formData.edit}
-                                                    onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
-                                                    required
-                                                    className={`w-64 border-b ${formData.edit ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
-                                                >
-                                                    <option value="" disabled >
-                                                        select category
-                                                    </option>
-                                                    {categorias.map((category) => (
-                                                        <option key={category} value={category} className='text-black'>
-                                                            {category}
-                                                        </option>
-                                                    ))}
+                                               <select
+                                name="data"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                required
+                                className={`w-64 border-b ${category ? "text-black" : "text-gray-400"} border-gray-300 p-2 focus:outline-none focus:border-gray-500`}
+                            
+                            >
+                                <option value="" disabled >
+                                    Insert category
+                                </option>
+                                {categorias.map((category) => (
+                                    <option key={category} value={category} className='text-black'>
+                                        {category}
+                                    </option>
+                                ))}
                                                 </select>
                                             </div>
 
@@ -122,12 +115,8 @@ const FormEditManga = () => {
                                         />)}
                                 </div>
 
-                                {/* Error message */}
-                                {error && (
-                                    <p className="text-red-500 text-sm mt-2">{error}</p>
-                                )}
-
                                 {/* buttons */}
+
                                 <div className="flex pt-8 w-[90%] justify-center items-center md:justify-start font-semibold">
                                     <button
                                         type="submit"
@@ -148,6 +137,8 @@ const FormEditManga = () => {
                                 </div>
                             </form>
                         </div>
+
+
                     </div>
                 </div>
                 <div className="w-full md:w-[45%] hidden md:flex ">
@@ -227,6 +218,7 @@ const FormEditManga = () => {
             )}
         </>
     )
+
 }
 
 export default FormEditManga
