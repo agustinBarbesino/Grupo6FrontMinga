@@ -9,9 +9,9 @@ const FormEditChapter = () => {
     const dispatch = useDispatch()
     const isDarkMode = useSelector(selectIsDarkMode)
     const { title, id, idC } = useParams()
-
+    
     useEffect(() => {
-        dispatch(chapterByManga({ idC }))
+        dispatch(chapterByManga({idC}))
     }, [dispatch])
 
     const { showSaveModal, showDeleteModal, showDeletedModal, showNoChaptersModal, loadingEdit, loadingDelete, deleteSuccess, chaptersTrigger, initialFormDataChapter, loadingPhoto, mangaPhoto } = useSelector((state) => state.editChapters)
@@ -31,7 +31,7 @@ const FormEditChapter = () => {
     useEffect(() => {
         dispatch(fetchCategories())
         dispatch(getChapterPhoto({ id }))
-        dispatch(chapterByManga({ idC }))
+        dispatch(chapterByManga({idC}))
         setFormData({ ...formData, name: title })
     }, [dispatch])
 
@@ -80,10 +80,11 @@ const FormEditChapter = () => {
                                         name="name"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white text-black border-gray-300 focus:border-gray-500'
-                                            }`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white text-black border-gray-300 focus:border-gray-500'
+                                        }`}
                                         placeholder="name of the manga"
                                     />
                                 </div>
@@ -93,10 +94,11 @@ const FormEditChapter = () => {
                                         value={formData.chapter}
                                         onChange={(e) => setFormData({ ...formData, chapter: e.target.value })}
                                         required
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white border-gray-300 focus:border-gray-500'
-                                            } ${formData.chapter !== '' ? isDarkMode ? 'text-dark-text-primary' : 'text-black' : 'text-gray-400'}`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white border-gray-300 focus:border-gray-500'
+                                        } ${formData.chapter !== '' ? isDarkMode ? 'text-dark-text-primary' : 'text-black' : 'text-gray-400'}`}
                                     >
                                         {chapters.length === 0 ? <option>You don't have chapters</option> : <option value="" disabled>select chapter</option>}
                                         {chapters.map((chapter) => (
@@ -112,10 +114,11 @@ const FormEditChapter = () => {
                                         value={formData.data}
                                         onChange={(e) => setFormData({ ...formData, data: e.target.value })}
                                         required
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white border-gray-300 focus:border-gray-500'
-                                            } ${formData.data ? isDarkMode ? 'text-dark-text-primary' : 'text-black' : 'text-gray-400'}`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white border-gray-300 focus:border-gray-500'
+                                        } ${formData.data ? isDarkMode ? 'text-dark-text-primary' : 'text-black' : 'text-gray-400'}`}
                                     >
                                         <option value="" disabled>select data</option>
                                         {['order', 'title', 'cover photo', 'pages'].map((data) => (
@@ -132,10 +135,11 @@ const FormEditChapter = () => {
                                         name="title"
                                         value={formData.data === 'title' ? formData.edit : ''}
                                         onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white text-black border-gray-300 focus:border-gray-500'
-                                            }`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white text-black border-gray-300 focus:border-gray-500'
+                                        }`}
                                         placeholder="Insert title"
                                     />
                                 </div>
@@ -154,10 +158,11 @@ const FormEditChapter = () => {
                                                 setFormData({ ...formData, edit: Number(e.target.value) })
                                             }
                                         }}
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white text-black border-gray-300 focus:border-gray-500'
-                                            }`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white text-black border-gray-300 focus:border-gray-500'
+                                        }`}
                                         placeholder="Insert order"
                                     />
                                 </div>
@@ -167,10 +172,11 @@ const FormEditChapter = () => {
                                         name="pages"
                                         value={formData.data === 'pages' ? formData.edit : ''}
                                         onChange={handlePagesChange}
-                                        className={`w-64 border-b p-2 focus:outline-none resize-none overflow-hidden ${isDarkMode
-                                                ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white text-black border-gray-300 focus:border-gray-500'
-                                            }`}
+                                        className={`w-64 border-b p-2 focus:outline-none resize-none overflow-hidden ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white text-black border-gray-300 focus:border-gray-500'
+                                        }`}
                                         placeholder="Insert pages"
                                         rows={1}
                                         style={{ height: textAreaHeight }}
@@ -183,10 +189,11 @@ const FormEditChapter = () => {
                                         name="cover_photo"
                                         value={formData.data === 'cover photo' ? formData.edit : ''}
                                         onChange={(e) => setFormData({ ...formData, edit: e.target.value })}
-                                        className={`w-64 border-b p-2 focus:outline-none ${isDarkMode
-                                                ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400'
-                                                : 'bg-white text-black border-gray-300 focus:border-gray-500'
-                                            }`}
+                                        className={`w-64 border-b p-2 focus:outline-none ${
+                                            isDarkMode 
+                                            ? 'bg-dark-bg-secondary text-dark-text-primary border-gray-600 focus:border-gray-400' 
+                                            : 'bg-white text-black border-gray-300 focus:border-gray-500'
+                                        }`}
                                         placeholder="URL of the cover photo"
                                     />
                                 </div>
@@ -194,7 +201,11 @@ const FormEditChapter = () => {
                                 <div className="flex pt-8 justify-center items-center md:justify-start font-semibold">
                                     <button
                                         type="submit"
-                                        className={`w-full text-lg bg-[#34D399] text-white py-2 rounded-full hover:bg-[#2ebb88] transition-colors`}
+                                        className={`w-full text-lg py-2 rounded-full transition-colors ${
+                                            isDarkMode 
+                                            ? 'bg-dark-rose-light text-dark-text-primary hover:bg-dark-rose-dark' 
+                                            : 'bg-[#34D399] text-white hover:bg-rose-dark'
+                                        }`}
                                     >
                                         {loadingEdit ? "Editing..." : "Edit"}
                                     </button>
@@ -204,7 +215,7 @@ const FormEditChapter = () => {
                                     <button
                                         type="button"
                                         onClick={() => dispatch(setShowDeleteModal(true))}
-                                        className="w-full text-lg bg-red-100 text-[#EE8380] py-2 rounded-full hover:bg-red-200 transition-colors"
+                                        className="w-full text-lg bg-red-100 text-red-500 py-2 rounded-full hover:bg-red-200 transition-colors"
                                     >
                                         Delete
                                     </button>
@@ -216,8 +227,9 @@ const FormEditChapter = () => {
 
                 <div className="w-full md:w-[45%] hidden md:flex">
                     {loadingPhoto ? (
-                        <p className={`flex text-2xl font-montserrat justify-items-center justify-center items-center text-center ${isDarkMode ? 'text-dark-text-primary' : 'text-black'
-                            }`}>
+                        <p className={`flex text-2xl font-montserrat justify-items-center justify-center items-center text-center ${
+                            isDarkMode ? 'text-dark-text-primary' : 'text-black'
+                        }`}>
                             Loading photo...
                         </p>
                     ) : (
@@ -240,8 +252,8 @@ const FormEditChapter = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
                         <h3 className={`text-lg font-medium mb-4 ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
-                            {chapters.length === 1
-                                ? "Are you sure you want to delete this? You only have 1 chapter"
+                            {chapters.length === 1 
+                                ? "Are you sure you want to delete this? You only have 1 chapter" 
                                 : "Are you sure you want to delete this?"}
                         </h3>
                         <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
@@ -257,65 +269,65 @@ const FormEditChapter = () => {
                                 onClick={() => dispatch(setShowDeleteModal(false))}
                                 className="flex-1 text-blue-500 py-2"
                             >{/* Continuación de los modales */}
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {showSaveModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-4 ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
-                            Your changes are saved correctly!
-                        </h3>
-                        <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
-                        <button
-                            onClick={() => dispatch(setShowSaveModal(false))}
-                            className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
-                        >
-                            <NavLink to={'/manager'}> Accept</NavLink>
+                            No
                         </button>
                     </div>
                 </div>
-            )}
+            </div>
+        )}
 
-            {showDeletedModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-4 text-center ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
-                            Your chapter is deleted!
-                        </h3>
-                        <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
-                        <button
-                            onClick={() => dispatch(setShowDeletedModal(false))}
-                            className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
-                        >
-                            <NavLink to={'/manager'}> Accept</NavLink>
-                        </button>
-                    </div>
+        {showSaveModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
+                    <h3 className={`text-lg font-medium mb-4 ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
+                        Your changes are saved correctly!
+                    </h3>
+                    <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
+                    <button
+                        onClick={() => dispatch(setShowSaveModal(false))}
+                        className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
+                    >
+                        <NavLink to={'/manager'}> Accept</NavLink>
+                    </button>
                 </div>
-            )}
+            </div>
+        )}
 
-            {showNoChaptersModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
-                        <h3 className={`text-lg font-medium mb-4 text-center ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
-                            You don't have chapter, please go back to your panel!
-                        </h3>
-                        <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
-                        <button
-                            onClick={() => dispatch(setShowNoChaptersModal(true))}
-                            className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
-                        >
-                            <NavLink to={'/mangas'}> Accept</NavLink>
-                        </button>
-                    </div>
+        {showDeletedModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
+                    <h3 className={`text-lg font-medium mb-4 text-center ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
+                        Your chapter is deleted!
+                    </h3>
+                    <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
+                    <button
+                        onClick={() => dispatch(setShowDeletedModal(false))}
+                        className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
+                    >
+                        <NavLink to={'/manager'}> Accept</NavLink>
+                    </button>
                 </div>
-            )}
-        </>
-    )
+            </div>
+        )}
+
+        {showNoChaptersModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                <div className={`rounded-lg p-6 max-w-sm w-full ${isDarkMode ? 'bg-dark-bg-secondary' : 'bg-white'}`}>
+                    <h3 className={`text-lg font-medium mb-4 text-center ${isDarkMode ? 'text-dark-text-primary' : 'text-black'}`}>
+                        You don't have chapter, please go back to your panel!
+                    </h3>
+                    <hr className={`my-4 ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`} />
+                    <button
+                        onClick={() => dispatch(setShowNoChaptersModal(true))}
+                        className={`w-full py-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
+                    >
+                        <NavLink to={'/mangas'}> Accept</NavLink>
+                    </button>
+                </div>
+            </div>
+        )}
+    </>
+)
 }
 
 export default FormEditChapter
