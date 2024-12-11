@@ -1,3 +1,70 @@
+:root {
+    --text-primary: #b6b6b6;
+    --text-secondary: #ececec;
+    --color-primary-gradient-1: #F9A8D4;
+    --color-primary-gradient-2: #F472B6;
+    --color-primary: #FFFFFF;
+    --color-secondary: #EBEBEB;
+    --transition-speed: 600ms;
+}
+
+/* Dark mode variables */
+.dark {
+    --text-primary: #e0e0e0;
+    --text-secondary: #cccccc;
+    --color-primary: #1a1a1a;
+    --color-secondary: #2d2d2d;
+    --color-primary-gradient-1: #831843;
+    --color-primary-gradient-2: #be185d;
+}
+
+/* Dark mode specific*/
+.dark .imageGirl {
+    filter: brightness(0.3);
+}
+
+.dark .searchBar {
+    background-color: var(--color-primary);
+}
+
+.dark .searchBar > input {
+    background-color: var(--color-primary);
+    color: var(--text-primary);
+}
+
+.dark .searchBar > input::placeholder {
+    color: var(--text-secondary);
+}
+
+.dark .mangas {
+    background-color: var(--color-primary);
+}
+
+.dark .all {
+    background-color: #666666;
+}
+
+.dark .Shonen {
+    background-color: rgba(239, 132, 129, 0.8);
+    color: white;
+}
+
+.dark .Seinen {
+    background-color: rgba(252, 156, 87, 0.8);
+    color: white;
+}
+
+.dark .Shojo {
+    background-color: rgba(0, 186, 136, 0.8);
+    color: white;
+}
+
+.dark .Kodomo {
+    background-color: rgba(136, 131, 240, 0.8);
+    color: white;
+}
+
+
 
 :root {
     --text-primary: #b6b6b6;

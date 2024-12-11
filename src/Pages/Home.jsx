@@ -100,31 +100,33 @@ export default function Home() {
                   ) : currentCategory ? (
                     <>
                       {/* Character Photo - Left */}
-                      <div className="hidden md:flex relative items-center justify-center">
+                      <div className="hidden md:block relative">
                         <img
                           src={currentCategory.characterPhoto}
                           alt={`${currentCategory.name} character`}
-                          className="w-48 md:w-[277px] h-56 md:h-[298px] object-contain absolute -top-16"
+                          className="w-48 md:w-[277px] h-56 md:h-[298px] object-contain absolute -top-32"
                         />
                       </div>
 
                       {/* Cover Photo - Center */}
-                      <div className="hidden md:flex relative items-center justify-center">
+                      <div className="hidden md:block relative">
                         <img
                           src={currentCategory.coverPhoto}
                           alt={`${currentCategory.name} cover`}
-                          className="w-36 md:w-[180px] h-56 md:h-[270px] rounded-lg object-cover absolute -top-12"
+                          className="w-36 md:w-[180px] h-56 md:h-[270px] rounded-lg object-cover absolute -top-32"
                         />
                       </div>
 
                       {/* Text Content */}
-                      <div className="text-white text-center md:text-left">
-                        <h2 className="text-xl md:text-2xl mb-2 pt-32">
-                          {currentCategory.name}:
-                        </h2>
-                        <p className="text-xs leading-[95.19%]">
-                          {currentCategory.description.slice(0, 200)}...
-                        </p>
+                      <div className="text-white text-center md:text-left flex flex-col justify-center h-full">
+                        <div>
+                          <h2 className="text-xl md:text-2xl mb-2">
+                            {currentCategory.name}:
+                          </h2>
+                          <p className="text-xs leading-[95.19%]">
+                            {currentCategory.description.slice(0, 200)}...
+                          </p>
+                        </div>
                       </div>
                     </>
                   ) : null}
