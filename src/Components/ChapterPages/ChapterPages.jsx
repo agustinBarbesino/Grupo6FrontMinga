@@ -13,7 +13,7 @@ import Modal from './Modal';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import './ChapterPages.css'
+import './chapterPages.css'
 
 export default function ChapterPages() {
     const { loading } = useSelector(state => state.chapterStore);
