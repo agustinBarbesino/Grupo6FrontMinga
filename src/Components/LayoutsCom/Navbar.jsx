@@ -150,12 +150,12 @@ function NavBar() {
                     )}
 
                     {/* navegacion */}
-                    <div className="flex place-content-center justify-center md:w-80 ">
+                    <div className="flex place-content-center justify-center md:w-full ">
                         <NavLink to="/home" onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             Home
                         </NavLink>
                     </div>
-                    <div className="flex place-content-center justify-center md:w-80 z-50">
+                    <div className="flex place-content-center justify-center  z-50">
                         <NavLink to="/mangas" onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                             Mangas
                         </NavLink >
@@ -163,14 +163,14 @@ function NavBar() {
                     
                     {/* changeRole and register */}
                     {(isAuthenticated && role?.role === 0) && (
-                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2  z-50">
                             <NavLink to={'/rol'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 Change to role
                             </NavLink>
                         </div>)}
                     {/* My Mangas */}
                     {(role?.role === 1 || role?.role === 2) && (
-                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2  z-50">
                             <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/manager'}>
                                 My Mangas
                             </NavLink>
@@ -179,30 +179,30 @@ function NavBar() {
                         }
                      {/* Favourites */}
                      {(mangasReact.length>0) && (
-                        <div className={` ${fav ? 'block' : 'hidden'}flex place-content-center justify-center ml-0 md:pr-2 md:mt-2 mb-2 md:w-80 z-50`}>
+                        <div className={` ${fav ? 'block' : 'hidden'}flex place-content-center justify-center ml-0 md:pr-2 md:mt-2 mb-2  z-50`}>
                             <NavLink onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-1 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" to={'/favourites'}>
                                 Favourites
                             </NavLink>
                         </div>
                         )
                         }
-                    {/* My mangas */}
+                    {/* ¨Panel ADM */}
                     {role?.role === 3 && (
-                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2 md:w-80 z-50">
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2  z-50">
                             <NavLink to={'/panel'} onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base">
                                 Panel ADM
                             </NavLink>
                         </div>)}
                     {/* inciar/cerrar sesion */}
                     {!isAuthenticated ? (
-                        <div className="flex place-content-center justify-center mb-2 md:w-80 z-50">
+                        <div className="flex place-content-center justify-center ml-0 md:mt-2 mb-2  z-50">
                             <NavLink to="/signin" onClick={() => setIsOpen(!isOpen)} className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base" >
                                 Sign In
                             </NavLink>
                         </div>
                         
                     ) : (
-                        <div className="flex place-content-center justify-center ml-0 mt-0 md:mt-2 mb-2 md:w-80 z-50">
+                        <div className="flex place-content-center justify-center ml-0 mt-0 md:mt-2 mb-2  z-50">
                             <button
                                 onClick={handleLogout}
                                 className="flex place-content-center text-center items-center py-1 w-full mx-2 md:py-2 gap-2 drop-shadow text-white hover:bg-white hover:text-rose-dark rounded text-sm sm:text-base"
