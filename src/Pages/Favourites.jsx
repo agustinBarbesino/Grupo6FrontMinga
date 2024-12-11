@@ -23,11 +23,13 @@ function Favourites(){
 
     useEffect(() => {
         const updatedMangasReact = reactions
-            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && r.author_id|| r.company_id ?profile._id:profile.id)
+            .filter((r) => r.reaction !== "dislike" && r.reaction !== null && (r?.author_id|| r?.company_id))
             .map((r) => ({
                 ...r.manga_id,
-                reactId: r.author_id, 
+                reactId: r?.author_id || r?.company_id, 
             }));
+            console.log(updatedMangasReact,reactions);
+            
         setMangasReact(updatedMangasReact); 
     }, [reactions]);
 
@@ -38,7 +40,8 @@ function Favourites(){
             company_id: authorSign?.company_id || null,
             reaction: null,
         };
-
+        console.log(dataCreate);
+        
         dispatch(reactionsCreate({ dataCreate }));
         setMangasReact(prevState => prevState.filter(manga => manga._id !== manga_id));
     }
@@ -48,7 +51,8 @@ function Favourites(){
             let value1 = text.toLowerCase();
             let value2 = c.reactId
             let filt1 = c.title?.toLowerCase();
-            let filt2 = authorSign.author_id||authorSign.company_id
+            let filt2=authorSign.author_id||authorSign.company_id
+           
             
             return filt1?.startsWith(value1) && filt2.startsWith(value2)
         });
