@@ -67,10 +67,7 @@ function Card({category, name, image, id, autor, description, autorId}) {
             <button 
                 className="readM absolute transition-all duration-300 hover:opacity-90"
                 onClick={() => manga(id)}
-                style={{
-                    backgroundColor: bgColor,
-                    color: hexColor
-                }}
+               
             >
                 Read
             </button>
