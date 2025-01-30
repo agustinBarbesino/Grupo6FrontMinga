@@ -1,7 +1,7 @@
-import thumbUp from "../../Resources/pulgarArriba.png";
-import thumbDown from "../../Resources/pulgarAbajo-removebg-preview.png";
-import surprise from "../../Resources/emojiSorpresa.webp";
-import hearthEyes from "../../Resources/coras-removebg-preview.png";
+import thumbUp from "../../assets/pulgarArriba.png";
+import thumbDown from "../../assets/pulgarAbajo-removebg-preview.png";
+import surprise from "../../assets/emojiSorpresa.webp";
+import hearthEyes from "../../assets/coras-removebg-preview.png";
 import { reactionsCreate } from "../../store/actions/reactionsCreateActions";
 import { reactionsAll } from "../../store/actions/reactionsAllActions";
 import { useState, useEffect } from "react";
