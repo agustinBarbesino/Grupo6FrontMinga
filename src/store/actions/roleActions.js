@@ -16,7 +16,7 @@ export const updateUserRole = createAsyncThunk(
                 }
             }
 
-            const response = await axios.put(`http://localhost:8080/api/user/updateRole`, {
+            const response = await axios.put(`https://grupo6backminga.onrender.com/api/user/updateRole`, {
                 _id: id,
                 role: role
             }, config);

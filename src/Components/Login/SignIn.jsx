@@ -97,7 +97,7 @@ export default function SignIn() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/api/auth/signin/google";
+    window.location.href = "https://grupo6backminga.onrender.com/api/auth/signin/google";
   };
 
   return (

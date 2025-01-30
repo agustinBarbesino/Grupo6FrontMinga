@@ -7,7 +7,7 @@ export const reactionsCreate= createAsyncThunk("reactionsCreate", async({dataCre
         console.log("Se crea la reaction");
         console.log(dataCreate);
         
-            const response = await axios.post(`http://localhost:8080/api/reactions/create`,dataCreate)
+            const response = await axios.post(`https://grupo6backminga.onrender.com/api/reactions/create`,dataCreate)
         console.log("Response",response.data);
        
         return response.data.response

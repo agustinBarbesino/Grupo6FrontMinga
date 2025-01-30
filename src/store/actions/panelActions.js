@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-const BASE_URL = 'http://localhost:8080/api'
-/* const BASE_URL = 'https://grupo6backminga.onrender.com/api'  */
+
+ const BASE_URL = 'https://grupo6backminga.onrender.com/api'  
 
 export const getCompanies = createAsyncThunk('getCompanies', async() => {
     const response = await axios.get(`${BASE_URL}/companies/all`)

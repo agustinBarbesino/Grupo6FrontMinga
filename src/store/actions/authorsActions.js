@@ -7,7 +7,7 @@ export const AuthorsFetch = createAsyncThunk("GetAuthors", async () => {
     try {
         const token = localStorage.getItem("token"); 
         const response = await axios.get(
-            "http://localhost:8080/api/authors/all",
+            "https://grupo6backminga.onrender.com/api/authors/all",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
