@@ -7,6 +7,7 @@ import { category, search } from "../store/mangaSlice";
 import { LoadingMangas } from "../Components/Mangas/LoadingMangas";
 import { LoadingCategories } from "../Components/Mangas/LoadingCategories";
 import { selectIsDarkMode } from '../store/actions/darkModeActions';
+import imgMangas from "../assets/Manga.jpeg"
 import '../Components/Mangas/mangaPages.css';
 
 function Mangas(){
@@ -68,7 +69,7 @@ function Mangas(){
       <div className={`bodyManga flex-wrap flex justify-center font-sans text-white ${isDarkMode ? 'dark' : ''}`}>
         <img 
           className="absolute imageGirl object-cover w-full filter brightness-50" 
-          src="../../public/Manga.jpeg" 
+          src={imgMangas}
           alt="" 
         />
 

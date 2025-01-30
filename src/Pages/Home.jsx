@@ -4,6 +4,7 @@ import { fetchCategories, selectCategoriesLoading, selectCategoriesError } from 
 import { selectIsAuthenticated } from '../store/actions/authActions';
 import { selectIsDarkMode } from '../store/actions/darkModeActions';
 import { useNavigate } from 'react-router-dom';
+import imgHome from ".././assets/Home.jpeg"
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -160,7 +161,7 @@ export default function Home() {
             {/* Background image */}
             <div className={`${isMobile ? 'fixed top-0 left-0 right-0 h-screen' : 'absolute inset-0 h-full'}`}>
               <img
-                src="../../public/Home.jpeg"
+                src={imgHome}
                 alt="Background"
                 className="w-full h-full object-cover lg:object-[center_-200px]"
               />

@@ -6,6 +6,7 @@ import { CiHeart } from "react-icons/ci"
 import img from "../../assets/logoMinga.png"
 import { useSelector } from 'react-redux';
 import { selectIsDarkMode } from '../../store/actions/darkModeActions';
+import imgFooter from "../../assets/Footer.jpeg"
 
 const Footer = () => {
     const isDarkMode = useSelector(selectIsDarkMode);
@@ -15,7 +16,7 @@ const Footer = () => {
             <div className=' md:block md:min-h-[40vh] z-10'>
 
                 <div className='relative w-full lg:min-h-[55vh] min-h-[20vh] overflow-hidden bg-gradient-to-r from-orange-800 via-sky-900 via-40% to-red-900 to-100% bg-contain bg-bottom clip-ellipse-bg '>
-                    <img src="../../public/Footer.jpeg" alt="recorte"
+                    <img src={imgFooter} alt="recorte"
                         className="absolute w-full h-full lg:h-full object-cover clip-ellipse-custom" />
                 </div>
                 <div className={`flex items-center min-h-[10vh] font-montserrat pb-1 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
